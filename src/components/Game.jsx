@@ -1,16 +1,25 @@
 import { useEffect, useState } from "react"
 import './game.css'
+// import Cookies from 'universal-cookie';
 
 const Game = () => {
 
-    // const [color, setColor] = useState([0,0,0])
+    
+    const [isLeftOpen, setIsLeftOpen] = useState(false)
+    const [isRightOpen, setIsRightOpen] = useState(false)
+
     const [value, setValue] = useState(10)
     const [color, setColor] = useState({
         r: 0, g: 0, b: 0
     })
 
+
+    //load game
     useEffect(() => {
-        document.querySelector('.square').style.backgroundColor = "#000000"
+        // document.querySelector('.square').style.backgroundColor = "#000000"
+
+        
+
     }, [])
     
     useEffect(() => {
@@ -29,23 +38,66 @@ const Game = () => {
 
 
     function onClick() {
-        console.log("CLICK HELVETE")
-
         setColor({r: color.r + value, g: color.g, b: color.b})
-        
-        // if(color.r > 255){
-        //     console.log("255")
-        //     setColor({r: color.r - 255, g: color.g + 1, b: color.b})
-        // }
-        
-
-
     }
 
+    function openLeft(open){
+        const lm = document.querySelector('.left-menu-content')
+        const b = document.querySelector('.open-left')
+        if(open){
+            lm.style.display = "none"
+            b.innerText = ">"
+        } else {
+            lm.style.display = "block"
+            b.innerText = "<"
+        }
+        setIsLeftOpen(!isLeftOpen)
+    }
+
+    function openRight(open){
+        const rm = document.querySelector('.right-menu-content')
+        const b = document.querySelector('.open-right')
+        if(open){
+            rm.style.display = "none"
+            b.innerText = "<"
+        } else {
+            rm.style.display = "block"
+            b.innerText = ">"
+        }
+        setIsRightOpen(!isRightOpen)
+    }
+
+     const leftMenu = <div className="left-menu side-menu">
+         <div className="left-menu-content menu-content">
+            <span>hej</span>
+            <span>hej</span>
+            <span>hej</span>
+            <span>hej</span>
+            <span>hej</span>
+         </div>
+         <button className="open-left menu-button" onClick={() => openLeft(isLeftOpen)}>{">"}</button>
+     </div>
+     
+     const rightMenu = <div className="right-menu side-menu">
+        <button className="open-right menu-button" onClick={() => openRight(isRightOpen)}>{"<"}</button>
+         <div className="right-menu-content menu-content">
+             <span>hej</span>
+             <span>hej</span>
+             <span>hej</span>
+             <span>hej</span>
+             <span>hej</span>
+             </div>
+        
+        
+        </div>
 
     return (
         <section>
         <div className="square" onClick={onClick}>
+
+
+
+        </div>
             <div className="color-values">
                 <span className="cur-r">
                     {color.r}
@@ -57,8 +109,8 @@ const Game = () => {
                     {color.b}
                 </span>
             </div>
-
-        </div>
+            {leftMenu}
+            {rightMenu}
         </section>
     )
 }

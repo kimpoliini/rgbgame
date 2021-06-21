@@ -1,4 +1,5 @@
 section {
+    color: white;
     display: flex;
     align-content: center;
     justify-content: center;
@@ -38,4 +39,73 @@ section {
 .cur-b {
     color: blue;
     margin: 4px;
+}
+
+/* menus */
+
+.side-menu {
+    top: 15%;
+    height: 60%;
+    position: fixed;
+    display: flex;
+}
+
+.menu-content {
+    display: none;
+    padding: 8px;
+    background-color: #282c34;
+    width: 8em;
+}
+
+.menu-button {
+    color: white;
+    height: 4em;
+    width: 2em;
+    font-size: 24pt;
+    background-color: #282c34;
+    border: none;
+}
+
+.menu-content span {
+    display: block;
+}
+
+.menu-button:hover {
+    background-color: #4b5261;
+}
+
+/* left menus */
+
+.left-menu {
+    left: 0px;
+    pointer-events: none;
+}
+
+.left-menu-content {
+    border-bottom-right-radius: 8px;
+    transition: visibility 0.3s ease-in-out;
+}
+
+.open-left {
+    pointer-events: auto;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+/* right menus */
+
+.right-menu {
+    right: 0px;
+    pointer-events: none;
+}
+
+.right-menu-content {
+    border-bottom-left-radius: 8px;
+    transition: visibility 0.3s ease-in-out;
+}
+
+.open-right {
+    pointer-events: auto;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
 }
