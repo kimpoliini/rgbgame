@@ -1,0 +1,41 @@
+section {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    height: 100%;
+    user-select: none;
+    font-size: 18pt;
+}
+
+.square {
+    width: 100vw;
+    height: 80vh;
+    transition: background-color 0.25s;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+}
+
+.color-values {
+    margin-top: 8px;
+    position: absolute;
+    background-color: white;
+    width: fit-content;
+    padding: 8px;
+    border-radius: 8px;
+}
+
+.cur-r {
+    color: red;
+    margin: 4px;
+}
+
+.cur-g {
+    color: green;
+    margin: 4px;
+}
+
+.cur-b {
+    color: blue;
+    margin: 4px;
+}
