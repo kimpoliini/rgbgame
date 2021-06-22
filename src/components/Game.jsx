@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { createElement, useEffect, useState } from "react"
 import './game.css'
 // import Cookies from 'universal-cookie';
 
@@ -37,7 +37,24 @@ const Game = () => {
     }, [color])
 
 
-    function onClick() {
+    function onClick(e) {
+        const square = document.querySelector('.square')
+        const text = document.createElement("span")
+
+        text.innerText = value
+        text.style.position = "absolute"
+
+        //getting pointer location and accounts for header
+        const x = e.clientX - 12
+        const y = e.clientY - 165
+
+        text.style.left = `${x}px`
+        text.style.top = `${y}px`
+        
+        square.appendChild(text)
+
+        setTimeout(() => {text.remove() }, 900);
+
         setColor({r: color.r + value, g: color.g, b: color.b})
     }
 
