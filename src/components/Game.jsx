@@ -8,7 +8,7 @@ const Game = () => {
     const [isLeftOpen, setIsLeftOpen] = useState(false)
     const [isRightOpen, setIsRightOpen] = useState(false)
 
-    const [value, setValue] = useState(150)
+    const [value, setValue] = useState(15)
     const [color, setColor] = useState({
         r: 0, g: 0, b: 0
     })
@@ -101,11 +101,7 @@ const Game = () => {
 
     return (
         <section>
-        <div className="square" onClick={onClick}>
-
-
-
-        </div>
+        <div className="square" onClick={onClick}></div>
             <div className="color-values">
                 <span className="cur-r">
                     {color.r}

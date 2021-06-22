@@ -9,12 +9,10 @@ section {
 }
 
 .square {
-    width: 100vw;
-    height: 80vh;
+    position: fixed;
+    width: 100%;
+    height: 100%;
     transition: background-color 0.25s;
-    display: flex;
-    align-content: center;
-    justify-content: center;
 }
 
 .color-values {
@@ -43,6 +41,10 @@ section {
 
 /* menus */
 
+.menu-content h4 {
+    margin: 8px;
+}
+
 .side-menu {
     top: 15%;
     height: 60%;
@@ -64,12 +66,15 @@ section {
 }
 
 .menu-button {
+    cursor: pointer;
+    margin-top: 1em;
     color: white;
     height: 4em;
     width: 2em;
     font-size: 24pt;
     background-color: #282c34;
     border: none;
+    transition: background-color 0.2s;
 }
 
 .menu-content span {
@@ -89,6 +94,7 @@ section {
 
 .left-menu-content {
     border-bottom-right-radius: 8px;
+    border-top-right-radius: 8px;
 }
 
 .open-left {
@@ -106,6 +112,7 @@ section {
 
 .right-menu-content {
     border-bottom-left-radius: 8px;
+    border-top-left-radius: 8px;
 }
 
 .open-right {
