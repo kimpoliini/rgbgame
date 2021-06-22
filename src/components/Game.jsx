@@ -8,7 +8,7 @@ const Game = () => {
     const [isLeftOpen, setIsLeftOpen] = useState(false)
     const [isRightOpen, setIsRightOpen] = useState(false)
 
-    const [value, setValue] = useState(10)
+    const [value, setValue] = useState(150)
     const [color, setColor] = useState({
         r: 0, g: 0, b: 0
     })
@@ -44,11 +44,14 @@ const Game = () => {
     function openLeft(open){
         const lm = document.querySelector('.left-menu-content')
         const b = document.querySelector('.open-left')
+
+        lm.classList.toggle("hidden")
+
         if(open){
-            lm.style.display = "none"
+            // lm.style.display = "none"
             b.innerText = ">"
         } else {
-            lm.style.display = "block"
+            // lm.style.display = "block"
             b.innerText = "<"
         }
         setIsLeftOpen(!isLeftOpen)
@@ -57,18 +60,22 @@ const Game = () => {
     function openRight(open){
         const rm = document.querySelector('.right-menu-content')
         const b = document.querySelector('.open-right')
+
+        rm.classList.toggle("hidden")
+
         if(open){
-            rm.style.display = "none"
+            // rm.style.display = "none"
             b.innerText = "<"
         } else {
-            rm.style.display = "block"
+            // rm.style.display = "block"
             b.innerText = ">"
         }
         setIsRightOpen(!isRightOpen)
     }
 
      const leftMenu = <div className="left-menu side-menu">
-         <div className="left-menu-content menu-content">
+         <div className="left-menu-content menu-content hidden">
+             <h4>Upgrades</h4>
             <span>hej</span>
             <span>hej</span>
             <span>hej</span>
@@ -80,7 +87,8 @@ const Game = () => {
      
      const rightMenu = <div className="right-menu side-menu">
         <button className="open-right menu-button" onClick={() => openRight(isRightOpen)}>{"<"}</button>
-         <div className="right-menu-content menu-content">
+         <div className="right-menu-content menu-content hidden">
+            <h4>Generators</h4>
              <span>hej</span>
              <span>hej</span>
              <span>hej</span>

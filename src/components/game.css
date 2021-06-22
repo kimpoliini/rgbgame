@@ -51,10 +51,16 @@ section {
 }
 
 .menu-content {
-    display: none;
-    padding: 8px;
-    background-color: #282c34;
     width: 8em;
+    overflow-x: hidden;
+    display: block;
+    padding-top: 8px;
+    background-color: #282c34;
+    transition: width 0.25s ease-in-out;
+}
+
+.hidden {
+    width: 0px;
 }
 
 .menu-button {
@@ -83,7 +89,6 @@ section {
 
 .left-menu-content {
     border-bottom-right-radius: 8px;
-    transition: visibility 0.3s ease-in-out;
 }
 
 .open-left {
@@ -101,7 +106,6 @@ section {
 
 .right-menu-content {
     border-bottom-left-radius: 8px;
-    transition: visibility 0.3s ease-in-out;
 }
 
 .open-right {
