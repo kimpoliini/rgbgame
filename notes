@@ -1,0 +1,19 @@
+re: Red Equivalent, ex 123R, 20G, 3B = 123 + 5100 + 195075 = 200298re
+
+
+generator prices:
+
+vertices^vertices. ex Triangle = 3^3=27re, Square = 4^4=256re
+
+generator base gains per second:
+
+1. (round(-generator # + 2, (generator # * 2 % of base generator price)) / 2 ? 
+
+ex Triangle = 1% of 27 = 0.27 rounded = 0.3 / 2 = 0.15,
+Square = 2% of 256 = 5.12
+
+2. 1 + (0.1*(generator # -1)) % of base generator price
+ex Triangle = 27*0.01 = 0.27, 100 seconds until profit,
+Square = 256*0.011 = 2.816, 90.9 seconds until profits
+
+3. 2. 1 + floor(-generator # + 2 decimals, (0.1*(generator # -1)) % of base generator price

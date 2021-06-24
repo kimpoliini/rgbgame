@@ -43,6 +43,7 @@ section {
 
 .menu-content h4 {
     margin: 8px;
+    margin-bottom: 16px;
 }
 
 .side-menu {
@@ -50,22 +51,32 @@ section {
     height: 60%;
     position: fixed;
     display: flex;
+    pointer-events: none;
+
 }
 
 .menu-content {
-    width: 8em;
+    padding: 8px;
+    width: 10em;
     overflow-x: hidden;
     display: block;
     padding-top: 8px;
     background-color: #282c34;
-    transition: width 0.25s ease-in-out;
+    overflow-y: scroll;
+    pointer-events: auto;
+    
+    transition: width, padding, 0.25s ease-in-out;
 }
 
 .hidden {
     width: 0px;
+    overflow: hidden;
+    padding-left: 0px;
+    padding-right: 0px;
 }
 
 .menu-button {
+    pointer-events: auto;
     cursor: pointer;
     margin-top: 1em;
     color: white;
@@ -85,11 +96,25 @@ section {
     background-color: #4b5261;
 }
 
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.25);
+    border-radius: 100px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #4b5261;
+}
+
+
+
 /* left menus */
 
 .left-menu {
     left: 0px;
-    pointer-events: none;
 }
 
 .left-menu-content {
@@ -98,7 +123,6 @@ section {
 }
 
 .open-left {
-    pointer-events: auto;
     border-top-right-radius: 8px;
     border-bottom-right-radius: 8px;
 }
@@ -107,7 +131,6 @@ section {
 
 .right-menu {
     right: 0px;
-    pointer-events: none;
 }
 
 .right-menu-content {
@@ -116,7 +139,6 @@ section {
 }
 
 .open-right {
-    pointer-events: auto;
     border-top-left-radius: 8px;
     border-bottom-left-radius: 8px;
 }
