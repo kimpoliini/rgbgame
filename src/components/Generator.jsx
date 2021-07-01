@@ -1,7 +1,7 @@
 import "./sideMenuItems.css"
 
 
-const Generator = ({name,baseIncrease, basePrice, costScalingPercent}) => {
+const Generator = ({name, baseIncrease, basePrice, costScalingPercent, onClick}) => {
 
 
 
@@ -9,7 +9,7 @@ const Generator = ({name,baseIncrease, basePrice, costScalingPercent}) => {
 
 
     return(
-        <div className="side-menu-item">
+        <div className="side-menu-item" onClick={onClick}>
             <h5>{name}</h5>
             <p>{baseIncrease}/s</p>
             <p>{basePrice}</p>
