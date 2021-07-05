@@ -79,9 +79,11 @@ section {
     overflow: hidden;
     padding-left: 0px;
     padding-right: 0px;
+    box-shadow: none;
 }
 
 .menu-button {
+    z-index: 1;
     pointer-events: auto;
     cursor: pointer;
     margin-top: 1em;
@@ -115,8 +117,6 @@ section {
     background-color: #4b5261;
 }
 
-
-
 /* left menus */
 
 .left-menu {
@@ -126,11 +126,13 @@ section {
 .left-menu-content {
     border-bottom-right-radius: 8px;
     border-top-right-radius: 8px;
+    box-shadow: rgba(0, 0, 0, 0.25) 2px 2px 4px;
 }
 
 .open-left {
     border-top-right-radius: 8px;
     border-bottom-right-radius: 8px;
+    box-shadow: rgba(0, 0, 0, 0.25) 2px 2px 4px;
 }
 
 /* right menus */
@@ -142,11 +144,13 @@ section {
 .right-menu-content {
     border-bottom-left-radius: 8px;
     border-top-left-radius: 8px;
+    box-shadow: rgba(0, 0, 0, 0.25) -2px 2px 4px;
 }
 
 .open-right {
     border-top-left-radius: 8px;
     border-bottom-left-radius: 8px;
+    box-shadow: rgba(0, 0, 0, 0.25) -2px 2px 4px;
 }
 
 .square span {

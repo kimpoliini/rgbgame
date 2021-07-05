@@ -3,6 +3,7 @@ import Generator from "./Generator"
 import Upgrade from "./Upgrade"
 import "./game.css"
 import { useInterval } from "../js/interval.jsx"
+import calculateRed from "../js/colorCalc.jsx"
 // import Cookies from 'universal-cookie';
 
 function Game(){
@@ -88,6 +89,7 @@ function Game(){
                 // console.log("triangle")
                 if(color.r >= 27){
                     setRps(rps + 0.25)
+                    setColor({...color, r: color.r - 27})
                     // console.log("bought")
                 }
                 break
@@ -95,6 +97,7 @@ function Game(){
                 // console.log("square")
                 if(color.r >= 100){
                     setRps(rps + 8)
+                    setColor({...color, r: color.r - 100})
                     // console.log("bought")
                 }
                 break
@@ -102,6 +105,7 @@ function Game(){
                 // console.log("pentagon")
                 if(color.r >= 250){
                     setRps(rps + 25)
+                    setColor({...color, r: color.r - 250})
                     // console.log("bought")
                 }
                 break
@@ -167,8 +171,6 @@ function Game(){
             <Generator name="Dodecahedron" basePrice="15" baseIncrease="2"/>
 
              </div>
-        
-        
         </div>
 
     return (
@@ -179,10 +181,10 @@ function Game(){
                     {color.r.toFixed(0)}
                 </span>
                 <span className="cur-g">
-                    {color.g}
+                    {color.g.toFixed(0)}
                 </span>
                 <span className="cur-b">
-                    {color.b}
+                    {color.b.toFixed(0)}
                 </span>
                 <p>rps: {rps}</p>
             </div>
