@@ -17,3 +17,15 @@ ex Triangle = 27*0.01 = 0.27, 100 seconds until profit,
 Square = 256*0.011 = 2.816, 90.9 seconds until profits
 
 3. 2. 1 + floor(-generator # + 2 decimals, (0.1*(generator # -1)) % of base generator price
+
+
+
+prestige:
+
+255, 255, 255 = 1 shard thingy?
+first time gives you a notification.
+
+each time you've gained at least one shard thingy you get the option to prestige,
+with said shards acting as currency between prestiges.
+
+what happen at >255^3 rps?? sps???

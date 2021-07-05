@@ -17,13 +17,14 @@ section {
 }
 
 .color-values {
+    width: 6em;
     margin-top: 8px;
     position: absolute;
     background-color: white;
-    width: fit-content;
     padding: 8px;
     border-radius: 8px;
     color: black;
+    box-shadow: rgba(0, 0, 0, 0.25) 2px 2px 2px;
 }
 
 .cur-r {
@@ -44,6 +45,7 @@ section {
 .color-values p {
     text-align: center;
 }
+
 /* menus */
 
 .menu-content h4 {

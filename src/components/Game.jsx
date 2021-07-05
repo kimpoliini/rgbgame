@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import Generator from "./Generator"
 import Upgrade from "./Upgrade"
 import "./game.css"
@@ -19,8 +19,6 @@ function Game(){
 
     //temporary
     const [rps, setRps] = useState(0)
-    
-
     
     //intervals
     useInterval(() => {
@@ -106,6 +104,8 @@ function Game(){
                     setRps(rps + 25)
                     // console.log("bought")
                 }
+                break
+            default:
                 break
         }
 

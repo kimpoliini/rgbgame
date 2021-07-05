@@ -1,9 +1,11 @@
 h5 {
+    white-space: nowrap;
     text-align: left;
     margin: 4px;
 }
 
 p {
+    white-space: nowrap;
     font-size: 12pt;
     text-align: left;
     margin: 4px;
