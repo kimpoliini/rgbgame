@@ -1,122 +1,110 @@
 import React, { useRef, useEffect, useState } from "react"
 import Generator from "./Generator"
 import Upgrade from "./Upgrade"
-import './game.css'
+import "./game.css"
+import { useInterval } from "../js/interval.jsx"
 // import Cookies from 'universal-cookie';
 
 function Game(){
 
-    
     const [isLeftOpen, setIsLeftOpen] = useState(false)
     const [isRightOpen, setIsRightOpen] = useState(false)
     
     //fps
-    const [intervalValue, setIntervalValue] = useState(33.3)
+    const [intervalValue, setIntervalValue] = useState(66.7)
 
-    const [value, setValue] = useState(1)
+    const [gameElement, setGameElement] = useState()
+    const [value, setValue] = useState(123)
     const [color, setColor] = useState({r: 0, g: 0, b: 0})
 
     //temporary
     const [rps, setRps] = useState(0)
     
-    //interval
+
+    
+    //intervals
     useInterval(() => {
         if(rps > 0){
             let amountToAdd = (rps/(1000/intervalValue))
             increment(amountToAdd)
-          }
-          
+          }  
       }, intervalValue)
 
-      useInterval(() => {
-          document.querySelector('.square').style.backgroundColor = `rgb(${color.r}, ${color.g}, ${color.b})`
-        }, 100)
+    useInterval(() => {
+        gameElement.style.backgroundColor = `rgb(${color.r}, ${color.g}, ${color.b})`
+    }, 200)
         
-        //load game
-        useEffect(() => {
-            document.querySelector('.square').style.backgroundColor = `rgb(${color.r}, ${color.g}, ${color.b})`
-        
+    //load game
+    useEffect(() => {
+        setGameElement(document.querySelector('.square'))
     }, [])
     
+    //updates the background color to color values after loading the game, probably not necessary
+    useEffect(() => {
+        if(gameElement != null){
+            gameElement.style.backgroundColor = `rgb(${color.r}, ${color.g}, ${color.b})`
+        }
+    }, [gameElement])
+    
     function increment(red){
-        setColor({r: color.r + red, g: color.g, b: color.b})
+        setColor({...color, r: color.r + red})
     }
 
-    function useInterval(callback, delay) {
-        const savedCallback = useRef();
-      
-        // Remember the latest callback.
-        useEffect(() => {
-          savedCallback.current = callback;
-        }, [callback]);
-      
-        // Set up the interval.
-        useEffect(() => {
-          function tick() {
-            savedCallback.current();
-          }
-          if (delay !== null) {
-            let id = setInterval(tick, delay);
-            return () => clearInterval(id);
-          }
-        }, [delay]);
-      }
-      
-    //calculate each press/tick
+    //calculate each time the color changes
     useEffect(() => {
-        if(color.r > 255){
-            setColor({r: color.r - 256, g: color.g + 1, b: color.b})
+        if(color.r >= 256){
+            setColor({...color, r: color.r - 256, g: color.g + 1})
         }
         
-        if(color.g > 255){
-            setColor({r: color.r, g: color.g - 256, b: color.b + 1})
+        if(color.g >= 256){
+            setColor({...color, g: color.g - 256, b: color.b + 1})
         }
         
     }, [color])    
     
     function onClick(e) {
-        const square = document.querySelector('.square')
         const text = document.createElement("span")
 
         text.innerText = value
         text.style.position = "absolute"
+        text.style.textAlign = "center"
 
         //getting pointer location and accounts for header
         const x = e.clientX - 12
-        const y = e.clientY - 165
+        const y = e.clientY - 130
 
         text.style.left = `${x}px`
         text.style.top = `${y}px`
         
-        square.appendChild(text)
+        gameElement.appendChild(text)
 
-        setTimeout(() => {text.remove() }, 900);
+        setTimeout(() => { text.remove() }, 900);
 
-        setColor({r: color.r + value, g: color.g, b: color.b})
+        setColor({...color, r: color.r + value})
     }
 
     //buying generators
     function tryBuy(name){
         switch(name){
             case "triangle":
-                console.log("triangle")
+                // console.log("triangle")
                 if(color.r >= 27){
                     setRps(rps + 0.25)
-                    console.log("bought")
+                    // console.log("bought")
                 }
                 break
             case "square":
-                console.log("square")
+                // console.log("square")
                 if(color.r >= 100){
                     setRps(rps + 8)
-                    console.log("bought")
+                    // console.log("bought")
                 }
                 break
             case "pentagon":
-                console.log("pentagon")
+                // console.log("pentagon")
                 if(color.r >= 250){
                     setRps(rps + 25)
-                    console.log("bought")
+                    // console.log("bought")
                 }
                 break
         }
