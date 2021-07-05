@@ -159,6 +159,16 @@ section {
     animation: on-click-fade 1s;
 }
 
+.stats {
+    position: absolute;
+    right: 8px;
+    bottom: 8px;
+    background-color: white;
+    color: black;
+    border-radius: 8px;
+    padding: 4px;
+}
+
 @keyframes on-click-fade {
     0% {
         opacity: 100;

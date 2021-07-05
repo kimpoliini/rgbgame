@@ -3,7 +3,7 @@ import Generator from "./Generator"
 import Upgrade from "./Upgrade"
 import "./game.css"
 import { useInterval } from "../js/interval.jsx"
-import calculateRed from "../js/colorCalc.jsx"
+import { redToRgb } from "../js/colorCalc.jsx"
 // import Cookies from 'universal-cookie';
 
 function Game(){
@@ -18,21 +18,37 @@ function Game(){
     const [value, setValue] = useState(123)
     const [color, setColor] = useState({r: 0, g: 0, b: 0})
 
-    //temporary
+    //rps
     const [rps, setRps] = useState(0)
+    const [rpt, setRpt] = useState(0)
+    const [rgbps, setRgbps] = useState([0,0,0])
+    const [rgbpt, setRgbpt] = useState([0,0,0])
     
     //intervals
+
+    //increments rgb each tick
     useInterval(() => {
         if(rps > 0){
-            let amountToAdd = (rps/(1000/intervalValue))
-            increment(amountToAdd)
+            incrementRgb(rgbpt)
           }  
       }, intervalValue)
 
+    //how often the bg changes
     useInterval(() => {
         gameElement.style.backgroundColor = `rgb(${color.r}, ${color.g}, ${color.b})`
     }, 200)
         
+    //sets rpt and rgbps every time rps changes
+    useEffect(() => {        
+        setRpt(rps/(1000/intervalValue))
+        setRgbps(redToRgb(rps))
+    }, [rps])
+    
+    //set rgbpt every time rpt changes
+    useEffect(() => {
+        setRgbpt(redToRgb(rpt))
+    }, [rpt])
+
     //load game
     useEffect(() => {
         setGameElement(document.querySelector('.square'))
@@ -47,6 +63,10 @@ function Game(){
     
     function increment(red){
         setColor({...color, r: color.r + red})
+    }
+
+    function incrementRgb(rgb){
+        setColor({r: color.r + rgb[0], g: color.g + rgb[1], b: color.b + rgb[2]})
     }
 
     //calculate each time the color changes
@@ -181,15 +201,21 @@ function Game(){
                     {color.r.toFixed(0)}
                 </span>
                 <span className="cur-g">
-                    {color.g.toFixed(0)}
+                    {color.g}
                 </span>
                 <span className="cur-b">
-                    {color.b.toFixed(0)}
+                    {color.b}
                 </span>
                 <p>rps: {rps}</p>
             </div>
             {leftMenu}
             {rightMenu}
+
+            <div className="stats">
+                <p>R/t: {rpt.toFixed(2)}</p>
+                <p>RGB/s: {rgbps[0]}, {rgbps[1]}, {rgbps[2]}</p>
+                <p>RGB/t: {rgbpt[0]}, {rgbpt[1]}, {rgbpt[2]}</p>
+            </div>
         </section>
     )
 }
