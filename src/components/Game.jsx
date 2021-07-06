@@ -8,15 +8,20 @@ import { redToRgb } from "../js/colorCalc.jsx"
 
 function Game(){
 
+    //menus
     const [isLeftOpen, setIsLeftOpen] = useState(false)
     const [isRightOpen, setIsRightOpen] = useState(false)
     
     //fps
     const [intervalValue, setIntervalValue] = useState(66.7)
 
+    //game
     const [gameElement, setGameElement] = useState()
-    const [value, setValue] = useState(123)
     const [color, setColor] = useState({r: 0, g: 0, b: 0})
+    
+    //click
+    const [clickValueRed, setClickValueRed] = useState(100)
+    const [clickValueRgb, setClickValueRgb] = useState([0,0,0])
 
     //rps
     const [rps, setRps] = useState(0)
@@ -38,6 +43,10 @@ function Game(){
         gameElement.style.backgroundColor = `rgb(${color.r}, ${color.g}, ${color.b})`
     }, 200)
         
+    useEffect(() => {
+        setClickValueRgb(redToRgb(clickValueRed))
+    }, [clickValueRed])
+    
     //sets rpt and rgbps every time rps changes
     useEffect(() => {        
         setRpt(rps/(1000/intervalValue))
@@ -60,14 +69,6 @@ function Game(){
             gameElement.style.backgroundColor = `rgb(${color.r}, ${color.g}, ${color.b})`
         }
     }, [gameElement])
-    
-    function increment(red){
-        setColor({...color, r: color.r + red})
-    }
-
-    function incrementRgb(rgb){
-        setColor({r: color.r + rgb[0], g: color.g + rgb[1], b: color.b + rgb[2]})
-    }
 
     //calculate each time the color changes
     useEffect(() => {
@@ -79,12 +80,16 @@ function Game(){
             setColor({...color, g: color.g - 256, b: color.b + 1})
         }
         
-    }, [color])    
+    }, [color])
+
+    function incrementRgb(rgb){
+        setColor({r: color.r + rgb[0], g: color.g + rgb[1], b: color.b + rgb[2]})
+    }
     
     function onClick(e) {
         const text = document.createElement("span")
-
-        text.innerText = value
+        
+        text.innerText = clickValueRed
         text.style.position = "absolute"
         text.style.textAlign = "center"
 
@@ -99,7 +104,7 @@ function Game(){
 
         setTimeout(() => { text.remove() }, 900);
 
-        setColor({...color, r: color.r + value})
+        incrementRgb(clickValueRgb)
     }
 
     //buying generators
