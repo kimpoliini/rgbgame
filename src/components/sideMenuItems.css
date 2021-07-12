@@ -12,6 +12,8 @@ p {
 }
 
 .side-menu-item {
+    display: flex;
+    flex-direction: row;
     margin-top: 12px;
     pointer-events: auto;
     padding: 4px;
@@ -28,4 +30,11 @@ p {
     transform: translateY(-6px);
 
     transition: background-color, transform, box-shadow, 0.25s;
+}
+
+.generator-image {
+    /* improve unless it works */
+    display: block;
+    margin-left: auto;
+    height: 100px;
 }

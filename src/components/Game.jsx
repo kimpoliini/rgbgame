@@ -184,12 +184,32 @@ function Game(){
          <div className="right-menu-content menu-content hidden">
             <h4>Generators</h4>
 
-            <Generator name="Triangle" basePrice="27" baseIncrease="0.25" onClick={() => tryBuy("triangle")}/>
-            <Generator name="Square" basePrice="256" baseIncrease="8" onClick={() => tryBuy("square")}/>
-            <Generator name="Pentagon" basePrice="3125" baseIncrease="15" onClick={() => tryBuy("pentagon")}/>
-            <Generator name="Hexagon" basePrice="46656" baseIncrease="24"/>
-            <Generator name="Septagon" basePrice="823543" baseIncrease="35"/>
-            <Generator name="Octagon" basePrice="16777216" baseIncrease="248"/>
+            <Generator name="Triangle" basePrice="27" baseIncrease="0.25" 
+            onClick={() => tryBuy("triangle")} 
+            tempImage="/assets/generators/triangle.png"
+            tempAnim="/assets/generators/triangle-anim.gif"/>
+
+            <Generator name="Square" basePrice="256" baseIncrease="8" 
+            onClick={() => tryBuy("square")}
+            tempImage="/assets/generators/square.png"
+            tempAnim="/assets/generators/square-anim.gif"/>
+
+            <Generator name="Pentagon" basePrice="3125" baseIncrease="15" 
+            onClick={() => tryBuy("pentagon")}
+            tempImage="/assets/generators/pentagon.png"
+            tempAnim="/assets/generators/pentagon-anim.gif"/>
+
+            <Generator name="Hexagon" basePrice="46656" baseIncrease="24"
+            tempImage="/assets/generators/hexagon.png"
+            tempAnim="/assets/generators/hexagon-anim.gif"/>
+
+            <Generator name="Septagon" basePrice="823543" baseIncrease="35"
+            tempImage="/assets/generators/septagon.png"
+            tempAnim="/assets/generators/septagon-anim.gif"/>
+
+            <Generator name="Octagon" basePrice="16777216" baseIncrease="248"
+            tempImage="/assets/generators/octagon.png"
+            tempAnim="/assets/generators/octagon-anim.gif"/>
 
             <Generator name="Pyramid" basePrice="15" baseIncrease="2"/>
             <Generator name="Cube" basePrice="15" baseIncrease="2"/>
