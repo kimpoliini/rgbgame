@@ -13,9 +13,14 @@ const Generator = ({name, onClick, tempImage, tempAnim, genId}) => {
         onMouseEnter={() => setImage(gen.imageAnim)} 
         onMouseLeave={() => setImage(gen.image)} >
             <div>
-                <h5>{generators[genId].name}</h5>
-                <p>{generators[genId].baseRps} R/s</p>
-                <p>{generators[genId].basePrice}</p>
+                <h5>{gen.name}</h5>
+                <p>{gen.baseRps} R/s</p>
+                <div className="generator-price">
+                    <span>{gen.basePrice[0]}</span>
+                    <span>{gen.basePrice[1]}</span>
+                    <span>{gen.basePrice[2]}</span>
+                </div>
+                {/* <p>{generators[genId].basePrice}</p> */}
             </div>
             <img className="generator-image" src={image} alt=""/>
         </div>

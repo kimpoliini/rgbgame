@@ -154,7 +154,7 @@ function Game(){
          <div className="left-menu-content menu-content hidden">
              <h4>Upgrades</h4>
             <Upgrade name="Paint bucket" 
-            description="Your clicks give +1 re" 
+            description="Your clicks give +1 red" 
             price="100"/>
 
          </div>
