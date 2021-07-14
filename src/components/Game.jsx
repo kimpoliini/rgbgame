@@ -4,6 +4,7 @@ import Upgrade from "./Upgrade"
 import "./game.css"
 import { useInterval } from "../js/interval.jsx"
 import { redToRgb } from "../js/colorCalc.jsx"
+import { generators } from  "../js/generators.js"
 // import Cookies from 'universal-cookie';
 
 function Game(){
@@ -109,36 +110,16 @@ function Game(){
     }
 
     //buying generators
-    function tryBuy(name){
-        switch(name){
-            case "triangle":
-                // console.log("triangle")
-                if(color.r >= 27){
-                    setRps(rps + 0.25)
-                    setColor({...color, r: color.r - 27})
-                    // console.log("bought")
-                }
-                break
-            case "square":
-                // console.log("square")
-                if(color.r >= 100){
-                    setRps(rps + 8)
-                    setColor({...color, r: color.r - 100})
-                    // console.log("bought")
-                }
-                break
-            case "pentagon":
-                // console.log("pentagon")
-                if(color.r >= 250){
-                    setRps(rps + 25)
-                    setColor({...color, r: color.r - 250})
-                    // console.log("bought")
-                }
-                break
-            default:
-                break
-        }
+    function tryBuy(id){
+        const gen = generators[id]
 
+        console.log("tryBuy " + gen.name)
+        
+        if(color.r >= gen.basePrice[0]){
+            setRps(rps + gen.baseRps)
+            setColor({...color, r: color.r - gen.basePrice[0]})
+        }
+                
     }
 
     function openLeft(open){
@@ -185,36 +166,16 @@ function Game(){
          <div className="right-menu-content menu-content hidden">
             <h4>Generators</h4>
 
-            <Generator name="Triangle" basePrice="27" baseIncrease="0.25" 
-            onClick={() => tryBuy("triangle")} 
-            tempImage="/assets/generators/triangle.png"
-            tempAnim="/assets/generators/triangle-anim.gif"/>
+            <Generator genId="0" onClick={() => tryBuy(0)} />
+            <Generator genId="1" onClick={() => tryBuy(1)}/>
+            <Generator genId="2" onClick={() => tryBuy(2)}/>
+            <Generator genId="3"/>
+            <Generator genId="4"/>
+            <Generator genId="5"/>
 
-            <Generator name="Square" basePrice="256" baseIncrease="8" 
-            onClick={() => tryBuy("square")}
-            tempImage="/assets/generators/square.png"
-            tempAnim="/assets/generators/square-anim.gif"/>
-
-            <Generator name="Pentagon" basePrice="3125" baseIncrease="15" 
-            onClick={() => tryBuy("pentagon")}
-            tempImage="/assets/generators/pentagon.png"
-            tempAnim="/assets/generators/pentagon-anim.gif"/>
-
-            <Generator name="Hexagon" basePrice="46656" baseIncrease="24"
-            tempImage="/assets/generators/hexagon.png"
-            tempAnim="/assets/generators/hexagon-anim.gif"/>
-
-            <Generator name="Septagon" basePrice="823543" baseIncrease="35"
-            tempImage="/assets/generators/septagon.png"
-            tempAnim="/assets/generators/septagon-anim.gif"/>
-
-            <Generator name="Octagon" basePrice="16777216" baseIncrease="248"
-            tempImage="/assets/generators/octagon.png"
-            tempAnim="/assets/generators/octagon-anim.gif"/>
-
-            <Generator name="Pyramid" basePrice="15" baseIncrease="2"/>
-            <Generator name="Cube" basePrice="15" baseIncrease="2"/>
-            <Generator name="Dodecahedron" basePrice="15" baseIncrease="2"/>
+            <Generator genId="6"/>
+            <Generator genId="7"/>
+            <Generator genId="8"/>
 
              </div>
         </div>
@@ -232,7 +193,7 @@ function Game(){
                 <span className="cur-b">
                     {color.b}
                 </span>
-                <p>rps: {rps}</p>
+                <p>rps: {rps.toFixed(1)}</p>
             </div>
             {leftMenu}
             {rightMenu}
