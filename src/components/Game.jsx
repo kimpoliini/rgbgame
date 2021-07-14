@@ -29,6 +29,11 @@ function Game(){
     const [rgbps, setRgbps] = useState([0,0,0])
     const [rgbpt, setRgbpt] = useState([0,0,0])
     
+    //load game
+    useEffect(() => {
+        setGameElement(document.querySelector('.square'))
+    }, [])
+
     //intervals
 
     //increments rgb each tick
@@ -58,10 +63,6 @@ function Game(){
         setRgbpt(redToRgb(rpt))
     }, [rpt])
 
-    //load game
-    useEffect(() => {
-        setGameElement(document.querySelector('.square'))
-    }, [])
     
     //updates the background color to color values after loading the game, probably not necessary
     useEffect(() => {
