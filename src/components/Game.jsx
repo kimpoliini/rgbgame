@@ -3,7 +3,7 @@ import Generator from "./Generator"
 import Upgrade from "./Upgrade"
 import "./game.css"
 import { useInterval } from "../js/interval.jsx"
-import { redToRgb } from "../js/colorCalc.jsx"
+import { redToRgb, rgbToRed, buy } from "../js/colorCalc.jsx"
 import { generators } from  "../js/generators.js"
 // import Cookies from 'universal-cookie';
 
@@ -113,13 +113,12 @@ function Game(){
     function tryBuy(id){
         const gen = generators[id]
 
-        console.log("tryBuy " + gen.name)
-        
-        if(color.r >= gen.basePrice[0]){
+        console.log("tryBuy " + gen.name)     
+        const remainder = buy([color.r, color.g, color.b],gen.basePrice)
+        if(remainder != null){
             setRps(rps + gen.baseRps)
-            setColor({...color, r: color.r - gen.basePrice[0]})
-        }
-                
+            setColor({r: remainder[0], g: remainder[1], b: remainder[2]})
+        }                
     }
 
     function openLeft(open){
@@ -169,13 +168,13 @@ function Game(){
             <Generator genId="0" onClick={() => tryBuy(0)} />
             <Generator genId="1" onClick={() => tryBuy(1)}/>
             <Generator genId="2" onClick={() => tryBuy(2)}/>
-            <Generator genId="3"/>
-            <Generator genId="4"/>
-            <Generator genId="5"/>
+            <Generator genId="3" onClick={() => tryBuy(3)}/>
+            <Generator genId="4" onClick={() => tryBuy(4)}/>
+            <Generator genId="5" onClick={() => tryBuy(5)}/>
 
-            <Generator genId="6"/>
-            <Generator genId="7"/>
-            <Generator genId="8"/>
+            <Generator genId="6" onClick={() => tryBuy(6)}/>
+            <Generator genId="7" onClick={() => tryBuy(7)}/>
+            <Generator genId="8" onClick={() => tryBuy(8)}/>
 
              </div>
         </div>

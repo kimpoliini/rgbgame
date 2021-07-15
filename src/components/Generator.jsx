@@ -20,7 +20,6 @@ const Generator = ({name, onClick, tempImage, tempAnim, genId}) => {
                     <span>{gen.basePrice[1]}</span>
                     <span>{gen.basePrice[2]}</span>
                 </div>
-                {/* <p>{generators[genId].basePrice}</p> */}
             </div>
             <img className="generator-image" src={image} alt=""/>
         </div>
