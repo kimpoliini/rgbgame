@@ -113,8 +113,11 @@ function Game(){
     function tryBuy(id){
         const gen = generators[id]
 
+        //to prevent the basePrice to change in generators.js
+        const price = Object.assign({}, gen.basePrice)
+
         console.log("tryBuy " + gen.name)     
-        const remainder = buy([color.r, color.g, color.b],gen.basePrice)
+        const remainder = buy([color.r, color.g, color.b], price)
         if(remainder != null){
             setRps(rps + gen.baseRps)
             setColor({r: remainder[0], g: remainder[1], b: remainder[2]})

@@ -1,4 +1,3 @@
-
 //turns a value of red into rgb
 export const redToRgb = (red) => {
     let r = parseFloat(red.toFixed(2))
@@ -20,7 +19,6 @@ export const redToRgb = (red) => {
 }
 
 export const rgbToRed = (rgb) => {
-
     while(rgb[2] > 0){
         rgb[2] -= 1
         rgb[1] += 256
