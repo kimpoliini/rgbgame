@@ -121,6 +121,7 @@ function Game(){
         if(remainder != null){
             setRps(rps + gen.baseRps)
             setColor({r: remainder[0], g: remainder[1], b: remainder[2]})
+            gen.count += 1
         }                
     }
 
