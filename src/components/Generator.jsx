@@ -8,11 +8,6 @@ const Generator = ({name, onClick, tempImage, tempAnim, genId}) => {
     const [gen, setGen] = useState(generators[genId])
     const [image, setImage] = useState(gen.image)
 
-    useEffect(() => {
-        console.log(`${gen.basePrice[0]}, ${gen.basePrice[1]}, ${gen.basePrice[2]}`)
-        console.log(generators[genId].basePrice)
-    },[image])
-
     return(
         <div className="side-menu-item" onClick={onClick} 
         onMouseEnter={() => setImage(gen.imageAnim)} 
