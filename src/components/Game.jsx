@@ -5,6 +5,7 @@ import "./game.css"
 import { useInterval } from "../js/interval.jsx"
 import { redToRgb, rgbToRed, buy } from "../js/colorCalc.jsx"
 import { generators } from  "../js/generators.js"
+import { upgrades } from "../js/upgrades.js"
 // import Cookies from 'universal-cookie';
 
 function Game(){
@@ -125,6 +126,18 @@ function Game(){
         }                
     }
 
+    function tryBuyUpgrade(id){
+        const upgrade = upgrades[id]
+        const price = Object.assign({}, upgrade.price)
+
+        console.log("tryBuyUpgrade " + upgrade.name)
+        const remainder = buy([color.r, color.g, color.b], price)
+        if(remainder != null){
+            //handle upgrade
+            setColor({r: remainder[0], g: remainder[1], b: remainder[2]})
+        }
+    }
+
     function openLeft(open){
         const lm = document.querySelector('.left-menu-content')
         const b = document.querySelector('.open-left')
@@ -156,9 +169,7 @@ function Game(){
      const leftMenu = <div className="left-menu side-menu">
          <div className="left-menu-content menu-content hidden">
              <h4>Upgrades</h4>
-            <Upgrade name="Paint bucket" 
-            description="Your clicks give +1 red" 
-            price="100"/>
+            <Upgrade upgradeId="0" onClick={() => tryBuyUpgrade(0)}/>
 
          </div>
          <button className="open-left menu-button" onClick={() => openLeft(isLeftOpen)}>{">"}</button>
