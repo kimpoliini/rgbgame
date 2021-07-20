@@ -40,7 +40,6 @@ function addValue(upgradeType, addAmount){
             break
         case "click":
             values.clickValue += addAmount
-            console.log(values.clickValue)
             break
         case "vertex":
             //n/a

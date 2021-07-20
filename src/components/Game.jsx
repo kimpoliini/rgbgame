@@ -177,7 +177,9 @@ function Game(){
      const leftMenu = <div className="left-menu side-menu">
          <div className="left-menu-content menu-content hidden">
              <h4>Upgrades</h4>
-            <Upgrade upgradeId="0" onClick={() => tryBuyUpgrade(0)}/>
+            {upgrades.map((upgrade, i) => { 
+                return <Upgrade key={i} upgradeId={i} onClick={() => tryBuyUpgrade(i)}/>
+            })}
          </div>
          <button className="open-left menu-button" onClick={() => openLeft(isLeftOpen)}>{">"}</button>
      </div>
@@ -216,6 +218,7 @@ function Game(){
                 <p>R/t: {rpt.toFixed(2)}</p>
                 <p>RGB/s: {rgbps[0]}, {rgbps[1]}, {rgbps[2]}</p>
                 <p>RGB/t: {rgbpt[0]}, {rgbpt[1]}, {rgbpt[2]}</p>
+                <p>R/click: {clickValueRed}</p>
             </div>
         </section>
     )
