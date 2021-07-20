@@ -14,7 +14,7 @@ export const redToRgb = (red) => {
         b += 1
     }
 
-    console.log(`${red} red -> ${r}, ${g}, ${b}`)
+    // console.log(`${red} red -> ${r}, ${g}, ${b}`)
     return [r, g, b]
 }
 
@@ -31,7 +31,7 @@ export const rgbToRed = (rgb) => {
 
     let red = rgb[0]
 
-    console.log(`${rgb} -> ${red} reds`)
+    // console.log(`${rgb[0]}, ${rgb[1]}, ${rgb[2]} -> ${red} reds`)
     return red
 }
 

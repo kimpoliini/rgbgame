@@ -1,4 +1,3 @@
-//Keep generator upgrades in a separate file?
 export const upgrades = [
     {
         name: "Paint bucket",
@@ -8,22 +7,6 @@ export const upgrades = [
         effect: 1,
         effectModifier: "add" /* add, sub, multiply */,
         type: "click"
-    },
-    {
-        name: "Sharper edges",
-        description: "Your Triangles are 100% more effective",
-        rank: 1,
-        price: [120,0,0],
-        effect: 2,
-        effectModifier: "multiply"
-    },
-    { 
-        name: "Square root",
-        description: "Your Squares are 100% more effective",
-        rank: 1,
-        price: [0,3,0],
-        effect: 2,
-        effectModifier: "multiply"
     },
     {
         name: "Vertex extractor",

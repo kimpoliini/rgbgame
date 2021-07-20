@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import Generator from "./Generator"
 import Upgrade from "./Upgrade"
 import "./game.css"
@@ -39,7 +39,7 @@ function Game(){
     }, [])
 
     //intervals
-
+    
     //increments rgb each tick
     useInterval(() => {
         if(rps > 0){
@@ -50,7 +50,7 @@ function Game(){
     //how often the bg changes
     useInterval(() => {
         gameElement.style.backgroundColor = `rgb(${color.r}, ${color.g}, ${color.b})`
-    }, 200)
+    }, 1000/2)
         
 
     //checks
@@ -125,7 +125,6 @@ function Game(){
         //to prevent the basePrice to change in generators.js
         const price = Object.assign({}, gen.basePrice)
 
-        console.log("tryBuy " + gen.name)     
         const remainder = buy([color.r, color.g, color.b], price)
         if(remainder != null){
             setRps(rps + gen.baseRps)
@@ -138,7 +137,6 @@ function Game(){
         const upgrade = upgrades[id]
         const price = Object.assign({}, upgrade.price)
 
-        console.log("tryBuyUpgrade " + upgrade.name)
         const remainder = buy([color.r, color.g, color.b], price)
         if(remainder != null){
             handleUpgrade(id)
@@ -180,7 +178,6 @@ function Game(){
          <div className="left-menu-content menu-content hidden">
              <h4>Upgrades</h4>
             <Upgrade upgradeId="0" onClick={() => tryBuyUpgrade(0)}/>
-
          </div>
          <button className="open-left menu-button" onClick={() => openLeft(isLeftOpen)}>{">"}</button>
      </div>
@@ -189,18 +186,11 @@ function Game(){
         <button className="open-right menu-button" onClick={() => openRight(isRightOpen)}>{"<"}</button>
          <div className="right-menu-content menu-content hidden">
             <h4>Generators</h4>
-
-            <Generator genId="0" onClick={() => tryBuy(0)} />
-            <Generator genId="1" onClick={() => tryBuy(1)}/>
-            <Generator genId="2" onClick={() => tryBuy(2)}/>
-            <Generator genId="3" onClick={() => tryBuy(3)}/>
-            <Generator genId="4" onClick={() => tryBuy(4)}/>
-            <Generator genId="5" onClick={() => tryBuy(5)}/>
-
-            <Generator genId="6" onClick={() => tryBuy(6)}/>
-            <Generator genId="7" onClick={() => tryBuy(7)}/>
-            <Generator genId="8" onClick={() => tryBuy(8)}/>
-
+            {/* loops through all generators and 
+            creates a Generator component for each */}
+            {generators.map((gen, i) => {
+            return <Generator key={i} genId={i} onClick={() => tryBuy(i)} />
+            })}
              </div>
         </div>
 
