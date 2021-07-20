@@ -7,6 +7,7 @@ export const values = {
     clickMultiplier: 1,
     
     //vertex
+    vertices: 0,
     vertexMultiplier: 0
 
 }

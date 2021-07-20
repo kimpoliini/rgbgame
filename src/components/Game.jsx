@@ -51,9 +51,29 @@ function Game(){
     useInterval(() => {
         gameElement.style.backgroundColor = `rgb(${color.r}, ${color.g}, ${color.b})`
     }, 1000/2)
-        
+    
+    //checks if you can afford each generator and applies a filter for those you cannot
+    useInterval(() => {
+        generators.forEach((gen, i) => {
+            if(rgbToRed(Object.assign({}, gen.price)) > rgbToRed([color.r, color.g, color.b])){
+                document.querySelector(`#generator-${i}`).classList.add("cannot-afford")
+            }else {
+                document.querySelector(`#generator-${i}`).classList.remove("cannot-afford")
+            }
+        })
+        upgrades.forEach((upgrade, i) => {
+            if(upgrade.bought){
+                return
+            }
+            if(rgbToRed(Object.assign({}, upgrade.price)) > rgbToRed([color.r, color.g, color.b])){
+                document.querySelector(`#upgrade-${i}`).classList.add("cannot-afford")
+            }else {
+                document.querySelector(`#upgrade-${i}`).classList.remove("cannot-afford")
+            }
+        })
+    }, 1000)
 
-    //checks
+    //convertions
 
     useEffect(() => {
         setClickValueRgb(redToRgb(clickValueRed))
@@ -123,14 +143,23 @@ function Game(){
         const gen = generators[id]
 
         //to prevent the basePrice to change in generators.js
-        const price = Object.assign({}, gen.basePrice)
+        const price = Object.assign({}, gen.price)
 
         const remainder = buy([color.r, color.g, color.b], price)
+
         if(remainder != null){
             setRps(rps + gen.baseRps)
             setColor({r: remainder[0], g: remainder[1], b: remainder[2]})
             gen.count += 1
-        }                
+
+            //increase price of the generator when buying
+            const priceIncreasePercentage = (112 + id)/100
+            gen.price = redToRgb(Math.floor(rgbToRed(price)*priceIncreasePercentage))
+
+            //add to total vertices
+            values.vertices += gen.vertices
+        }
+
     }
 
     function tryBuyUpgrade(id){
@@ -138,10 +167,12 @@ function Game(){
         const price = Object.assign({}, upgrade.price)
 
         const remainder = buy([color.r, color.g, color.b], price)
+
         if(remainder != null){
             handleUpgrade(id)
             onUpgrade() //applies multipliers when upgrading
             setColor({r: remainder[0], g: remainder[1], b: remainder[2]})
+            upgrade.bought = true
             document.querySelector(`#upgrade-${id}`).remove()
         }
     }
@@ -214,11 +245,17 @@ function Game(){
             {leftMenu}
             {rightMenu}
 
-            <div className="stats">
+            <div className="stats bottom-right">
                 <p>R/t: {rpt.toFixed(2)}</p>
                 <p>RGB/s: {rgbps[0]}, {rgbps[1]}, {rgbps[2]}</p>
                 <p>RGB/t: {rgbpt[0]}, {rgbpt[1]}, {rgbpt[2]}</p>
                 <p>R/click: {clickValueRed}</p>
+            </div>
+
+            <div className="stats bottom-left">
+                <p>Total Generators: </p>
+                <p>Vertices: {values.vertices}</p>
+                <p>Upgrades purchased: </p>
             </div>
         </section>
     )

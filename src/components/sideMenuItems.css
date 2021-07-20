@@ -80,3 +80,7 @@ p {
     background-color: slategray;
     border-radius: 8px;
 }
+
+.cannot-afford {
+    filter: saturate(0.25) brightness(0.5);
+}

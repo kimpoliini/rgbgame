@@ -9,16 +9,16 @@ const Generator = ({onClick, genId}) => {
     const [image, setImage] = useState(gen.image)
 
     return(
-        <div className="side-menu-item" onClick={onClick} 
+        <div id={`generator-${genId}`} className="side-menu-item cannot-afford" onClick={onClick} 
         onMouseEnter={() => setImage(gen.imageAnim)} 
         onMouseLeave={() => setImage(gen.image)} >
             <div>
                 <h5>{gen.name}</h5>
                 <p>+{gen.baseRps} R/s</p>
                 <div className="generator-price">
-                    <span>{gen.basePrice[0]}</span>
-                    <span>{gen.basePrice[1]}</span>
-                    <span>{gen.basePrice[2]}</span>
+                    <span>{gen.price[0]}</span>
+                    <span>{gen.price[1]}</span>
+                    <span>{gen.price[2]}</span>
                 </div>
             <span className="generator-count">{gen.count}</span>
             </div>
@@ -26,6 +26,5 @@ const Generator = ({onClick, genId}) => {
         </div>
     )
 }
-
 
 export default Generator

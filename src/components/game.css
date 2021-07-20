@@ -161,12 +161,20 @@ section {
 
 .stats {
     position: absolute;
-    right: 8px;
-    bottom: 8px;
     background-color: white;
     color: black;
     border-radius: 8px;
     padding: 4px;
+}
+
+.bottom-right {
+    bottom: 8px;
+    right: 8px;
+}
+
+.bottom-left {
+    bottom: 8px;
+    left: 8px;
 }
 
 @keyframes on-click-fade {

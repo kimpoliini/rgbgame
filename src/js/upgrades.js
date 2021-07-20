@@ -6,7 +6,8 @@ export const upgrades = [
         price: [100,0,0],
         effect: 1,
         effectModifier: "add" /* add, sub, multiply */,
-        type: "click"
+        type: "click",
+        bought: false
     },
     {
         name: "Vertex extractor",
@@ -15,6 +16,7 @@ export const upgrades = [
         price: [0,10,0],
         effect: 1.01,
         effectModifier: "multiply",
-        type: "vertex"
+        type: "vertex",
+        bought: false
     },
 ]
