@@ -20,7 +20,10 @@ const Generator = ({onClick, genId}) => {
                     <span>{gen.price[1]}</span>
                     <span>{gen.price[2]}</span>
                 </div>
-            <span className="generator-count">{gen.count}</span>
+                <div className="generator-count">
+                    <span>{gen.count}</span>
+                    <div className="generator-count-bar" style={{width: `${(gen.count % 10)*10}%`}}></div>
+                </div>
             </div>
             <img className="generator-image" src={image} alt=""/>
         </div>

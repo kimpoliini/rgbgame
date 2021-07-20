@@ -77,8 +77,23 @@ p {
     width: 6em;
     color: white;
     font-size: 12pt;
-    background-color: slategray;
+    background-color: rgba(255, 255, 255, 0.15);
     border-radius: 8px;
+    position: relative;
+    z-index: 1; 
+    font-weight: bold;
+    overflow: hidden;
+    text-shadow: rgba(0, 0, 0, 1) 0px 0px 5px;
+}
+
+.generator-count-bar {
+    background-color: rgba(255, 255, 255, 0.4);
+    left: 0px;
+    width: 0%;
+    height: 100%;
+    position: absolute;
+    top: 0px;
+    z-index: -1; 
 }
 
 .cannot-afford {

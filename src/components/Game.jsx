@@ -54,24 +54,8 @@ function Game(){
     
     //checks if you can afford each generator and applies a filter for those you cannot
     useInterval(() => {
-        generators.forEach((gen, i) => {
-            if(rgbToRed(Object.assign({}, gen.price)) > rgbToRed([color.r, color.g, color.b])){
-                document.querySelector(`#generator-${i}`).classList.add("cannot-afford")
-            }else {
-                document.querySelector(`#generator-${i}`).classList.remove("cannot-afford")
-            }
-        })
-        upgrades.forEach((upgrade, i) => {
-            if(upgrade.bought){
-                return
-            }
-            if(rgbToRed(Object.assign({}, upgrade.price)) > rgbToRed([color.r, color.g, color.b])){
-                document.querySelector(`#upgrade-${i}`).classList.add("cannot-afford")
-            }else {
-                document.querySelector(`#upgrade-${i}`).classList.remove("cannot-afford")
-            }
-        })
-    }, 1000)
+        checkCanAfford()
+    }, 1000/2) //lower if necessary
 
     //convertions
 
@@ -108,6 +92,26 @@ function Game(){
         }
         
     }, [color])
+
+    function checkCanAfford(){
+        generators.forEach((gen, i) => {
+            if(rgbToRed(Object.assign({}, gen.price)) > rgbToRed([color.r, color.g, color.b])){
+                document.querySelector(`#generator-${i}`).classList.add("cannot-afford")
+            }else {
+                document.querySelector(`#generator-${i}`).classList.remove("cannot-afford")
+            }
+        })
+        upgrades.forEach((upgrade, i) => {
+            if(upgrade.bought){
+                return
+            }
+            if(rgbToRed(Object.assign({}, upgrade.price)) > rgbToRed([color.r, color.g, color.b])){
+                document.querySelector(`#upgrade-${i}`).classList.add("cannot-afford")
+            }else {
+                document.querySelector(`#upgrade-${i}`).classList.remove("cannot-afford")
+            }
+        })
+    }
 
     function incrementRgb(rgb){
         setColor({r: color.r + rgb[0], g: color.g + rgb[1], b: color.b + rgb[2]})
