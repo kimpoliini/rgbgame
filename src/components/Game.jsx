@@ -6,6 +6,8 @@ import { useInterval } from "../js/interval.jsx"
 import { redToRgb, rgbToRed, buy } from "../js/colorCalc.jsx"
 import { generators } from  "../js/generators.js"
 import { upgrades } from "../js/upgrades.js"
+import { handleUpgrade } from "../js/upgradeHandler"
+import { values } from "../js/values"
 // import Cookies from 'universal-cookie';
 
 function Game(){
@@ -22,7 +24,7 @@ function Game(){
     const [color, setColor] = useState({r: 0, g: 0, b: 0})
     
     //click
-    const [clickValueRed, setClickValueRed] = useState(100)
+    const [clickValueRed, setClickValueRed] = useState(values.clickValue)
     const [clickValueRgb, setClickValueRgb] = useState([0,0,0])
 
     //rps
@@ -50,6 +52,9 @@ function Game(){
         gameElement.style.backgroundColor = `rgb(${color.r}, ${color.g}, ${color.b})`
     }, 200)
         
+
+    //checks
+
     useEffect(() => {
         setClickValueRgb(redToRgb(clickValueRed))
     }, [clickValueRed])
@@ -65,7 +70,6 @@ function Game(){
         setRgbpt(redToRgb(rpt))
     }, [rpt])
 
-    
     //updates the background color to color values after loading the game, probably not necessary
     useEffect(() => {
         if(gameElement != null){
@@ -89,6 +93,10 @@ function Game(){
         setColor({r: color.r + rgb[0], g: color.g + rgb[1], b: color.b + rgb[2]})
     }
     
+    function onUpgrade(){
+        setClickValueRed(values.clickValue * values.clickMultiplier)
+    }
+
     function onClick(e) {
         const text = document.createElement("span")
         
@@ -133,8 +141,10 @@ function Game(){
         console.log("tryBuyUpgrade " + upgrade.name)
         const remainder = buy([color.r, color.g, color.b], price)
         if(remainder != null){
-            //handle upgrade
+            handleUpgrade(id)
+            onUpgrade() //applies multipliers when upgrading
             setColor({r: remainder[0], g: remainder[1], b: remainder[2]})
+            document.querySelector(`#upgrade-${id}`).remove()
         }
     }
 

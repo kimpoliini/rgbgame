@@ -7,7 +7,7 @@ const Upgrade = ({onClick, upgradeId}) => {
     const [upgrade, setUpgrade] = useState(upgrades[upgradeId])
 
     return(
-        <div className="side-menu-item" onClick={onClick}>
+        <div id={`upgrade-${upgradeId}`} className="side-menu-item" onClick={onClick}>
             <div>
                 <h5>{upgrade.name}</h5>
                 <p>{upgrade.description}</p>
