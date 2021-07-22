@@ -11,14 +11,15 @@ import { values } from "../js/values"
 // import Cookies from 'universal-cookie';
 
 function Game(){
-
+    
     //menus
     const [isLeftOpen, setIsLeftOpen] = useState(false)
     const [isRightOpen, setIsRightOpen] = useState(false)
     
     //fps
     const [intervalValue, setIntervalValue] = useState(66.7)
-
+    const [currentInterval, setCurrentInterval] = useState(intervalValue)
+    
     //game
     const [gameElement, setGameElement] = useState()
     const [color, setColor] = useState({r: 0, g: 0, b: 0})
@@ -26,7 +27,7 @@ function Game(){
     //click
     const [clickValueRed, setClickValueRed] = useState(values.clickValue)
     const [clickValueRgb, setClickValueRgb] = useState([0,0,0])
-
+    
     //rps
     const [rps, setRps] = useState(0)
     const [rpt, setRpt] = useState(0)
@@ -37,15 +38,24 @@ function Game(){
     useEffect(() => {
         setGameElement(document.querySelector('.square'))
     }, [])
+    
+    //sets the fps to 0.5 when not in focus
+    document.addEventListener('visibilitychange', () => {
+        if(document.hidden){
+            setCurrentInterval(2000)
+        } else {
+            setCurrentInterval(intervalValue)
+        }
+    })
 
     //intervals
-    
+
     //increments rgb each tick
     useInterval(() => {
         if(rps > 0){
             incrementRgb(rgbpt)
           }  
-      }, intervalValue)
+      }, currentInterval)
 
     //how often the bg changes
     useInterval(() => {
@@ -65,9 +75,9 @@ function Game(){
     
     //sets rpt and rgbps every time rps changes
     useEffect(() => {        
-        setRpt(rps/(1000/intervalValue))
+        setRpt(rps/(1000/currentInterval))
         setRgbps(redToRgb(rps))
-    }, [rps])
+    }, [rps, intervalValue])
     
     //set rgbpt every time rpt changes
     useEffect(() => {
