@@ -6,12 +6,15 @@ import { useInterval } from "../js/interval.jsx"
 import { redToRgb, rgbToRed, buy } from "../js/colorCalc.jsx"
 import { generators } from  "../js/generators.js"
 import { upgrades } from "../js/upgrades.js"
-import { handleUpgrade } from "../js/upgradeHandler"
-import { values } from "../js/values"
-// import Cookies from 'universal-cookie';
+import { handleUpgrade } from "../js/upgradeHandler.jsx"
+import { values } from "../js/values.js"
+import { useCookies } from "react-cookie"
 
 function Game(){
     
+    //cookies
+    const [cookies, setCookie, removeCookie] = useCookies([])
+
     //menus
     const [isLeftOpen, setIsLeftOpen] = useState(false)
     const [isRightOpen, setIsRightOpen] = useState(false)
@@ -39,6 +42,20 @@ function Game(){
     //load game
     useEffect(() => {
         setGameElement(document.querySelector('.square'))
+        
+        //loads all values from values.js
+        for(const property in cookies.values){
+            values[property] = cookies.values[property]
+        }
+        
+        //loads all generators from generators.js
+        generators.forEach((gen, i) => {
+            for(const property in cookies.generators[i]){
+                gen[property] = cookies.generators[i][property]
+            }
+        })
+        
+        checkRgb()
     }, [])
     
     //Checks if the window is active or not
@@ -49,16 +66,25 @@ function Game(){
             setIsActive(true)
         }
     })
-
+    
     //intervals
+    
+    //save the game once every minute
+    useInterval(() => {
+        setCookie('values', values)
+        setCookie('generators', generators)
+        setCookie('upgrades', upgrades)
+
+        console.log("saved")
+    }, 60000)
     
     //increments rgb each tick
     useInterval(() => {
         if(rps > 0){
             incrementRgb(rgbpt)
-          }  
-      }, currentInterval)
-
+        }  
+    }, currentInterval)
+    
     //how often the bg changes
     useInterval(() => {
         gameElement.style.backgroundColor = `rgb(${color.r}, ${color.g}, ${color.b})`
@@ -68,9 +94,9 @@ function Game(){
     useInterval(() => {
         checkCanAfford()
     }, 1000/2) //lower if necessary
-
+    
     //convertions
-
+    
     useEffect(() => {
         setClickValueRgb(redToRgb(clickValueRed))
     }, [clickValueRed])
@@ -89,17 +115,17 @@ function Game(){
     useEffect(() => {
         setRgbpt(redToRgb(rpt))
     }, [rpt])
-
+    
     //updates the background color to color values after loading the game, probably not necessary
     useEffect(() => {
         if(gameElement != null){
             gameElement.style.backgroundColor = `rgb(${color.r}, ${color.g}, ${color.b})`
         }
     }, [gameElement])
-
+    
     function checkCanAfford(){
         const c = values.color
-
+        
         generators.forEach((gen, i) => {
             if(rgbToRed(Object.assign({}, gen.price)) > rgbToRed([c[0], c[1], c[2]])){
                 document.querySelector(`#generator-${i}`).classList.add("cannot-afford")
@@ -118,7 +144,7 @@ function Game(){
             }
         })
     }
-
+    
     function incrementRgb(rgb){
         const c = values.color
         values.color = [c[0] + rgb[0], c[1] + rgb[1], c[2] + rgb[2]]
@@ -134,19 +160,19 @@ function Game(){
         if(c[1] >= 256){
             values.color = [c[0], c[1] - 256, c[2] + 1]
         }
-
+        
         //update numbers
         c = values.color
         setColor({r: c[0], g: c[1], b: c[2]})
     }
     
-
+    
     function onUpgrade(){
         setClickValueRed(values.clickValue * values.clickMultiplier)
         checkRgb()
         checkCanAfford()
     }
-
+    
     function onClick(e) {
         const text = document.createElement("span")
         
@@ -241,8 +267,12 @@ function Game(){
      const leftMenu = <div className="left-menu side-menu">
          <div className="left-menu-content menu-content">
              <h4>Upgrades</h4>
+
+             {/* loops through all upgrades and 
+             creates an Upgrade component for each */}
+
             {upgrades.map((upgrade, i) => { 
-                return <Upgrade key={i} upgradeId={i} onClick={() => tryBuyUpgrade(i)}/>
+                    return <Upgrade key={i} upgradeId={i} onClick={() => tryBuyUpgrade(i)}/>
             })}
          </div>
          <button className="open-left menu-button" onClick={openLeft}>{">"}</button>
@@ -252,8 +282,10 @@ function Game(){
         <button className="open-right menu-button" onClick={openRight}>{"<"}</button>
          <div className="right-menu-content menu-content">
             <h4>Generators</h4>
+
             {/* loops through all generators and 
             creates a Generator component for each */}
+
             {generators.map((gen, i) => {
             return <Generator key={i} genId={i} onClick={() => tryBuy(i)} />
             })}
