@@ -1,5 +1,8 @@
 re: Red Equivalent, ex 123R, 20G, 3B = 123 + 5100 + 195075 = 200298re
 
+no
+
+they're just called red, or reds
 
 generator prices:
 
@@ -22,10 +25,14 @@ Square = 256*0.011 = 2.816, 90.9 seconds until profits
 
 prestige:
 
-255, 255, 255 = 1 shard thingy?
+255, 255, 255 = 1 pixel
 first time gives you a notification.
 
-each time you've gained at least one shard thingy you get the option to prestige,
-with said shards acting as currency between prestiges.
+each time you've gained at least one pixel you get the option to prestige,
+with said pixels acting as currency between prestiges.
 
-what happen at >255^3 rps?? sps???
+pixel minigame?
+
+what happen at >255^3 rps?? pps???
+
+game seems to run fine at 144fps, at least on a 5600x

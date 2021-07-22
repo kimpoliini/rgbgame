@@ -1,4 +1,7 @@
 export const values = {
+    //color values
+    color: [0,0,0],
+
     //rps
     rpsMultiplier: 1,
     

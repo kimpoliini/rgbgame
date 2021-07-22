@@ -17,7 +17,7 @@ function Game(){
     const [isRightOpen, setIsRightOpen] = useState(false)
     
     //fps
-    const [intervalValue, setIntervalValue] = useState(66.7)
+    const [intervalValue, setIntervalValue] = useState(33.3)
     const [currentInterval, setCurrentInterval] = useState(intervalValue)
     
     //game
@@ -25,7 +25,7 @@ function Game(){
     const [color, setColor] = useState({r: 0, g: 0, b: 0})
     
     //click
-    const [clickValueRed, setClickValueRed] = useState(values.clickValue)
+    const [clickValueRed, setClickValueRed] = useState(values.clickValue*1)
     const [clickValueRgb, setClickValueRgb] = useState([0,0,0])
     
     //rps
@@ -34,22 +34,24 @@ function Game(){
     const [rgbps, setRgbps] = useState([0,0,0])
     const [rgbpt, setRgbpt] = useState([0,0,0])
     
+    const [isActive, setIsActive] = useState(true)
+
     //load game
     useEffect(() => {
         setGameElement(document.querySelector('.square'))
     }, [])
     
-    //sets the fps to 0.5 when not in focus
+    //Checks if the window is active or not
     document.addEventListener('visibilitychange', () => {
         if(document.hidden){
-            setCurrentInterval(2000)
+            setIsActive(false)
         } else {
-            setCurrentInterval(intervalValue)
+            setIsActive(true)
         }
     })
 
     //intervals
-
+    
     //increments rgb each tick
     useInterval(() => {
         if(rps > 0){
@@ -75,9 +77,13 @@ function Game(){
     
     //sets rpt and rgbps every time rps changes
     useEffect(() => {        
-        setRpt(rps/(1000/currentInterval))
+        if(!document.hidden){
+            setRpt(rps/(1000/currentInterval))
+        } else {
+            setRpt(rps)
+        }
         setRgbps(redToRgb(rps))
-    }, [rps, intervalValue])
+    }, [rps, intervalValue, isActive])
     
     //set rgbpt every time rpt changes
     useEffect(() => {
@@ -91,21 +97,11 @@ function Game(){
         }
     }, [gameElement])
 
-    //calculate each time the color changes
-    useEffect(() => {
-        if(color.r >= 256){
-            setColor({...color, r: color.r - 256, g: color.g + 1})
-        }
-        
-        if(color.g >= 256){
-            setColor({...color, g: color.g - 256, b: color.b + 1})
-        }
-        
-    }, [color])
-
     function checkCanAfford(){
+        const c = values.color
+
         generators.forEach((gen, i) => {
-            if(rgbToRed(Object.assign({}, gen.price)) > rgbToRed([color.r, color.g, color.b])){
+            if(rgbToRed(Object.assign({}, gen.price)) > rgbToRed([c[0], c[1], c[2]])){
                 document.querySelector(`#generator-${i}`).classList.add("cannot-afford")
             }else {
                 document.querySelector(`#generator-${i}`).classList.remove("cannot-afford")
@@ -115,7 +111,7 @@ function Game(){
             if(upgrade.bought){
                 return
             }
-            if(rgbToRed(Object.assign({}, upgrade.price)) > rgbToRed([color.r, color.g, color.b])){
+            if(rgbToRed(Object.assign({}, upgrade.price)) > rgbToRed([c[0], c[1], c[2]])){
                 document.querySelector(`#upgrade-${i}`).classList.add("cannot-afford")
             }else {
                 document.querySelector(`#upgrade-${i}`).classList.remove("cannot-afford")
@@ -124,11 +120,31 @@ function Game(){
     }
 
     function incrementRgb(rgb){
-        setColor({r: color.r + rgb[0], g: color.g + rgb[1], b: color.b + rgb[2]})
+        const c = values.color
+        values.color = [c[0] + rgb[0], c[1] + rgb[1], c[2] + rgb[2]]
+        checkRgb()
     }
     
+    function checkRgb(){
+        let c = values.color
+        if(c[0] >= 256){
+            values.color = [c[0] - 256, c[1] + 1, c[2]]
+        }
+        
+        if(c[1] >= 256){
+            values.color = [c[0], c[1] - 256, c[2] + 1]
+        }
+
+        //update numbers
+        c = values.color
+        setColor({r: c[0], g: c[1], b: c[2]})
+    }
+    
+
     function onUpgrade(){
         setClickValueRed(values.clickValue * values.clickMultiplier)
+        checkRgb()
+        checkCanAfford()
     }
 
     function onClick(e) {
@@ -155,39 +171,42 @@ function Game(){
     //buying generators
     function tryBuy(id){
         const gen = generators[id]
-
-        //to prevent the basePrice to change in generators.js
         const price = Object.assign({}, gen.price)
+        const c = values.color
 
-        const remainder = buy([color.r, color.g, color.b], price)
+        const remainder = buy([c[0], c[1], c[2]], price)
 
         if(remainder != null){
             setRps(rps + gen.baseRps)
-            setColor({r: remainder[0], g: remainder[1], b: remainder[2]})
+            values.color = [remainder[0], remainder[1], remainder[2]]
             gen.count += 1
-
+            
             //increase price of the generator when buying
             const priceIncreasePercentage = (112 + id)/100
             gen.price = redToRgb(Math.floor(rgbToRed(price)*priceIncreasePercentage))
-
+            
             //add to total vertices
             values.vertices += gen.vertices
+
+            checkCanAfford()
         }
-
     }
-
+    
     function tryBuyUpgrade(id){
         const upgrade = upgrades[id]
         const price = Object.assign({}, upgrade.price)
-
-        const remainder = buy([color.r, color.g, color.b], price)
-
+        const c = values.color
+        
+        const remainder = buy([c[0], c[1], c[2]], price)
+        
         if(remainder != null){
             handleUpgrade(id)
-            onUpgrade() //applies multipliers when upgrading
-            setColor({r: remainder[0], g: remainder[1], b: remainder[2]})
+            values.color = [remainder[0], remainder[1], remainder[2]]
+            
             upgrade.bought = true
             document.querySelector(`#upgrade-${id}`).remove()
+
+            onUpgrade() //applies multipliers when upgrading
         }
     }
 
