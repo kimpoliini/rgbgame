@@ -181,27 +181,27 @@ function Game(){
         }
     }
 
-    function openLeft(open){
-        const lm = document.querySelector('.left-menu-content')
+    function openLeft(){
+        const lm = document.querySelector('.left-menu')
         const b = document.querySelector('.open-left')
 
-        lm.classList.toggle("hidden")
+        lm.classList.toggle("hidden-left")
 
-        if(open){
+        if(isLeftOpen){
             b.innerText = ">"
         } else {
             b.innerText = "<"
         }
         setIsLeftOpen(!isLeftOpen)
     }
-
-    function openRight(open){
-        const rm = document.querySelector('.right-menu-content')
+    
+    function openRight(){
+        const rm = document.querySelector('.right-menu')
         const b = document.querySelector('.open-right')
-
-        rm.classList.toggle("hidden")
-
-        if(open){
+        
+        rm.classList.toggle("hidden-right")
+        
+        if(isRightOpen){
             b.innerText = "<"
         } else {
             b.innerText = ">"
@@ -210,18 +210,18 @@ function Game(){
     }
 
      const leftMenu = <div className="left-menu side-menu">
-         <div className="left-menu-content menu-content hidden">
+         <div className="left-menu-content menu-content">
              <h4>Upgrades</h4>
             {upgrades.map((upgrade, i) => { 
                 return <Upgrade key={i} upgradeId={i} onClick={() => tryBuyUpgrade(i)}/>
             })}
          </div>
-         <button className="open-left menu-button" onClick={() => openLeft(isLeftOpen)}>{">"}</button>
+         <button className="open-left menu-button" onClick={openLeft}>{">"}</button>
      </div>
      
      const rightMenu = <div className="right-menu side-menu">
-        <button className="open-right menu-button" onClick={() => openRight(isRightOpen)}>{"<"}</button>
-         <div className="right-menu-content menu-content hidden">
+        <button className="open-right menu-button" onClick={openRight}>{"<"}</button>
+         <div className="right-menu-content menu-content">
             <h4>Generators</h4>
             {/* loops through all generators and 
             creates a Generator component for each */}

@@ -59,27 +59,29 @@ section {
     position: fixed;
     display: flex;
     pointer-events: none;
+    width: 12em;
+    transition: left, right, 0.25s ease-in-out;
+    z-index: 1;
 }
 
 .menu-content {
+    position: relative;
     padding: 8px;
     width: 10em;
     overflow-x: hidden;
-    display: block;
+    flex-direction: column;
     padding-top: 8px;
     background-color: #282c34;
     overflow-y: scroll;
     pointer-events: auto;
-    
-    transition: width, padding, 0.25s ease-in-out;
 }
 
-.hidden {
-    width: 0px;
-    overflow: hidden;
-    padding-left: 0px;
-    padding-right: 0px;
-    box-shadow: none;
+.side-menu.hidden-left {
+    left: 0em;
+}
+
+.side-menu.hidden-right {
+    right: 0em;
 }
 
 .menu-button {
@@ -120,10 +122,10 @@ section {
 /* left menus */
 
 .left-menu {
-    left: 0px;
+    left: calc(-10em + 10px);
 }
 
-.left-menu-content {
+.left-menu-content {    
     border-bottom-right-radius: 8px;
     border-top-right-radius: 8px;
     box-shadow: rgba(0, 0, 0, 0.25) 2px 2px 4px;
@@ -132,13 +134,13 @@ section {
 .open-left {
     border-top-right-radius: 8px;
     border-bottom-right-radius: 8px;
-    box-shadow: rgba(0, 0, 0, 0.25) 2px 2px 4px;
+    box-shadow: rgba(0, 0, 0, 0.25) 4px 2px 4px;
 }
 
 /* right menus */
 
 .right-menu {
-    right: 0px;
+    right: calc(-10em + 10px);
 }
 
 .right-menu-content {
@@ -150,7 +152,7 @@ section {
 .open-right {
     border-top-left-radius: 8px;
     border-bottom-left-radius: 8px;
-    box-shadow: rgba(0, 0, 0, 0.25) -2px 2px 4px;
+    box-shadow: rgba(0, 0, 0, 0.25) -4px 2px 4px;
 }
 
 .square span {
@@ -165,6 +167,7 @@ section {
     color: black;
     border-radius: 8px;
     padding: 4px;
+    z-index: 0;
 }
 
 .bottom-right {
