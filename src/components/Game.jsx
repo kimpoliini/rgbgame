@@ -43,19 +43,24 @@ function Game(){
     useEffect(() => {
         setGameElement(document.querySelector('.square'))
         
-        //loads all values from values.js
-        for(const property in cookies.values){
-            values[property] = cookies.values[property]
-        }
-        
-        //loads all generators from generators.js
-        generators.forEach((gen, i) => {
-            for(const property in cookies.generators[i]){
-                gen[property] = cookies.generators[i][property]
+        //Checks if there is any saved data before trying to load it
+        if(cookies.values){
+            //loads all values from values.js
+            for(const property in cookies.values){
+                values[property] = cookies.values[property]
             }
-        })
-        
-        checkRgb()
+            
+            //loads all generators from generators.js
+            generators.forEach((gen, i) => {
+                for(const property in cookies.generators[i]){
+                    gen[property] = cookies.generators[i][property]
+                }
+            })
+            
+            checkRgb()
+        } else {
+            console.log("welcome!")
+        }
     }, [])
     
     //Checks if the window is active or not
