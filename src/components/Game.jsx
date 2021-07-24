@@ -49,18 +49,22 @@ function Game(){
             for(const property in cookies.values){
                 values[property] = cookies.values[property]
             }
-            
+        } else {
+            console.log("welcome!")
+        }
+         
+        //Checks if there are any bought generators before trying to load them
+        if(cookies.generators){
             //loads all generators from generators.js
             generators.forEach((gen, i) => {
                 for(const property in cookies.generators[i]){
                     gen[property] = cookies.generators[i][property]
                 }
             })
-            
-            checkRgb()
-        } else {
-            console.log("welcome!")
         }
+            
+            calculateRps()
+            checkRgb()
     }, [])
     
     //Checks if the window is active or not
@@ -74,14 +78,34 @@ function Game(){
     
     //intervals
     
-    //save the game once every minute
+    //save the game once every half minute
     useInterval(() => {
         setCookie('values', values)
-        setCookie('generators', generators)
-        setCookie('upgrades', upgrades)
+        
+        //Loops through generators and saves how many are bought
+        //and how much they currently cost
+        let generatorData = []
+        generators.forEach((gen, i) => {
+            generatorData.push({})
+            for(const property in generators[i]){
+                if(property == "count" || property == "price"){
+                    generatorData[i][property] = generators[i][property]
+                }
+            }
+        })
+
+        //Loops through upgrades and saves how many are bought
+        let upgradeData = []
+        upgrades.forEach((upgrade, i) => {
+            upgradeData.push({})
+            upgradeData[i].bought = upgrade.bought
+        })
+
+        setCookie('generators', generatorData)
+        setCookie('upgrades', upgradeData)
 
         console.log("saved")
-    }, 60000)
+    }, 10000)
     
     //increments rgb each tick
     useInterval(() => {
@@ -171,6 +195,15 @@ function Game(){
         setColor({r: c[0], g: c[1], b: c[2]})
     }
     
+    function calculateRps(){
+
+        let rps = 0
+        generators.forEach((gen, i) => {
+                rps += (gen.count * gen.baseRps)
+        })
+
+        setRps(rps)
+    }
     
     function onUpgrade(){
         setClickValueRed(values.clickValue * values.clickMultiplier)
@@ -208,7 +241,7 @@ function Game(){
         const remainder = buy([c[0], c[1], c[2]], price)
 
         if(remainder != null){
-            setRps(rps + gen.baseRps)
+            // setRps(rps + gen.baseRps)
             values.color = [remainder[0], remainder[1], remainder[2]]
             gen.count += 1
             
@@ -218,7 +251,8 @@ function Game(){
             
             //add to total vertices
             values.vertices += gen.vertices
-
+            
+            calculateRps()
             checkCanAfford()
         }
     }
