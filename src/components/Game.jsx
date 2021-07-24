@@ -37,7 +37,13 @@ function Game(){
     const [rgbps, setRgbps] = useState([0,0,0])
     const [rgbpt, setRgbpt] = useState([0,0,0])
     
+    //game
     const [isActive, setIsActive] = useState(true)
+
+    //stats
+    const [stats, setStats] = useState({
+        generatorCount: 0, upgradeCount: 0
+    })
 
     //load game
     useEffect(() => {
@@ -63,8 +69,8 @@ function Game(){
             })
         }
             
-            calculateRps()
-            checkRgb()
+        calculateStats()
+        checkRgb()
     }, [])
     
     //Checks if the window is active or not
@@ -88,7 +94,7 @@ function Game(){
         generators.forEach((gen, i) => {
             generatorData.push({})
             for(const property in generators[i]){
-                if(property == "count" || property == "price"){
+                if(property === "count" || property === "price"){
                     generatorData[i][property] = generators[i][property]
                 }
             }
@@ -105,7 +111,7 @@ function Game(){
         setCookie('upgrades', upgradeData)
 
         console.log("saved")
-    }, 10000)
+    }, 30000)
     
     //increments rgb each tick
     useInterval(() => {
@@ -195,20 +201,34 @@ function Game(){
         setColor({r: c[0], g: c[1], b: c[2]})
     }
     
-    function calculateRps(){
-
+    function calculateStats(){
         let rps = 0
+        let vertices = 0
+        let genCount = 0
         generators.forEach((gen, i) => {
                 rps += (gen.count * gen.baseRps)
+                vertices += (gen.count * gen.vertices)
+                genCount += gen.count
+        })
+
+        let upgradeCount = 0
+        upgrades.forEach((upgrade, i) => {
+            if(upgrade.bought){
+                upgradeCount++
+            }
         })
 
         setRps(rps)
+        values.vertices = vertices
+        setStats({generatorCount: genCount, upgradeCount: upgradeCount })
+
     }
     
     function onUpgrade(){
         setClickValueRed(values.clickValue * values.clickMultiplier)
         checkRgb()
         checkCanAfford()
+        calculateStats()
     }
     
     function onClick(e) {
@@ -241,7 +261,6 @@ function Game(){
         const remainder = buy([c[0], c[1], c[2]], price)
 
         if(remainder != null){
-            // setRps(rps + gen.baseRps)
             values.color = [remainder[0], remainder[1], remainder[2]]
             gen.count += 1
             
@@ -249,10 +268,7 @@ function Game(){
             const priceIncreasePercentage = (112 + id)/100
             gen.price = redToRgb(Math.floor(rgbToRed(price)*priceIncreasePercentage))
             
-            //add to total vertices
-            values.vertices += gen.vertices
-            
-            calculateRps()
+            calculateStats()
             checkCanAfford()
         }
     }
@@ -269,6 +285,8 @@ function Game(){
             values.color = [remainder[0], remainder[1], remainder[2]]
             
             upgrade.bought = true
+
+            //bad
             document.querySelector(`#upgrade-${id}`).remove()
 
             onUpgrade() //applies multipliers when upgrading
@@ -357,9 +375,9 @@ function Game(){
             </div>
 
             <div className="stats bottom-left">
-                <p>Total Generators: </p>
+                <p>Total Generators: {stats.generatorCount}</p>
                 <p>Vertices: {values.vertices}</p>
-                <p>Upgrades purchased: </p>
+                <p>Upgrades purchased: {stats.upgradeCount}</p>
             </div>
         </section>
     )
