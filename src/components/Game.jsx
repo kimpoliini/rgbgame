@@ -68,7 +68,18 @@ function Game(){
                 }
             })
         }
-            
+
+        //Checks if there are any upgrades bought before trying to load them
+        if(cookies.upgrades){
+            upgrades.forEach((upgrade, i) => {
+                if(cookies.upgrades[i] != null){
+                    upgrade.bought = cookies.upgrades[i].bought
+                } else {
+                    upgrade.bought = false
+                }
+            })
+        }
+
         calculateStats()
         checkRgb()
     }, [])
@@ -86,7 +97,6 @@ function Game(){
     
     //save the game once every half minute
     useInterval(() => {
-        setCookie('values', values)
         
         //Loops through generators and saves how many are bought
         //and how much they currently cost
@@ -99,19 +109,20 @@ function Game(){
                 }
             }
         })
-
+        
         //Loops through upgrades and saves how many are bought
         let upgradeData = []
         upgrades.forEach((upgrade, i) => {
             upgradeData.push({})
             upgradeData[i].bought = upgrade.bought
         })
-
+        
+        setCookie('values', values)
         setCookie('generators', generatorData)
         setCookie('upgrades', upgradeData)
 
         console.log("saved")
-    }, 30000)
+    }, 10000)
     
     //increments rgb each tick
     useInterval(() => {
@@ -172,10 +183,15 @@ function Game(){
             if(upgrade.bought){
                 return
             }
-            if(rgbToRed(Object.assign({}, upgrade.price)) > rgbToRed([c[0], c[1], c[2]])){
-                document.querySelector(`#upgrade-${i}`).classList.add("cannot-afford")
-            }else {
-                document.querySelector(`#upgrade-${i}`).classList.remove("cannot-afford")
+
+            const upgradeElement = document.querySelector(`#upgrade-${i}`)
+
+            if(upgradeElement){   
+                if(rgbToRed(Object.assign({}, upgrade.price)) > rgbToRed([c[0], c[1], c[2]])){
+                    upgradeElement.classList.add("cannot-afford")
+                }else {
+                    upgradeElement.classList.remove("cannot-afford")
+                }
             }
         })
     }
@@ -285,11 +301,7 @@ function Game(){
             values.color = [remainder[0], remainder[1], remainder[2]]
             
             upgrade.bought = true
-
-            //bad
-            document.querySelector(`#upgrade-${id}`).remove()
-
-            onUpgrade() //applies multipliers when upgrading
+            onUpgrade()
         }
     }
 
@@ -329,7 +341,11 @@ function Game(){
              creates an Upgrade component for each */}
 
             {upgrades.map((upgrade, i) => { 
+                if(!upgrade.bought){
                     return <Upgrade key={i} upgradeId={i} onClick={() => tryBuyUpgrade(i)}/>
+                } else {
+                    return
+                }
             })}
          </div>
          <button className="open-left menu-button" onClick={openLeft}>{">"}</button>
