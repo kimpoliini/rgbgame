@@ -78,6 +78,7 @@ function Game(){
                     upgrade.bought = false
                 }
             })
+            onUpgrade()
         }
 
         calculateStats()
