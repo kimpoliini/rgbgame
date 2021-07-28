@@ -227,16 +227,17 @@ function Game(){
                 vertices += (gen.count * gen.vertices)
                 genCount += gen.count
         })
-
+        
         let upgradeCount = 0
         upgrades.forEach((upgrade, i) => {
             if(upgrade.bought){
                 upgradeCount++
             }
         })
-
-        setRps(rps)
+        
+        const vMult = 1 + (vertices * values.vertexMultiplier) 
         values.vertices = vertices
+        setRps(rps * vMult)
         setStats({generatorCount: genCount, upgradeCount: upgradeCount })
 
     }

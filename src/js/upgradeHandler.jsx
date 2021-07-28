@@ -16,7 +16,6 @@ export const handleUpgrade = (id) => {
     }
 }
 
-
 function multiplyValue(upgradeType, multiplier){
     switch(upgradeType){
         case "rps":
@@ -42,7 +41,7 @@ function addValue(upgradeType, addAmount){
             values.clickValue += addAmount
             break
         case "vertex":
-            //n/a
+            values.vertexMultiplier += addAmount
             break
     }
 }
