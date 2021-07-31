@@ -242,7 +242,7 @@ function Game(){
                 genCount += gen.count
         })
         values.vertices = vertices
-        
+
         let upgradeCount = 0
         upgrades.forEach((upgrade, i) => {
             if(upgrade.bought){
@@ -260,9 +260,14 @@ function Game(){
 
         let totalClickValue = (values.clickValue + (vertices * values.clickValuePerVertex)) * clickMult
 
+
         setClickValueRed(totalClickValue)
         setRps(rps * mult)
         setStats({generatorCount: genCount, upgradeCount: upgradeCount, totalMultiplier: mult})
+
+        generators.forEach((gen, i) => {
+            gen.rps = gen.baseRps * mult
+        })
     }
     
     function onUpgrade(){
@@ -422,7 +427,7 @@ function Game(){
             <div className="stats bottom-right">
                 <p>R/t: {rpt.toFixed(2)}</p>
                 <p>RGB/s: {rgbps[0].toFixed(2)}, {rgbps[1]}, {rgbps[2]}</p>
-                <p>RGB/t: {rgbpt[0]}, {rgbpt[1]}, {rgbpt[2]}</p>
+                <p>RGB/t: {rgbpt[0].toFixed(2)}, {rgbpt[1]}, {rgbpt[2]}</p>
                 <p>R/click: {clickValueRed}</p>
             </div>
 

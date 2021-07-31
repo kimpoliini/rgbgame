@@ -14,7 +14,7 @@ const Generator = ({onClick, genId}) => {
         onMouseLeave={() => setImage(gen.image)} >
             <div>
                 <h5>{gen.name}</h5>
-                <p>+{gen.baseRps} R/s</p>
+                <p>+{gen.rps ? gen.rps.toFixed(1) : gen.baseRps} R/s</p>
                 <div className="generator-price">
                     <span>{gen.price[0]}</span>
                     <span>{gen.price[1]}</span>
