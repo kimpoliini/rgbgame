@@ -105,7 +105,6 @@ function Game(){
     
     //save the game once every half minute
     useInterval(() => {
-        
         //Loops through generators and saves how many are bought
         //and how much they currently cost
         let generatorData = []
@@ -139,9 +138,17 @@ function Game(){
         }  
     }, currentInterval)
     
-    //how often the bg changes
+    //handle background color change
     useInterval(() => {
-        elements.main.style.backgroundColor = `rgb(${color.r}, ${color.g}, ${color.b})`
+        let bg = elements.main
+
+        if(rgbps[2] >= 1){
+            bg.style.backgroundColor = `rgb(255, 255, ${color.b})`
+        } else if(rgbps[1] >= 1){
+            bg.style.backgroundColor = `rgb(255, ${color.g}, ${color.b})`
+        } else {
+            bg.style.backgroundColor = `rgb(${color.r}, ${color.g}, ${color.b})`
+        }
     }, 1000/2)
     
     //checks if you can afford each generator and applies a filter for those you cannot
