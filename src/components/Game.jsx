@@ -266,22 +266,33 @@ function Game(){
     
     function onClick(e) {
         const text = document.createElement("span")
+        const clickEffect = document.createElement("div")
         const headerHeight = elements.header.offsetHeight
         
         text.innerText = clickValueRed
         text.style.position = "absolute"
         text.style.textAlign = "center"
+
+        clickEffect.style.position = "absolute"
         
         elements.main.appendChild(text)
+        elements.main.appendChild(clickEffect)
 
         //getting pointer location and accounts for header
-        const x = e.clientX - text.offsetWidth / 2
-        const y = e.clientY - headerHeight - text.offsetHeight * 1.25
+        const x = e.clientX
+        const y = e.clientY
         
-        text.style.left = `${x}px`
-        text.style.top = `${y}px`
+        const randomHeightOffset = Math.floor(Math.random() * 40)
+        const randomWidthOffset = Math.floor(Math.random() * 60)
 
-        setTimeout(() => { text.remove() }, 900);
+        text.style.left = `${x - (text.offsetWidth) + randomWidthOffset}px`
+        text.style.top = `${y - headerHeight - text.offsetHeight - randomHeightOffset}px`
+
+        clickEffect.style.left = `${x - clickEffect.offsetWidth / 2}px`
+        clickEffect.style.top = `${y - headerHeight - clickEffect.offsetHeight / 2}px`
+
+        setTimeout(() => { text.remove() }, 800);
+        setTimeout(() => { clickEffect.remove() }, 500);
 
         incrementRgb(clickValueRgb)
     }
