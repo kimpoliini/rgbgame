@@ -25,7 +25,9 @@ function Game(){
     const [currentInterval, setCurrentInterval] = useState(intervalValue)
     
     //game
-    const [gameElement, setGameElement] = useState()
+    const [elements, setElements] = useState({
+        main: null, header: null
+    })
     const [color, setColor] = useState({r: 0, g: 0, b: 0})
     
     //click
@@ -48,7 +50,8 @@ function Game(){
 
     //load game
     useEffect(() => {
-        setGameElement(document.querySelector('.square'))
+        setElements({main: document.querySelector('.square'), 
+        header: document.querySelector(".App-header")})
         
         //things i need to know because im too lazy to check manually
         console.log(generatorUpgrades.length + upgrades.length + " total upgrades")
@@ -138,7 +141,7 @@ function Game(){
     
     //how often the bg changes
     useInterval(() => {
-        gameElement.style.backgroundColor = `rgb(${color.r}, ${color.g}, ${color.b})`
+        elements.main.style.backgroundColor = `rgb(${color.r}, ${color.g}, ${color.b})`
     }, 1000/2)
     
     //checks if you can afford each generator and applies a filter for those you cannot
@@ -169,10 +172,10 @@ function Game(){
     
     //updates the background color to color values after loading the game, probably not necessary
     useEffect(() => {
-        if(gameElement != null){
-            gameElement.style.backgroundColor = `rgb(${color.r}, ${color.g}, ${color.b})`
+        if(elements.main != null){
+            elements.main.style.backgroundColor = `rgb(${color.r}, ${color.g}, ${color.b})`
         }
-    }, [gameElement])
+    }, [elements.main])
     
     function checkCanAfford(){
         const c = values.color
@@ -263,19 +266,20 @@ function Game(){
     
     function onClick(e) {
         const text = document.createElement("span")
+        const headerHeight = elements.header.offsetHeight
         
         text.innerText = clickValueRed
         text.style.position = "absolute"
         text.style.textAlign = "center"
+        
+        elements.main.appendChild(text)
 
         //getting pointer location and accounts for header
-        const x = e.clientX - 12
-        const y = e.clientY - 130
-
+        const x = e.clientX - text.offsetWidth / 2
+        const y = e.clientY - headerHeight - text.offsetHeight * 1.25
+        
         text.style.left = `${x}px`
         text.style.top = `${y}px`
-        
-        gameElement.appendChild(text)
 
         setTimeout(() => { text.remove() }, 900);
 
