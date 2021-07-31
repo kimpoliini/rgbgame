@@ -11,6 +11,8 @@ export const values = {
     
     //vertex
     vertices: 0,
-    vertexMultiplier: 0
+    vertexRpsMultiplier: 0,
+    vertexClickMultiplier: 0,
+    clickValuePerVertex: 0,
 
 }

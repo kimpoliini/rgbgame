@@ -6,6 +6,7 @@ import { useInterval } from "../js/interval.jsx"
 import { redToRgb, rgbToRed, buy } from "../js/colorCalc.jsx"
 import { generators } from  "../js/generators.js"
 import { upgrades } from "../js/upgrades.js"
+import { generatorUpgrades } from "../js/generatorUpgrades"
 import { handleUpgrade } from "../js/upgradeHandler.jsx"
 import { values } from "../js/values.js"
 import { useCookies } from "react-cookie"
@@ -42,13 +43,16 @@ function Game(){
 
     //stats
     const [stats, setStats] = useState({
-        generatorCount: 0, upgradeCount: 0
+        generatorCount: 0, upgradeCount: 0, totalMultiplier: 1
     })
 
     //load game
     useEffect(() => {
         setGameElement(document.querySelector('.square'))
         
+        //things i need to know because im too lazy to check manually
+        console.log(generatorUpgrades.length + upgrades.length + " total upgrades")
+
         //Checks if there is any saved data before trying to load it
         if(cookies.values){
             //loads all values from values.js
@@ -227,6 +231,7 @@ function Game(){
                 vertices += (gen.count * gen.vertices)
                 genCount += gen.count
         })
+        values.vertices = vertices
         
         let upgradeCount = 0
         upgrades.forEach((upgrade, i) => {
@@ -235,15 +240,22 @@ function Game(){
             }
         })
         
-        const vMult = 1 + (vertices * values.vertexMultiplier) 
-        values.vertices = vertices
-        setRps(rps * vMult)
-        setStats({generatorCount: genCount, upgradeCount: upgradeCount })
+        let mult = values.rpsMultiplier
+        let clickMult = values.clickMultiplier
 
+        if(vertices > 0){
+            mult *= 1 + (vertices * values.vertexRpsMultiplier)
+            clickMult *= 1 + (vertices * values.vertexClickMultiplier)
+        }
+
+        let totalClickValue = (values.clickValue + (vertices * values.clickValuePerVertex)) * clickMult
+
+        setClickValueRed(totalClickValue)
+        setRps(rps * mult)
+        setStats({generatorCount: genCount, upgradeCount: upgradeCount, totalMultiplier: mult})
     }
     
     function onUpgrade(){
-        setClickValueRed(values.clickValue * values.clickMultiplier)
         checkRgb()
         checkCanAfford()
         calculateStats()
@@ -299,9 +311,9 @@ function Game(){
         const remainder = buy([c[0], c[1], c[2]], price)
         
         if(remainder != null){
-            handleUpgrade(id)
             values.color = [remainder[0], remainder[1], remainder[2]]
-            
+            handleUpgrade(id, rps)
+
             upgrade.bought = true
             onUpgrade()
         }
@@ -387,12 +399,13 @@ function Game(){
 
             <div className="stats bottom-right">
                 <p>R/t: {rpt.toFixed(2)}</p>
-                <p>RGB/s: {rgbps[0]}, {rgbps[1]}, {rgbps[2]}</p>
+                <p>RGB/s: {rgbps[0].toFixed(2)}, {rgbps[1]}, {rgbps[2]}</p>
                 <p>RGB/t: {rgbpt[0]}, {rgbpt[1]}, {rgbpt[2]}</p>
                 <p>R/click: {clickValueRed}</p>
             </div>
 
             <div className="stats bottom-left">
+                <p>Total multiplier: {stats.totalMultiplier.toFixed(3)}x</p>
                 <p>Total Generators: {stats.generatorCount}</p>
                 <p>Vertices: {values.vertices}</p>
                 <p>Upgrades purchased: {stats.upgradeCount}</p>
