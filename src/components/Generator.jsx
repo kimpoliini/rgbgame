@@ -1,15 +1,41 @@
 import { useEffect, useState } from "react"
 import "./sideMenuItems.css"
-import { generators } from  "../js/generators.js"
+import { generators, levelThresholds } from  "../js/generators.js"
 
 
 const Generator = ({onClick, genId}) => {
 
     const [gen, setGen] = useState(generators[genId])
+    const [width, setWidth] = useState(0)
     const [image, setImage] = useState(gen.image)
 
+    useEffect(() => {
+        onBuy()
+    }, [])
+    
+    //Makes sure the progress bar to the next level has the correct width
+    function onBuy(){
+        for(const i in levelThresholds){
+            const t = levelThresholds[i].threshold
+            let prevT = 0
+
+            if(i > 0){
+                prevT = levelThresholds[i-1].threshold
+            }
+            
+            if(gen.count < t){
+                const witdthPercent = (((gen.count - prevT) / (t - prevT)) % t) * 100
+                setWidth(witdthPercent)
+                break
+            }
+        }
+    }
+
     return(
-        <div id={`generator-${genId}`} className="side-menu-item cannot-afford" onClick={onClick} 
+        <div id={`generator-${genId}`} className="side-menu-item cannot-afford" onClick={() => {
+            onClick()
+            onBuy()
+        }} 
         onMouseEnter={() => setImage(gen.imageAnim)} 
         onMouseLeave={() => setImage(gen.image)} >
             <div>
@@ -22,7 +48,7 @@ const Generator = ({onClick, genId}) => {
                 </div>
                 <div className="generator-count">
                     <span>{gen.count}</span>
-                    <div className="generator-count-bar" style={{width: `${(gen.count % 10)*10}%`}}></div>
+                    <div className="generator-count-bar" style={{width: `${width}%`}}></div>
                 </div>
             </div>
             <img className="generator-image" src={image} alt=""/>

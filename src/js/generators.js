@@ -93,3 +93,50 @@ export const generators = [
         imageAnim: ""
     },
 ]
+
+export const levelThresholds = [
+    {
+        threshold: 10,
+        bonus: 1.1
+    },
+    {
+        threshold: 25,
+        bonus: 1.2
+    },
+    {
+        threshold: 50,
+        bonus: 1.25
+    },
+    {
+        threshold: 75,
+        bonus: 1.1
+    },
+    {
+        threshold: 100,
+        bonus: 1.5
+    },
+    {
+        threshold: 150,
+        bonus: 1.2
+    },
+    {
+        threshold: 200,
+        bonus: 1.5
+    },
+    {
+        threshold: 250,
+        bonus: 1.2
+    },
+    {
+        threshold: 300,
+        bonus: 1.25
+    },
+    {
+        threshold: 400,
+        bonus: 1.25
+    },
+    {
+        threshold: 500,
+        bonus: 1.25
+    },
+]
