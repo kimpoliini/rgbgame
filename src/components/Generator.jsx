@@ -18,7 +18,7 @@ const Generator = ({onClick, genId}) => {
         for(const i in levelThresholds){
             const t = levelThresholds[i].threshold
             let prevT = 0
-
+            
             if(i > 0){
                 prevT = levelThresholds[i-1].threshold
             }

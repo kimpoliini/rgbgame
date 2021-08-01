@@ -25,9 +25,13 @@ function Game(){
     const [currentInterval, setCurrentInterval] = useState(intervalValue)
     
     //game
+    const [isActive, setIsActive] = useState(true)
+    const [generatorElements, setGeneratorElements] = useState([])
+    const [upgradeElements, setUpgradeElements] = useState([])
     const [elements, setElements] = useState({
         main: null, header: null
     })
+
     const [color, setColor] = useState({r: 0, g: 0, b: 0})
     
     //click
@@ -39,15 +43,12 @@ function Game(){
     const [rpt, setRpt] = useState(0)
     const [rgbps, setRgbps] = useState([0,0,0])
     const [rgbpt, setRgbpt] = useState([0,0,0])
-    
-    //game
-    const [isActive, setIsActive] = useState(true)
 
     //stats
     const [stats, setStats] = useState({
         generatorCount: 0, upgradeCount: 0, totalMultiplier: 1
     })
-
+    
     //load game
     useEffect(() => {
         setElements({main: document.querySelector('.square'), 
@@ -55,7 +56,7 @@ function Game(){
         
         //things i need to know because im too lazy to check manually
         console.log(generatorUpgrades.length + upgrades.length + " total upgrades")
-
+        
         //Checks if there is any saved data before trying to load it
         if(cookies.values){
             //loads all values from values.js
@@ -65,7 +66,7 @@ function Game(){
         } else {
             console.log("welcome!")
         }
-         
+        
         //Checks if there are any bought generators before trying to load them
         if(cookies.generators){
             //loads all generators from generators.js
@@ -75,7 +76,7 @@ function Game(){
                 }
             })
         }
-
+        
         //Checks if there are any upgrades bought before trying to load them
         if(cookies.upgrades){
             upgrades.forEach((upgrade, i) => {
@@ -85,18 +86,21 @@ function Game(){
                     upgrade.bought = false
                 }
             })
-            onUpgrade()
         }
 
-        calculateStats()
-        checkRgb()
+        let generatorElements = generators.map((gen, i) => {
+            return <Generator key={i} genId={i} onClick={() => tryBuy(i)} /> })
+
+        setGeneratorElements(generatorElements)
+        
+        onUpgrade()
     }, [])
-    
-    //Checks if the window is active or not
-    document.addEventListener('visibilitychange', () => {
-        if(document.hidden){
-            setIsActive(false)
-        } else {
+        
+        //Checks if the window is active or not
+        document.addEventListener('visibilitychange', () => {
+            if(document.hidden){
+                setIsActive(false)
+            } else {
             setIsActive(true)
         }
     })
@@ -271,8 +275,16 @@ function Game(){
     }
     
     function onUpgrade(){
+        let upgradeElements = upgrades.map((upgrade, i) => { 
+            if(!upgrade.bought){
+                return <Upgrade key={i} upgradeId={i} onClick={() => tryBuyUpgrade(i)}/>
+            } else {
+                return
+            }
+        })
+        setUpgradeElements(upgradeElements)
+
         checkRgb()
-        checkCanAfford()
         calculateStats()
     }
     
@@ -343,6 +355,7 @@ function Game(){
 
             upgrade.bought = true
             onUpgrade()
+            checkCanAfford()
         }
     }
 
@@ -380,14 +393,7 @@ function Game(){
 
              {/* loops through all upgrades and 
              creates an Upgrade component for each */}
-
-            {upgrades.map((upgrade, i) => { 
-                if(!upgrade.bought){
-                    return <Upgrade key={i} upgradeId={i} onClick={() => tryBuyUpgrade(i)}/>
-                } else {
-                    return
-                }
-            })}
+             {upgradeElements}
          </div>
          <button className="open-left menu-button" onClick={openLeft}>{">"}</button>
      </div>
@@ -399,10 +405,7 @@ function Game(){
 
             {/* loops through all generators and 
             creates a Generator component for each */}
-
-            {generators.map((gen, i) => {
-            return <Generator key={i} genId={i} onClick={() => tryBuy(i)} />
-            })}
+            {generatorElements}
              </div>
         </div>
 
