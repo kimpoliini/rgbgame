@@ -4,7 +4,7 @@ import Upgrade from "./Upgrade"
 import "./game.css"
 import { useInterval } from "../js/interval.jsx"
 import { redToRgb, rgbToRed, buy } from "../js/colorCalc.jsx"
-import { generators } from  "../js/generators.js"
+import { generators, levelThresholds } from  "../js/generators.js"
 import { upgrades } from "../js/upgrades.js"
 import { generatorUpgrades } from "../js/generatorUpgrades"
 import { handleUpgrade } from "../js/upgradeHandler.jsx"
@@ -115,7 +115,7 @@ function Game(){
         generators.forEach((gen, i) => {
             generatorData.push({})
             for(const property in generators[i]){
-                if(property === "count" || property === "price"){
+                if(property === "count" || property === "price" || property === "multiplier"){
                     generatorData[i][property] = generators[i][property]
                 }
             }
@@ -241,9 +241,16 @@ function Game(){
         let vertices = 0
         let genCount = 0
         generators.forEach((gen, i) => {
-                rps += (gen.count * gen.baseRps)
-                vertices += (gen.count * gen.vertices)
-                genCount += gen.count
+            let genRps = gen.count * gen.baseRps
+
+            //Checks if the current generator has a multiplier
+            if(gen.multiplier){
+                genRps *= gen.multiplier
+            }
+
+            rps += genRps
+            vertices += (gen.count * gen.vertices)
+            genCount += gen.count
         })
         values.vertices = vertices
 
@@ -269,8 +276,12 @@ function Game(){
         setRps(rps * mult)
         setStats({generatorCount: genCount, upgradeCount: upgradeCount, totalMultiplier: mult})
 
+        //Calculate each individual generator's rps
         generators.forEach((gen, i) => {
             gen.rps = gen.baseRps * mult
+            if(gen.multiplier){
+                gen.rps *= gen.multiplier
+            }
         })
     }
     
@@ -333,6 +344,21 @@ function Game(){
             values.color = [remainder[0], remainder[1], remainder[2]]
             gen.count += 1
             
+            let multiplier = 1
+            
+            for(const i in levelThresholds){
+                const t = levelThresholds[i].threshold
+                const bonus = levelThresholds[i].bonus
+
+                if(gen.count >= t){
+                    multiplier *= bonus
+                } else {
+                    break
+                } 
+            }
+
+            gen.multiplier = multiplier
+
             //increase price of the generator when buying
             const priceIncreasePercentage = (112 + id)/100
             gen.price = redToRgb(Math.floor(rgbToRed(price)*priceIncreasePercentage))

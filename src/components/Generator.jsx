@@ -7,6 +7,7 @@ const Generator = ({onClick, genId}) => {
 
     const [gen, setGen] = useState(generators[genId])
     const [width, setWidth] = useState(0)
+    const [level, setLevel] = useState(0)
     const [image, setImage] = useState(gen.image)
 
     useEffect(() => {
@@ -24,8 +25,9 @@ const Generator = ({onClick, genId}) => {
             }
             
             if(gen.count < t){
-                const witdthPercent = (((gen.count - prevT) / (t - prevT)) % t) * 100
-                setWidth(witdthPercent)
+                const widthPercent = (((gen.count - prevT) / (t - prevT)) % t) * 100
+                setWidth(widthPercent)
+                setLevel(i)
                 break
             }
         }
@@ -49,6 +51,9 @@ const Generator = ({onClick, genId}) => {
                 <div className="generator-count">
                     <span>{gen.count}</span>
                     <div className="generator-count-bar" style={{width: `${width}%`}}></div>
+                    <span className="next-level-bonus">
+                        +{((levelThresholds[level].bonus-1)*100).toFixed(0)}%
+                    </span>
                 </div>
             </div>
             <img className="generator-image" src={image} alt=""/>
