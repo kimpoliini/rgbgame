@@ -5,29 +5,36 @@
 .App-header {
   background-color: #282c34;
   /* min-height: 100vh; */
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: 1;
+  grid-template-columns: 1fr 1fr 1fr;
+  /* flex-direction: row; */
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  /* justify-content: center; */
+  font-size: calc(8px + 2vmin);
   color: white;
+  position: relative;
+  z-index: 1;
 }
 
 .App-link {
   color: #61dafb;
 }
 
+.App-header h3 {
+  margin: 8px;
+}
+
 .reset {
   font-size: 11pt;
-  margin: 0px;
+  /* margin: 0px; */
   padding: 16px;
-  right: 0px;
+  /* right: 0px; */
   background-color: transparent;
   color: white;
-  position: absolute;
   border: none;
   cursor: pointer;
-
+  margin-left: auto;
   transition: background-color 0.2s;
 }
 

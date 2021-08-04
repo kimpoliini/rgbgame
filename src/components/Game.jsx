@@ -314,14 +314,21 @@ function Game(){
         elements.main.appendChild(clickEffect)
 
         //getting pointer location and accounts for header
-        const x = e.clientX
-        const y = e.clientY
+        let x = e.clientX
+        let y = e.clientY
         
-        const randomHeightOffset = Math.floor(Math.random() * 40)
+        //makes sure the text doesn't appear underneath the header
         const randomWidthOffset = Math.floor(Math.random() * 60)
+        const randomHeightOffset = Math.floor(Math.random() * 40)
+        let textX = x - text.offsetWidth + randomWidthOffset
+        let textY = y - headerHeight - text.offsetHeight - randomHeightOffset
 
-        text.style.left = `${x - (text.offsetWidth) + randomWidthOffset}px`
-        text.style.top = `${y - headerHeight - text.offsetHeight - randomHeightOffset}px`
+        if(textY <= 0){
+            textY = 8
+        }
+
+        text.style.left = `${textX}px`
+        text.style.top = `${textY}px`
 
         clickEffect.style.left = `${x - clickEffect.offsetWidth / 2}px`
         clickEffect.style.top = `${y - headerHeight - clickEffect.offsetHeight / 2}px`

@@ -17,6 +17,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
+        <h3></h3>
         <h3>rgb</h3>
         <button className="reset" onClick={reset}><h3>reset</h3></button>
       </header>
