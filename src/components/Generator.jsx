@@ -38,7 +38,13 @@ const Generator = ({onClick, genId}) => {
             onClick()
             onBuy()
         }} 
-        onMouseEnter={() => setImage(gen.imageAnim)} 
+        //prevent images from animating when hovering over things you can't afford
+        onMouseEnter={() => { 
+            if(!document.querySelector(`#generator-${genId}`).classList.contains("cannot-afford")){
+                setImage(gen.imageAnim)
+            }
+        }
+        } 
         onMouseLeave={() => setImage(gen.image)} >
             <div>
                 <h5>{gen.name}</h5>

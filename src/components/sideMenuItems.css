@@ -21,7 +21,7 @@ p {
     transition: background-color, transform, box-shadow, 0.25s;
 }
 
-.side-menu-item:hover {
+.side-menu-item:not(.cannot-afford):hover {
     cursor: pointer;
     background-color: #4b5261;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 8px 1px 2px;
@@ -29,6 +29,7 @@ p {
     
     transition: background-color, transform, box-shadow, 0.25s;
 }
+
 
 .generator-image {
     /* improve unless it works */
