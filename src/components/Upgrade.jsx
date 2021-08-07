@@ -17,6 +17,7 @@ const Upgrade = ({onClick, upgradeId}) => {
                     <span>{upgrade.price[2]}</span>
                 </div>
             </div>
+            <div className="prevent-flicker"></div>
         </div>
     )
 }

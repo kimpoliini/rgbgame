@@ -40,9 +40,10 @@ const Generator = ({onClick, genId}) => {
         }} 
         //prevent images from animating when hovering over things you can't afford
         onMouseEnter={() => { 
-            if(!document.querySelector(`#generator-${genId}`).classList.contains("cannot-afford")){
+            const el = document.querySelector(`#generator-${genId}`)
+            if(!el.classList.contains("cannot-afford")){
                 setImage(gen.imageAnim)
-            }
+            }            
         }
         } 
         onMouseLeave={() => setImage(gen.image)} >
@@ -63,6 +64,7 @@ const Generator = ({onClick, genId}) => {
                 </div>
             </div>
             <img className="generator-image" src={image} alt=""/>
+            <div className="prevent-flicker"></div>
         </div>
     )
 }
