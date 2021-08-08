@@ -5,39 +5,40 @@
 .App-header {
   background-color: #282c34;
   /* min-height: 100vh; */
-  display: grid;
-  grid-template-rows: 1;
-  grid-template-columns: 1fr 1fr 1fr;
-  /* flex-direction: row; */
+  display: flex;
+  flex-direction: row;
   align-items: center;
   /* justify-content: center; */
   font-size: calc(8px + 2vmin);
   color: white;
   position: relative;
-  z-index: 1;
+  z-index: 10;
 }
 
 .App-link {
   color: #61dafb;
 }
 
+.App-header .title {
+  margin-left: 16px;
+  margin-right: auto;
+}
+
 .App-header h3 {
   margin: 8px;
 }
 
-.reset {
-  font-size: 11pt;
-  /* margin: 0px; */
+.header-button {
   padding: 16px;
-  /* right: 0px; */
-  background-color: transparent;
+  font-size: 11pt;
+    background-color: transparent;
   color: white;
   border: none;
   cursor: pointer;
-  margin-left: auto;
+  /* margin-left: auto; */
   transition: background-color 0.2s;
 }
 
-.reset:hover {
+.header-button:hover {
   background-color: #4b5261;
 }
