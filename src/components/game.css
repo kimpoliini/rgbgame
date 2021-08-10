@@ -155,6 +155,11 @@ section {
     box-shadow: rgba(0, 0, 0, 0.25) -4px 2px 4px;
 }
 
+.open-right span {
+    display: inline-block;
+    transform: rotate(180deg);
+}
+
 .square span {
     /* TODO: add contrast */
     /* text-shadow: black 1px 1px 5px; */

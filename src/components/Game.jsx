@@ -17,8 +17,7 @@ function Game(){
     const [cookies, setCookie, removeCookie] = useCookies([])
 
     //menus
-    const [isLeftOpen, setIsLeftOpen] = useState(false)
-    const [isRightOpen, setIsRightOpen] = useState(false)
+    const [isMenuOpen, setIsMenuOpen] = useState({left: false, right: false})
     
     //fps
     const [intervalValue, setIntervalValue] = useState(33.3)
@@ -391,53 +390,30 @@ function Game(){
             checkCanAfford()
         }
     }
-
-    function openLeft(){
-        const lm = document.querySelector('.left-menu')
-        const b = document.querySelector('.open-left')
-
-        lm.classList.toggle("hidden-left")
-
-        if(isLeftOpen){
-            b.innerText = ">"
-        } else {
-            b.innerText = "<"
-        }
-        setIsLeftOpen(!isLeftOpen)
-    }
     
-    function openRight(){
-        const rm = document.querySelector('.right-menu')
-        const b = document.querySelector('.open-right')
-        
-        rm.classList.toggle("hidden-right")
-        
-        if(isRightOpen){
-            b.innerText = "<"
-        } else {
-            b.innerText = ">"
-        }
-        setIsRightOpen(!isRightOpen)
+    function openMenu(dir){
+        const menu = document.querySelector(`.${dir}-menu`)
+        const button = document.querySelector(`.open-${dir}`)
+
+        menu.classList.toggle(`hidden-${dir}`)
+
+        isMenuOpen[dir] ? button.firstChild.innerText = ">" : button.firstChild.innerText = "<"
+
+        setIsMenuOpen({...isMenuOpen, [dir]: !isMenuOpen[dir]})
     }
 
      const leftMenu = <div className="left-menu side-menu">
          <div className="left-menu-content menu-content">
              <h4>Upgrades</h4>
-
-             {/* loops through all upgrades and 
-             creates an Upgrade component for each */}
              {upgradeElements}
          </div>
-         <button className="open-left menu-button" onClick={openLeft}>{">"}</button>
+         <button className="open-left menu-button" onClick={() => openMenu("left")}><span>{">"}</span></button>
      </div>
      
      const rightMenu = <div className="right-menu side-menu">
-        <button className="open-right menu-button" onClick={openRight}>{"<"}</button>
+        <button className="open-right menu-button" onClick={() => openMenu("right")}><span>{">"}</span></button>
          <div className="right-menu-content menu-content">
             <h4>Generators</h4>
-
-            {/* loops through all generators and 
-            creates a Generator component for each */}
             {generatorElements}
              </div>
         </div>
