@@ -17,11 +17,13 @@ section {
 }
 
 .color-values {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
     width: 6em;
     margin-top: 8px;
     position: absolute;
     background-color: white;
-    padding: 8px;
+    padding: 12px;
     border-radius: 8px;
     color: black;
     box-shadow: rgba(0, 0, 0, 0.25) 2px 2px 2px;
@@ -29,20 +31,18 @@ section {
 
 .cur-r {
     color: red;
-    margin: 4px;
 }
 
 .cur-g {
     color: green;
-    margin: 4px;
 }
 
 .cur-b {
     color: blue;
-    margin: 4px;
 }
 
 .color-values p {
+    grid-column: 1 / 4;
     text-align: center;
 }
 
