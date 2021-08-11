@@ -12,6 +12,7 @@
 }
 
 .options-content {
+    overflow-y: scroll;
     margin: 20px;
     border-radius: 8px;
     height: 80%;
@@ -47,4 +48,54 @@
         opacity: 0;
         transform: translateY(-10%);
     }
+}
+
+.option {
+    cursor: pointer;
+    border-radius: 8px;
+    user-select: none;
+    margin-left: 12px;
+    display: flex;
+    padding: 6px;
+    text-align: left;
+    transition: background-color 0.25s;
+}
+
+.option:hover {
+    background-color: #4b5261;
+}
+
+.option > :nth-child(1) {
+    margin-right: auto;
+}
+
+.switch-icon {
+    border-radius: 100px;
+    width: 40px;
+    background-color: slategray;
+    z-index: 2;
+    overflow: hidden;
+    max-height: 1.25em;
+    transition: background-color 0.25s;
+}
+
+.switch-icon div {
+    position: relative;
+    background-color: white;
+    height: 100%;
+    width: 60%;
+    z-index: 1;
+    border-radius: 100px;
+    transition: transform 0.25s;
+}
+
+.disabled {
+    background-color: red;
+}
+
+.enabled {
+    background-color: green;
+}
+.enabled > div {
+    transform: translateX(67%);
 }
