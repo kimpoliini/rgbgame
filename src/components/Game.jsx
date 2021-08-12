@@ -288,11 +288,12 @@ function Game(){
         }
 
         let totalClickValue = (values.clickValue + (vertices * values.clickValuePerVertex)) * clickMult
-
+        let totalRps = rps * mult
 
         setClickValueRed(totalClickValue)
-        setRps(rps * mult)
+        setRps(totalRps)
         setStats({generatorCount: genCount, upgradeCount: upgradeCount, totalMultiplier: mult})
+        values.rps = totalRps
 
         //Calculate each individual generator's rps
         generators.forEach((gen, i) => {
@@ -312,7 +313,7 @@ function Game(){
             }
         })
         setUpgradeElements(upgradeElements)
-
+        
         checkRgb()
         calculateStats()
     }
@@ -415,13 +416,12 @@ function Game(){
         const upgrade = upgrades[id]
         const price = Object.assign({}, upgrade.price)
         const c = values.color
-        
         const remainder = buy([c[0], c[1], c[2]], price)
-        
+
         if(remainder != null){
             values.color = [remainder[0], remainder[1], remainder[2]]
-            handleUpgrade(id, rps)
-
+            handleUpgrade(id, values.rps)
+            
             upgrade.bought = true
             onUpgrade()
             checkCanAfford()
