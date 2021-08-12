@@ -43,7 +43,7 @@ const Generator = ({onClick, genId}) => {
         onMouseEnter={() => { 
             if(options[0].value){
                 const el = document.querySelector(`#generator-${genId}`)
-                if(!el.classList.contains("cannot-afford" && options[0].value)){
+                if(!el.classList.contains("cannot-afford")){
                     setImage(gen.imageAnim)
                 }            
             }
