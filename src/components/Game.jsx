@@ -10,6 +10,7 @@ import { generatorUpgrades } from "../js/generatorUpgrades"
 import { handleUpgrade } from "../js/upgradeHandler.jsx"
 import { values } from "../js/values.js"
 import { useCookies } from "react-cookie"
+import { options } from "../js/options"
 
 function Game(){
     
@@ -20,8 +21,7 @@ function Game(){
     const [isMenuOpen, setIsMenuOpen] = useState({left: false, right: false})
     
     //fps
-    const [intervalValue, setIntervalValue] = useState(33.3)
-    const [currentInterval, setCurrentInterval] = useState(intervalValue)
+    const [framerate, setFramerate] = useState(30)
     
     //game
     const [isActive, setIsActive] = useState(true)
@@ -87,6 +87,15 @@ function Game(){
             })
         }
 
+        //Checks if there are option values stored in cookies
+        if(cookies.options){
+            options.forEach((opt,i) => {
+                if(cookies.options[i] != null){
+                    opt.value = cookies.options[i].value
+                }
+            })
+        }
+
         let generatorElements = generators.map((gen, i) => {
             return <Generator key={i} genId={i} onClick={() => tryBuy(i)} /> })
 
@@ -126,10 +135,17 @@ function Game(){
             upgradeData.push({})
             upgradeData[i].bought = upgrade.bought
         })
+
+        let optionsData = []
+        options.forEach((opt,i) => {
+            optionsData.push({})
+            optionsData[i].value = opt.value
+        })
         
         setCookie('values', values)
         setCookie('generators', generatorData)
         setCookie('upgrades', upgradeData)
+        setCookie('options', optionsData)
 
         console.log("saved")
     }, 10000)
@@ -138,8 +154,11 @@ function Game(){
     useInterval(() => {
         if(rps > 0){
             incrementRgb(rgbpt)
-        }  
-    }, currentInterval)
+        }
+        if(framerate != options[5].value){
+            setFramerate(options[5].value)
+        }
+    }, 1000 / framerate)
     
     //handle background color change
     useInterval(() => {
@@ -152,7 +171,7 @@ function Game(){
         } else {
             bg.style.backgroundColor = `rgb(${color.r}, ${color.g}, ${color.b})`
         }
-    }, 1000/2)
+    }, 1000 / options[6].value)
     
     //checks if you can afford each generator and applies a filter for those you cannot
     useInterval(() => {
@@ -168,12 +187,12 @@ function Game(){
     //sets rpt and rgbps every time rps changes
     useEffect(() => {        
         if(!document.hidden){
-            setRpt(rps/(1000/currentInterval))
+            setRpt(rps/(1000/(1000/framerate)))
         } else {
             setRpt(rps)
         }
         setRgbps(redToRgb(rps))
-    }, [rps, intervalValue, isActive])
+    }, [rps, framerate, isActive])
     
     //set rgbpt every time rpt changes
     useEffect(() => {
@@ -299,41 +318,59 @@ function Game(){
     }
     
     function onClick(e) {
-        const text = document.createElement("span")
-        const clickEffect = document.createElement("div")
-        const headerHeight = elements.header.offsetHeight
-        
-        text.innerText = clickValueRed
-        text.style.position = "absolute"
-        text.style.textAlign = "center"
-
-        clickEffect.style.position = "absolute"
-        
-        elements.main.appendChild(text)
-        elements.main.appendChild(clickEffect)
-
-        //getting pointer location and accounts for header
-        let x = e.clientX
-        let y = e.clientY
-        
-        //makes sure the text doesn't appear underneath the header
-        const randomWidthOffset = Math.floor(Math.random() * 60)
-        const randomHeightOffset = Math.floor(Math.random() * 40)
-        let textX = x - text.offsetWidth + randomWidthOffset
-        let textY = y - headerHeight - text.offsetHeight - randomHeightOffset
-
-        if(textY <= 0){
-            textY = 8
+        let headerHeight, x, y, randomWidthOffset = 0, randomHeightOffset = 0
+        //checks options if any click effects are enabled
+        if(options[1].value || options[3].value){
+            headerHeight = elements.header.offsetHeight
+            
+            //getting pointer location and accounts for header
+            x = e.clientX
+            y = e.clientY
+            
+            //makes sure the text doesn't appear underneath the header
+            randomWidthOffset = Math.floor(Math.random() * 60) - 30
+            randomHeightOffset = Math.floor(Math.random() * 40)
         }
+        
+        //checks if click effect text option is enabled
+        if(options[3].value){
+            const text = document.createElement("span")
+            text.innerText = clickValueRed
+            
+            text.classList.add("click-text")  
+            elements.main.appendChild(text)
 
-        text.style.left = `${textX}px`
-        text.style.top = `${textY}px`
+            let textX = x - text.offsetWidth + randomWidthOffset + (text.offsetWidth / 2)
+            let textY = y - headerHeight - text.offsetHeight - randomHeightOffset
+            
+            if(textY <= 0){
+                textY = 8
+            }
+            
+            text.style.left = `${textX}px`
+            text.style.top = `${textY}px`
+            
+            setTimeout(() => { text.remove() }, 800);
+        }
+        
+        //checks if click effect graphic option is enabled
+        if(options[1].value){
+            const clickEffect = document.createElement("div")
+            clickEffect.style.position = "absolute"
+            elements.main.appendChild(clickEffect)
+            
+            
+            switch(options[2].value){
+                case "ripple":
+                    clickEffect.classList.add("ripple")  
+                    break
+            }
+            
+            clickEffect.style.left = `${x - clickEffect.offsetWidth / 2}px`
+            clickEffect.style.top = `${y - headerHeight - clickEffect.offsetHeight / 2}px`
 
-        clickEffect.style.left = `${x - clickEffect.offsetWidth / 2}px`
-        clickEffect.style.top = `${y - headerHeight - clickEffect.offsetHeight / 2}px`
-
-        setTimeout(() => { text.remove() }, 800);
-        setTimeout(() => { clickEffect.remove() }, 500);
+            setTimeout(() => { clickEffect.remove() }, 500);
+        }
 
         incrementRgb(clickValueRgb)
     }
@@ -418,6 +455,20 @@ function Game(){
              </div>
         </div>
 
+        const leftStats = <div className="stats bottom-right">
+            <p>R/t: {rpt.toFixed(2)}</p>
+            <p>RGB/s: {rgbps[0].toFixed(2)}, {rgbps[1]}, {rgbps[2]}</p>
+            <p>RGB/t: {rgbpt[0].toFixed(2)}, {rgbpt[1]}, {rgbpt[2]}</p>
+            <p>R/click: {clickValueRed}</p>
+        </div>
+
+        const rightStats = <div className="stats bottom-left">
+            <p>Total multiplier: {stats.totalMultiplier.toFixed(3)}x</p>
+            <p>Total Generators: {stats.generatorCount}</p>
+            <p>Vertices: {values.vertices}</p>
+            <p>Upgrades purchased: {stats.upgradeCount}</p>
+        </div>
+
     return (
         <section>
         <div className="square" onClick={onClick}></div>
@@ -435,20 +486,8 @@ function Game(){
             </div>
             {leftMenu}
             {rightMenu}
-
-            <div className="stats bottom-right">
-                <p>R/t: {rpt.toFixed(2)}</p>
-                <p>RGB/s: {rgbps[0].toFixed(2)}, {rgbps[1]}, {rgbps[2]}</p>
-                <p>RGB/t: {rgbpt[0].toFixed(2)}, {rgbpt[1]}, {rgbpt[2]}</p>
-                <p>R/click: {clickValueRed}</p>
-            </div>
-
-            <div className="stats bottom-left">
-                <p>Total multiplier: {stats.totalMultiplier.toFixed(3)}x</p>
-                <p>Total Generators: {stats.generatorCount}</p>
-                <p>Vertices: {values.vertices}</p>
-                <p>Upgrades purchased: {stats.upgradeCount}</p>
-            </div>
+            {options[4].value ? leftStats : null}
+            {options[4].value ? rightStats : null}
         </section>
     )
 }

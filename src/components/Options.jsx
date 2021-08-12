@@ -9,14 +9,12 @@ const Options = ({dismiss}) => {
 
     useEffect(() => {
         const elements = options.map((o,i) => {
-            return <Option optionId={i}/>
+            return <Option key={i} optionId={i}/>
         })
         
         setOptionsElements(elements)
     }, [])
-
-
-
+    
     function click(e){
             if(e.currentTarget === e.target){
                 dismiss()
@@ -33,6 +31,6 @@ const Options = ({dismiss}) => {
                 </div>
             </div>
         )
-}
+    }
 
 export default Options

@@ -174,14 +174,15 @@ section {
     transform: rotate(180deg);
 }
 
-.square span {
+.click-text {
     /* TODO: add contrast */
-    /* text-shadow: black 1px 1px 5px; */
+    position: absolute;
+    text-align: center;
     animation: on-click-fade 1s;
     z-index: 1;
 }
 
-.square div {
+.ripple {
     background: radial-gradient(
         transparent, 
         rgba(0,0,0,0.3), 

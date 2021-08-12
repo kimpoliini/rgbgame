@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import "./sideMenuItems.css"
 import { generators, levelThresholds } from  "../js/generators.js"
+import { options } from "../js/options"
 
 
 const Generator = ({onClick, genId}) => {
@@ -38,12 +39,14 @@ const Generator = ({onClick, genId}) => {
             onClick()
             onBuy()
         }} 
-        //prevent images from animating when hovering over things you can't afford
+        //prevent images from animating when hovering over things you can't afford, or when animations are disabled
         onMouseEnter={() => { 
-            const el = document.querySelector(`#generator-${genId}`)
-            if(!el.classList.contains("cannot-afford")){
-                setImage(gen.imageAnim)
-            }            
+            if(options[0].value){
+                const el = document.querySelector(`#generator-${genId}`)
+                if(!el.classList.contains("cannot-afford" && options[0].value)){
+                    setImage(gen.imageAnim)
+                }            
+            }
         }
         } 
         onMouseLeave={() => setImage(gen.image)} >
