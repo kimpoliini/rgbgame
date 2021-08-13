@@ -16,7 +16,7 @@ export const options = [
         title: "Click effect",
         tooltip: "What effect to be shown when clicking",
         type: "dropdown",
-        typeValues: ["ripple"],
+        typeValues: ["ripple", "material ripple", "splash"],
         value: "ripple",
     },
     {

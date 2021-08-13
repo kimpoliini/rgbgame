@@ -199,6 +199,42 @@ section {
     animation: on-click-fade-ripple .55s;
 }
 
+.ripple-simple {
+    background-color: rgba(255,255,255,0.3);
+    border-radius: 100%;
+    z-index: 0;
+    width: 10px;
+    height: 10px;
+    animation: on-click-fade-ripple .55s;
+}
+
+.splash-line {
+    position: absolute;
+    height: 40px;
+    width: 8px;
+    background-color: white;
+    transform-origin: top center;
+    z-index: 1;
+
+    /* animation: splash .55s; */
+}
+
+.splash-line-path {
+    position: absolute;
+    height: 120px;
+    width: 8px;
+    background-color: black;
+    transform-origin: top center;
+    z-index: 0;
+
+}
+
+.splash-line::after {
+    height: 80px;
+    width: 8px;
+    background-color: white;
+}
+
 .stats {
     position: absolute;
     background-color: white;
@@ -240,5 +276,15 @@ section {
     100% {
         opacity: 0;
         transform: scale(24);
+    }
+}
+
+@keyframes splash {
+    0% {
+        transform: translateX(0px);
+    }
+    
+    100% {
+        transform: translateX(100px);
     }
 }

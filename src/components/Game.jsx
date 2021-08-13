@@ -365,6 +365,33 @@ function Game(){
                 case "ripple":
                     clickEffect.classList.add("ripple")  
                     break
+                case "material ripple":
+                    clickEffect.classList.add("ripple-simple")
+                    break
+                    case "splash"://Fix or make a Blender animation
+                    clickEffect.classList.add("splash")
+
+                    for(let i = 0; i < 1; i++){
+                        const fxPath = document.createElement("div")
+                        const fx = document.createElement("div")
+                        
+                        let deg = Math.random() * 360
+
+                        fxPath.classList.add("splash-line-path")
+                        fx.classList.add("splash-line")
+                        
+                        fxPath.style.transform = `rotate(${deg}deg)`
+                        fx.style.transform = `rotate(${deg}deg)`
+
+                        clickEffect.appendChild(fx)
+                        clickEffect.appendChild(fxPath)
+
+                        // let fxPathPos = fxPath.getBoundingClientRect()
+                        
+                        // console.log(fxPathPos.top)
+                    }
+
+                    break
             }
             
             clickEffect.style.left = `${x - clickEffect.offsetWidth / 2}px`
@@ -375,6 +402,8 @@ function Game(){
 
         incrementRgb(clickValueRgb)
     }
+
+    
 
     //buying generators
     function tryBuy(id){
