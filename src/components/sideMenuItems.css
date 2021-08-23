@@ -9,6 +9,12 @@ p {
     margin: 6px;
 }
 
+p:nth-child(3) {
+    font-size: 10pt;
+    font-style: italic;
+    color: lightgray;
+}
+
 .side-menu-item {
     display: flex;
     flex-direction: row;
