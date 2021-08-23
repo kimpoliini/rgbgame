@@ -95,11 +95,6 @@ function Game(){
                 }
             })
         }
-
-        let generatorElements = generators.map((gen, i) => {
-            return <Generator key={i} genId={i} onClick={() => tryBuy(i)} /> })
-
-        setGeneratorElements(generatorElements)
         
         onUpgrade()
     }, [])
@@ -304,6 +299,14 @@ function Game(){
         })
     }
     
+    function checkMultiplier(){
+        let generatorElements = generators.map((gen, i) => {
+            return <Generator key={i} genId={i} onClick={() => tryBuy(i)} /> 
+        })
+
+        setGeneratorElements(generatorElements)
+    }
+
     function onUpgrade(){
         let upgradeElements = upgrades.map((upgrade, i) => { 
             if(!upgrade.bought){
@@ -316,6 +319,7 @@ function Game(){
         
         checkRgb()
         calculateStats()
+        checkMultiplier()
     }
     
     function onClick(e) {
@@ -428,6 +432,7 @@ function Game(){
             
             calculateStats()
             checkCanAfford()
+            checkMultiplier()
         }
     }
     
