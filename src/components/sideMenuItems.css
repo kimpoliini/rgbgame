@@ -9,7 +9,7 @@ p {
     margin: 6px;
 }
 
-p:nth-child(3) {
+p:nth-child(3):not(.stats > p){
     font-size: 10pt;
     font-style: italic;
     color: lightgray;

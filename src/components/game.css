@@ -19,8 +19,9 @@ section {
 .color-values {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
     width: 128px;
-    height: 60px;
+    height: auto;
     margin-top: 8px;
     position: absolute;
     background-color: #282c34;
@@ -33,9 +34,10 @@ section {
     align-items: center;
 }
 
-.color-values span {
+.color-values span:not(.cur-p) {
     padding-top: 6px;
     padding-bottom: 6px;
+    z-index: 1;
 }
 
 .cur-r {
@@ -52,6 +54,21 @@ section {
     background-color: blue;
     border-top-right-radius: 8px;
     border-bottom-right-radius: 8px;
+}
+
+.cur-p {
+    padding-top: 18px;
+    padding-bottom: 4px;
+    
+    margin-top: -20px;
+    background-color: white;
+    color: black;
+    grid-column: 1 / 4;
+    
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+
+    transition: visibility, padding, 1s;
 }
 
 .color-values p {

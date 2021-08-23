@@ -3,6 +3,7 @@ export const redToRgb = (red) => {
     let r = parseFloat(red.toFixed(2))
     let g = 0
     let b = 0
+    let p = 0
 
     while(r >= 256){
         r -= 256
@@ -14,11 +15,22 @@ export const redToRgb = (red) => {
         b += 1
     }
 
-    // console.log(`${red} red -> ${r}, ${g}, ${b}`)
-    return [r, g, b]
+    while(b >= 256){
+        b -= 256
+        p += 1
+    }
+
+    console.log(`${red} red -> ${r}, ${g}, ${b}, ${p}`)
+    return [r, g, b, p]
 }
 
 export const rgbToRed = (rgb) => {
+
+    while(rgb[3] > 0){
+        rgb[3] -= 1
+        rgb[2] += 256
+    }
+
     while(rgb[2] > 0){
         rgb[2] -= 1
         rgb[1] += 256

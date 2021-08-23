@@ -1,12 +1,12 @@
 export const values = {
     //color values
-    color: [0,0,0],
+    color: [0,0,0,0],
 
     //rps
     rpsMultiplier: 1,
     
     //click
-    clickValue: 100,
+    clickValue: 100000,
     clickMultiplier: 1,
     
     //vertex

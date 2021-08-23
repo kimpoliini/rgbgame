@@ -32,17 +32,17 @@ function Game(){
         main: null, header: null
     })
 
-    const [color, setColor] = useState({r: 0, g: 0, b: 0})
+    const [color, setColor] = useState({r: 0, g: 0, b: 0, p: 0})
     
     //click
     const [clickValueRed, setClickValueRed] = useState(values.clickValue*1)
-    const [clickValueRgb, setClickValueRgb] = useState([0,0,0])
+    const [clickValueRgb, setClickValueRgb] = useState([0,0,0,0])
     
     //rps
     const [rps, setRps] = useState(0)
     const [rpt, setRpt] = useState(0)
-    const [rgbps, setRgbps] = useState([0,0,0])
-    const [rgbpt, setRgbpt] = useState([0,0,0])
+    const [rgbps, setRgbps] = useState([0,0,0,0])
+    const [rgbpt, setRgbpt] = useState([0,0,0,0])
 
     //stats
     const [stats, setStats] = useState({
@@ -231,23 +231,27 @@ function Game(){
     
     function incrementRgb(rgb){
         const c = values.color
-        values.color = [c[0] + rgb[0], c[1] + rgb[1], c[2] + rgb[2]]
+        values.color = [c[0] + rgb[0], c[1] + rgb[1], c[2] + rgb[2], c[3] + rgb[3]]
         checkRgb()
     }
     
     function checkRgb(){
         let c = values.color
         if(c[0] >= 256){
-            values.color = [c[0] - 256, c[1] + 1, c[2]]
+            values.color = [c[0] - 256, c[1] + 1, c[2], c[3]]
         }
         
         if(c[1] >= 256){
-            values.color = [c[0], c[1] - 256, c[2] + 1]
+            values.color = [c[0], c[1] - 256, c[2] + 1, c[3]]
+        }
+
+        if(c[2] >= 256){
+            values.color = [c[0], c[1], c[2] - 256, c[3] + 1]
         }
         
         //update numbers
         c = values.color
-        setColor({r: c[0], g: c[1], b: c[2]})
+        setColor({r: c[0], g: c[1], b: c[2], p: c[3]})
     }
     
     function calculateStats(){
@@ -334,10 +338,10 @@ function Game(){
         const price = Object.assign({}, gen.price)
         const c = values.color
 
-        const remainder = buy([c[0], c[1], c[2]], price)
+        const remainder = buy([c[0], c[1], c[2], c[3]], price)
 
         if(remainder != null){
-            values.color = [remainder[0], remainder[1], remainder[2]]
+            values.color = [remainder[0], remainder[1], remainder[2], remainder[3]]
             gen.count += 1
             
             let multiplier = 1
@@ -369,10 +373,10 @@ function Game(){
         const upgrade = upgrades[id]
         const price = Object.assign({}, upgrade.price)
         const c = values.color
-        const remainder = buy([c[0], c[1], c[2]], price)
+        const remainder = buy([c[0], c[1], c[2], c[3]], price)
 
         if(remainder != null){
-            values.color = [remainder[0], remainder[1], remainder[2]]
+            values.color = [remainder[0], remainder[1], remainder[2], remainder[3]]
             handleUpgrade(id, values.rps)
             
             upgrade.bought = true
@@ -410,8 +414,8 @@ function Game(){
 
         const leftStats = <div className="stats bottom-right">
             <p>R/t: {rpt.toFixed(2)}</p>
-            <p>RGB/s: {rgbps[0].toFixed(2)}, {rgbps[1]}, {rgbps[2]}</p>
-            <p>RGB/t: {rgbpt[0].toFixed(2)}, {rgbpt[1]}, {rgbpt[2]}</p>
+            <p>RGB/s: {rgbps[0].toFixed(2)}, {rgbps[1]}, {rgbps[2]}, {rgbps[3]}</p>
+            <p>RGB/t: {rgbpt[0].toFixed(2)}, {rgbpt[1]}, {rgbpt[2]}, {rgbpt[3]}</p>
             <p>R/click: {clickValueRed}</p>
         </div>
 
@@ -434,6 +438,9 @@ function Game(){
                 </span>
                 <span className="cur-b">
                     {color.b}
+                </span>
+                <span className="cur-p">
+                    {color.p}
                 </span>
                 <p>rps: {rps.toFixed(1)}</p>
             </div>
