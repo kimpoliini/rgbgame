@@ -206,12 +206,13 @@ function Game(){
         const c = values.color
         
         generators.forEach((gen, i) => {
-            if(rgbToRed(Object.assign({}, gen.price)) > rgbToRed([c[0], c[1], c[2]])){
+            if(rgbToRed(Object.assign({}, gen.price)) > rgbToRed([c[0], c[1], c[2], c[3]])){
                 document.querySelector(`#generator-${i}`).classList.add("cannot-afford")
             }else {
                 document.querySelector(`#generator-${i}`).classList.remove("cannot-afford")
             }
         })
+
         upgrades.forEach((upgrade, i) => {
             if(upgrade.bought){
                 return
@@ -220,7 +221,7 @@ function Game(){
             const upgradeElement = document.querySelector(`#upgrade-${i}`)
 
             if(upgradeElement){   
-                if(rgbToRed(Object.assign({}, upgrade.price)) > rgbToRed([c[0], c[1], c[2]])){
+                if(rgbToRed(Object.assign({}, upgrade.price)) > rgbToRed([c[0], c[1], c[2], c[3]])){
                     upgradeElement.classList.add("cannot-afford")
                 }else {
                     upgradeElement.classList.remove("cannot-afford")

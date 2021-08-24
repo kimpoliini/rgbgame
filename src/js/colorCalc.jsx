@@ -1,49 +1,65 @@
 //turns a value of red into rgb
 export const redToRgb = (red) => {
     let r = parseFloat(red.toFixed(2))
-    let g = 0
-    let b = 0
-    let p = 0
+    let rgb = [r,0,0,0]
 
-    while(r >= 256){
-        r -= 256
-        g += 1
+    for(let i = 0; i < 3; i++){
+        if(rgb[i] >= 256){
+            let next = Math.floor(rgb[i]/256)
+            rgb[i+1] = next
+            rgb[i] %= 256
+        }
     }
+    
+    //old
+    // while(r >= 256){
+    //     r -= 256
+    //     g += 1
+    // }
 
-    while(g >= 256){
-        g -= 256
-        b += 1
-    }
+    // while(g >= 256){
+    //     g -= 256
+    //     b += 1
+    // }
 
-    while(b >= 256){
-        b -= 256
-        p += 1
-    }
+    // while(b >= 256){
+    //     b -= 256
+    //     p += 1
+    // }
 
-    console.log(`${red} red -> ${r}, ${g}, ${b}, ${p}`)
-    return [r, g, b, p]
+    return rgb
 }
 
 export const rgbToRed = (rgb) => {
 
-    while(rgb[3] > 0){
-        rgb[3] -= 1
-        rgb[2] += 256
+    //new
+    for(let i = 4; i > 0; i--){
+        if(i === 0) break
+        
+        if(rgb[i] > 0){
+            rgb[i-1] += rgb[i] * 256
+            rgb[i] = 0
+        }
     }
 
-    while(rgb[2] > 0){
-        rgb[2] -= 1
-        rgb[1] += 256
-    }
+    //old
+    // while(rgb[3] > 0){
+    //     rgb[3] -= 1
+    //     rgb[2] += 256
+    // }
 
-    while(rgb[1] > 0){
-        rgb[1] -= 1
-        rgb[0] += 256
-    }
+    // while(rgb[2] > 0){
+    //     rgb[2] -= 1
+    //     rgb[1] += 256
+    // }
+
+    // while(rgb[1] > 0){
+    //     rgb[1] -= 1
+    //     rgb[0] += 256
+    // }
 
     let red = rgb[0]
 
-    // console.log(`${rgb[0]}, ${rgb[1]}, ${rgb[2]} -> ${red} reds`)
     return red
 }
 
