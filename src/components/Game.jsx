@@ -237,21 +237,9 @@ function Game(){
     }
     
     function checkRgb(){
-        let c = values.color
-        if(c[0] >= 256){
-            values.color = [c[0] - 256, c[1] + 1, c[2], c[3]]
-        }
+        let c = redToRgb(rgbToRed(values.color))
+        values.color = c
         
-        if(c[1] >= 256){
-            values.color = [c[0], c[1] - 256, c[2] + 1, c[3]]
-        }
-
-        if(c[2] >= 256){
-            values.color = [c[0], c[1], c[2] - 256, c[3] + 1]
-        }
-        
-        //update numbers
-        c = values.color
         setColor({r: c[0], g: c[1], b: c[2], p: c[3]})
     }
     
