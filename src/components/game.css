@@ -19,15 +19,15 @@ section {
 .color-values {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
+    grid-template-rows: auto;
     width: 128px;
     height: auto;
     margin-top: 8px;
     position: absolute;
     background-color: #282c34;
     padding: 12px;
+    padding-bottom: 6px;
     border-radius: 8px;
-    color: white;
     font-weight: bold;
     box-shadow: rgba(0, 0, 0, 0.25) 2px 2px 2px;
     font-size: 13pt;
@@ -57,18 +57,17 @@ section {
 }
 
 .cur-p {
-    padding-top: 18px;
+    padding-top: 8px;
     padding-bottom: 4px;
-    
-    margin-top: -20px;
+    margin-top: -8px;
     background-color: white;
     color: black;
     grid-column: 1 / 4;
-    
+
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
 
-    transition: visibility, padding, 1s;
+    transition: visibility, 0.25s;
 }
 
 .color-values p {

@@ -12,6 +12,7 @@ import { values } from "../js/values.js"
 import { useCookies } from "react-cookie"
 import { options } from "../js/options"
 import { click } from "../js/click"
+import Notification from "./Notification"
 
 function Game(){
     
@@ -48,6 +49,9 @@ function Game(){
     const [stats, setStats] = useState({
         generatorCount: 0, upgradeCount: 0, totalMultiplier: 1
     })
+
+    //notifications
+    const [notifs, setNotifs] = useState([])
     
     //load game
     useEffect(() => {
@@ -144,7 +148,8 @@ function Game(){
         setCookie('options', optionsData)
 
         console.log("saved")
-    }, 10000)
+        addNotification("Saved")
+    }, 60000)
     
     //increments rgb each tick
     useInterval(() => {
@@ -321,6 +326,15 @@ function Game(){
         incrementRgb(clickValueRgb)
     }
 
+    function addNotification(text, important = false){
+        const notif = <Notification text={text} important={important} />
+    
+        setNotifs([notif])
+        setTimeout(() => {
+            setNotifs([])
+        }, important ? 3000 : 1500);
+    }
+
     //buying generators
     function tryBuy(id){
         const gen = generators[id]
@@ -418,7 +432,7 @@ function Game(){
     return (
         <section>
         <div className="square" onClick={onClick}></div>
-            <div className="color-values">
+            <div className={"color-values "}>
                 <span className="cur-r">
                     {color.r.toFixed(0)}
                 </span>
@@ -429,7 +443,7 @@ function Game(){
                     {color.b}
                 </span>
                 <span className="cur-p">
-                    {color.p}
+                    {color.p}px
                 </span>
                 <p>rps: {rps.toFixed(1)}</p>
             </div>
@@ -437,6 +451,7 @@ function Game(){
             {rightMenu}
             {options[4].value ? leftStats : null}
             {options[4].value ? rightStats : null}
+            {notifs}
         </section>
     )
 }

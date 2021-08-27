@@ -1,0 +1,91 @@
+.notification {
+    z-index: 2;
+    background-color: white;
+    padding: 12px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    position: absolute;
+    color: black;
+    
+    bottom: -5%;
+    border-radius: 8px;
+    font-size: 13pt;
+}
+
+.notification.simple {
+    box-shadow: rgba(0, 0, 0, 0.25) 2px 2px 2px;
+    right: 2%;
+    
+    animation: notification-simple 1.5s;
+}
+
+.notification.important {
+    overflow: hidden;
+    box-shadow: rgba(0, 0, 0, 0.25) 2px 2px 2px;
+    align-self: center;
+
+    animation: notification-important 3s;
+}
+
+.important p {
+    width: 40%;
+    display: flex; 
+    margin-left: auto;
+    margin-right: auto;
+    animation: important-text-fade-in 3s;
+}
+
+@keyframes important-text-fade-in {
+    0% {
+        opacity: 0;
+    }
+
+    25% {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+@keyframes notification-important {
+    0% {
+        width: 0%;
+    }
+    
+    25% {
+        width: 0%;
+        bottom: 2%;
+    }
+    
+    50% {
+        width: 40%;
+        bottom: 2%;
+        
+    }
+    
+    75% {
+        width: 40%;
+        bottom: 2%;
+        opacity: 1;
+    }
+    
+    100% {
+        width: 40%;
+        bottom: 2%;
+        opacity: 0;
+    }
+}
+
+@keyframes notification-simple {
+    50% {
+        bottom: 2%;
+        opacity: 1;
+    }
+    
+    100% {
+        opacity: 0;
+        bottom: 2%;
+    }
+}
