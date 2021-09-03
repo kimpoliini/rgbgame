@@ -17,7 +17,7 @@ export const options = [
         tooltip: "What effect to be shown when clicking",
         type: "dropdown",
         typeValues: ["ripple", "material ripple", "splash"],
-        value: "ripple",
+        value: "material ripple",
     },
     {
         title: "Enable click text",
@@ -43,6 +43,6 @@ export const options = [
         tooltip: "How many times the background color refreshes each second. Values higher than 5 might have a negative impact on performance",
         type: "dropdown",
         typeValues: [10, 5, 2, 1],
-        value: 2,
+        value: 5,
     },
 ]

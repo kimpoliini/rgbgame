@@ -6,7 +6,7 @@ export const values = {
     rpsMultiplier: 1,
     
     //click
-    clickValue: 100,
+    clickValue: 1,
     clickMultiplier: 1,
     
     //vertex
