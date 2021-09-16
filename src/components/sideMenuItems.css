@@ -24,7 +24,16 @@ p:nth-child(3):not(.stats > p){
     border-radius: 8px;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 2px 1px 2px;
 
-    transition: background-color, transform, box-shadow, 0.25s;
+    transition: background-color, transform, -webkit-transform, box-shadow, 0.25s;
+}
+
+.side-menu-item:not(.cannot-afford):hover {
+    cursor: pointer;
+    background-color: #4b5261;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 8px 1px 2px;
+    transform: translateY(-6px);
+    
+    transition: background-color, transform, -webkit-transform, box-shadow, 0.25s;
 }
 
 .prevent-flicker {
@@ -35,17 +44,8 @@ p:nth-child(3):not(.stats > p){
     top: calc(100% - 12px);
     transform: translate(-50%, -50%);
     z-index: -1;
-    transition: transform 0.25s;
+    transition: transform, -webkit-transform, 0.25s;
     display: none;
-}
-
-.side-menu-item:not(.cannot-afford):hover {
-    cursor: pointer;
-    background-color: #4b5261;
-    box-shadow: rgba(0, 0, 0, 0.25) 0px 8px 1px 2px;
-    transform: translateY(-6px);
-    
-    transition: background-color, transform, box-shadow, 0.25s;
 }
 
 .side-menu-item:not(.cannot-afford):hover .prevent-flicker {
