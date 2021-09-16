@@ -67,7 +67,7 @@ const Generator = ({onClick, genId}) => {
                     </span>
                 </div>
             </div>
-            <img className="generator-image" src={image} alt=""/>
+            <img className="generator-image" src={image} alt={gen.name} />
             <div className="prevent-flicker"></div>
         </div>
     )

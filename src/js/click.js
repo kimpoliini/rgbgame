@@ -18,7 +18,7 @@ export const click = (e, elements, clickValueRed) => {
     //checks if click effect text option is enabled
     if(options[3].value){
         const text = document.createElement("span")
-        text.innerText = clickValueRed
+        text.innerText = clickValueRed.toFixed(0)
         
         text.classList.add("click-text")  
         elements.main.appendChild(text)
