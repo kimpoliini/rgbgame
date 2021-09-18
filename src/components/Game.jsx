@@ -3,7 +3,7 @@ import Generator from "./Generator"
 import Upgrade from "./Upgrade"
 import "./game.css"
 import { useInterval } from "../js/interval.jsx"
-import { redToRgb, rgbToRed, buy } from "../js/colorCalc.jsx"
+import { redToRgb, rgbToRed, buy, handleBigNumber } from "../js/colorCalc.jsx"
 import { generators, levelThresholds } from  "../js/generators.js"
 import { upgrades } from "../js/upgrades.js"
 import { generatorUpgrades } from "../js/generatorUpgrades"
@@ -443,7 +443,7 @@ function Game(){
                     {color.b}
                 </span>
                 <span className="cur-p">
-                    {color.p}px
+                    {handleBigNumber(color.p)} px
                 </span>
                 <p>rps: {rps.toFixed(1)}</p>
             </div>

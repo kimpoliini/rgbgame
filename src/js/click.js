@@ -1,4 +1,5 @@
 import { options } from "./options"
+import { handleBigNumber } from "./colorCalc"
 
 export const click = (e, elements, clickValueRed) => {
     let headerHeight, x, y, randomWidthOffset = 0, randomHeightOffset = 0
@@ -18,7 +19,7 @@ export const click = (e, elements, clickValueRed) => {
     //checks if click effect text option is enabled
     if(options[3].value){
         const text = document.createElement("span")
-        text.innerText = clickValueRed.toFixed(0)
+        text.innerText = handleBigNumber(clickValueRed.toFixed(0))
         
         text.classList.add("click-text")  
         elements.main.appendChild(text)

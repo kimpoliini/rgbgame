@@ -76,3 +76,32 @@ export const buy = (currentRgb, priceRgb) => {
 
     return redToRgb(currentRed)
 }
+
+const suffixes = [
+    "K",
+    "M",
+    "B",
+    "T",
+    "Qa",
+    "Qi",
+    "Sx",
+    "Sp",
+    "O",
+    "N",
+    "D",
+]
+
+export function handleBigNumber(number){
+    if(number >= 1000){
+        let log = Math.floor(Math.log10(number))
+        let suffix = Math.floor(log/3) - 1
+        let text = (number/Math.pow(10,log - (log % 3))).toFixed(3)
+
+        return `${text} ${suffixes[suffix]}`
+    } else {
+        return number
+    }
+    
+
+
+}
