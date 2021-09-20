@@ -50,8 +50,8 @@ const Generator = ({onClick, genId}) => {
         }
         } 
         onMouseLeave={() => setImage(gen.image)} >
-            <div>
                 <h5>{gen.name}</h5>
+            <div>
                 <p>+{gen.rps ? gen.rps.toFixed(2) : gen.baseRps}/s</p>
                 <p>({gen.count > 0 ? (gen.rps * gen.count).toFixed(2) : "0"}/s)</p>
                 <div className="generator-price">

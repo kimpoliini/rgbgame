@@ -69,8 +69,8 @@ export const generators = [
         price: [0,0,5],
         count: 0,
         vertices: 5,
-        image: "",
-        imageAnim: ""
+        image: "/assets/generators/pyramid.png",
+        imageAnim: "/assets/generators/pyramid-anim.gif"
     },
     {
         name: "Cube",
@@ -79,8 +79,8 @@ export const generators = [
         price: [0,0,24],
         count: 0,
         vertices: 8,
-        image: "",
-        imageAnim: ""
+        image: "/assets/generators/cube.png",
+        imageAnim: "/assets/generators/cube-anim.gif"
     },
     {
         name: "Dodecahedron",
@@ -89,8 +89,8 @@ export const generators = [
         price: [0,0,100],
         count: 0,
         vertices: 20,
-        image: "",
-        imageAnim: ""
+        image: "/assets/generators/dodecahedron.png",
+        imageAnim: "/assets/generators/dodecahedron-anim.gif"
     },
 ]
 
