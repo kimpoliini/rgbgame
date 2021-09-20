@@ -434,7 +434,7 @@ function Game(){
         <div className="square" onClick={onClick}></div>
             <div className={"color-values "}>
                 <span className="cur-r">
-                    {color.r.toFixed(0)}
+                    {Math.floor(color.r)}
                 </span>
                 <span className="cur-g">
                     {color.g}
@@ -445,7 +445,7 @@ function Game(){
                 <span className="cur-p">
                     {handleBigNumber(color.p)} px
                 </span>
-                <p>rps: {rps.toFixed(1)}</p>
+                <p>rps: {handleBigNumber(rps.toFixed(1))}</p>
             </div>
             {leftMenu}
             {rightMenu}

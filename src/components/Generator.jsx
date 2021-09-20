@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import "./sideMenuItems.css"
 import { generators, levelThresholds } from  "../js/generators.js"
 import { options } from "../js/options"
+import { handleBigNumber } from "../js/colorCalc"
 
 
 const Generator = ({onClick, genId}) => {
@@ -52,8 +53,8 @@ const Generator = ({onClick, genId}) => {
         onMouseLeave={() => setImage(gen.image)} >
                 <h5>{gen.name}</h5>
             <div>
-                <p>+{gen.rps ? gen.rps.toFixed(2) : gen.baseRps}/s</p>
-                <p>({gen.count > 0 ? (gen.rps * gen.count).toFixed(2) : "0"}/s)</p>
+                <p>+{gen.rps ? handleBigNumber(gen.rps.toFixed(2)) : gen.baseRps}/s</p>
+                <p>({gen.count > 0 ? handleBigNumber((gen.rps * gen.count).toFixed(2)) : "0"}/s)</p>
                 <div className="generator-price">
                     <span>{gen.price[0]}</span>
                     <span>{gen.price[1]}</span>
