@@ -307,7 +307,13 @@ function Game(){
     }
 
     function onUpgrade(){
-        let upgradeElements = upgrades.map((upgrade, i) => { 
+        //Sorts upgrades by price and adds them to the list
+        const sortedUpgrades = upgrades.sort((a,b) => {
+            let aPrice = rgbToRed(Object.assign({}, a.price))
+            let bPrice = rgbToRed(Object.assign({}, b.price))
+            return aPrice - bPrice
+        })
+        let upgradeElements = sortedUpgrades.map((upgrade, i) => { 
             if(!upgrade.bought){
                 return <Upgrade key={i} upgradeId={i} onClick={() => tryBuyUpgrade(i)}/>
             } else {
