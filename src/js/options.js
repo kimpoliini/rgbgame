@@ -45,4 +45,10 @@ export const options = [
         typeValues: [10, 5, 2, 1],
         value: 5,
     },
+    {
+        title: "Reset game",
+        tooltip: "Resets your progress, not just prestige. Make sure you want to do this before continuing!",
+        type: "button",
+        value: "reset",
+    },
 ]

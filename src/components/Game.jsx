@@ -338,7 +338,7 @@ function Game(){
         setNotifs([notif])
         setTimeout(() => {
             setNotifs([])
-        }, important ? 3000 : 1500);
+        }, important ? 4000 : 2500);
     }
 
     //buying generators
