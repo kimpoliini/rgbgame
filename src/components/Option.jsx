@@ -2,12 +2,14 @@ import { useEffect } from "react"
 import { useState } from "react"
 import { options } from "../js/options.js"
 import "./options.css"
+import Tooltip from "./Tooltip.jsx"
 
 const Option = ({ optionId, callback }) => {
     const [opt, setOpt] = useState(options[optionId])
     const [action, setAction] = useState()
     const [isEnabled, setIsEnabled] = useState(false)
     const [dropdownValue, setDropdownValue] = useState("")
+    const [tooltip, setTooltip] = useState()
 
     useEffect(() => {
         let el = <div></div>
@@ -54,9 +56,16 @@ const Option = ({ optionId, callback }) => {
     }    
 
     return (
-        <div className="option" onClick={opt.type == "button" ? null : onClick}>
+        <div className="option" onClick={opt.type == "button" ? null : onClick} 
+        onMouseEnter={() => {
+            setTooltip(<Tooltip text={opt.tooltip}/>)
+        }}
+        onMouseLeave={() => {
+            setTooltip(null)
+        }}>
             <span>{opt.title}</span>
             {action}
+            {tooltip}
         </div>
     )
 }

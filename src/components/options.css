@@ -59,6 +59,7 @@
     padding: 6px;
     text-align: left;
     transition: background-color 0.25s;
+    position: relative;
 }
 
 .option:hover {
