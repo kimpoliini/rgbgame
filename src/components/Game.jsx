@@ -369,7 +369,7 @@ function Game(){
             gen.multiplier = multiplier
 
             //increase price of the generator when buying
-            const priceIncreasePercentage = (112 + id)/100
+            const priceIncreasePercentage = (108 + id)/100
             gen.price = redToRgb(Math.floor(rgbToRed(price)*priceIncreasePercentage))
             
             calculateStats()
