@@ -42,8 +42,7 @@ export const click = (e, elements, clickValueRed) => {
         const clickEffect = document.createElement("div")
         clickEffect.style.position = "absolute"
         elements.main.appendChild(clickEffect)
-        
-        
+                
         switch(options[2].value){
             case "ripple":
                 clickEffect.classList.add("ripple")  
@@ -70,6 +69,6 @@ export const click = (e, elements, clickValueRed) => {
         clickEffect.style.left = `${x - clickEffect.offsetWidth / 2}px`
         clickEffect.style.top = `${y - headerHeight - clickEffect.offsetHeight / 2}px`
 
-        setTimeout(() => { clickEffect.remove() }, 500);
+        setTimeout(() => { clickEffect.remove() }, 400);
     }
 }

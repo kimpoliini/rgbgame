@@ -231,9 +231,9 @@ section {
     background-color: transparent;
     transform-origin: top center;
     z-index: 1;
-    backdrop-filter: invert(100%);
+    background-color: white;
 
-    animation: splash .55s;
+    animation: splash .41s;
 }
 
 .stats {
@@ -283,7 +283,6 @@ section {
 @keyframes splash {
     0% {
         clip-path: inset(0px 0px);
-
     }
 
     100% {
