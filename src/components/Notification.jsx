@@ -1,4 +1,4 @@
-import "./notification.css"
+import "./styles/notification.css"
 
 
 const Notification = ({important = false, text}) => {

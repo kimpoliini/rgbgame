@@ -1,4 +1,4 @@
-import { options } from "./options"
+import { options } from "./data/options"
 import { handleBigNumber } from "./colorCalc"
 
 export const click = (e, elements, clickValueRed) => {

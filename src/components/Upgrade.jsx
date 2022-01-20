@@ -1,5 +1,5 @@
-import "./sideMenuItems.css"
-import { upgrades } from "../js/upgrades"
+import "./styles/sideMenuItems.css"
+import { upgrades } from "../js/data/upgrades"
 import { useState } from "react"
 
 const Upgrade = ({onClick, upgradeId}) => {

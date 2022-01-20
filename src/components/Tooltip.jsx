@@ -1,5 +1,5 @@
 import React from 'react'
-import "./tooltip.css"
+import "./styles/tooltip.css"
 const Tooltip = ({ text }) => {
     return (
         <div className={"tooltip"}>

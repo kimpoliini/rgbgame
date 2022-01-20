@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import { useState } from "react"
-import { options } from "../js/options.js"
-import "./options.css"
+import { options } from "../js/data/options.js"
+import "./styles/options.css"
 import Tooltip from "./Tooltip.jsx"
 
 const Option = ({ optionId, callback }) => {

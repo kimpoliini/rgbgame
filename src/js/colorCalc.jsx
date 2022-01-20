@@ -10,29 +10,12 @@ export const redToRgb = (red) => {
             rgb[i] %= 256
         }
     }
-    
-    //old
-    // while(r >= 256){
-    //     r -= 256
-    //     g += 1
-    // }
-
-    // while(g >= 256){
-    //     g -= 256
-    //     b += 1
-    // }
-
-    // while(b >= 256){
-    //     b -= 256
-    //     p += 1
-    // }
 
     return rgb
 }
 
+//turns a value of rgb into red
 export const rgbToRed = (rgb) => {
-
-    //new
     for(let i = 4; i > 0; i--){
         if(i === 0) break
         
@@ -41,22 +24,6 @@ export const rgbToRed = (rgb) => {
             rgb[i] = 0
         }
     }
-
-    //old
-    // while(rgb[3] > 0){
-    //     rgb[3] -= 1
-    //     rgb[2] += 256
-    // }
-
-    // while(rgb[2] > 0){
-    //     rgb[2] -= 1
-    //     rgb[1] += 256
-    // }
-
-    // while(rgb[1] > 0){
-    //     rgb[1] -= 1
-    //     rgb[0] += 256
-    // }
 
     let red = rgb[0]
 
@@ -101,7 +68,4 @@ export function handleBigNumber(number){
     } else {
         return number
     }
-    
-
-
 }

@@ -1,5 +1,5 @@
-import { values } from "./values"
-import { upgrades } from "./upgrades"
+import { values } from "./data/values"
+import { upgrades } from "./data/upgrades"
 import { redToRgb } from "./colorCalc"
 
 export const handleUpgrade = (id, rps) => {

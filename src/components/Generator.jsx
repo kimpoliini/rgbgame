@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
-import "./sideMenuItems.css"
-import { generators, levelThresholds } from  "../js/generators.js"
-import { options } from "../js/options"
+import "./styles/sideMenuItems.css"
+import { generators, levelThresholds } from  "../js/data/generators.js"
+import { options } from "../js/data/options"
 import { handleBigNumber } from "../js/colorCalc"
 
 
