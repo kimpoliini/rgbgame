@@ -10,7 +10,9 @@ export const click = (e, elements, clickValueRed) => {
         //getting pointer location and accounts for header
         x = e.clientX
         y = e.clientY
-        
+
+        // console.log("x: " + x + ", y: " + y);
+
         //makes sure the text doesn't appear underneath the header
         randomWidthOffset = Math.floor(Math.random() * 60) - 30
         randomHeightOffset = Math.floor(Math.random() * 40)
@@ -21,11 +23,11 @@ export const click = (e, elements, clickValueRed) => {
         const text = document.createElement("span")
         text.innerText = handleBigNumber(clickValueRed.toFixed(0))
         
-        text.classList.add("click-text")  
-        elements.main.appendChild(text)
+        text.className = "click-text effect"
+        elements.container.appendChild(text)
 
         let textX = x - text.offsetWidth + randomWidthOffset + (text.offsetWidth / 2)
-        let textY = y - headerHeight - text.offsetHeight - randomHeightOffset
+        let textY = y - text.offsetHeight - randomHeightOffset
         
         if(textY <= 0){
             textY = 8
@@ -40,18 +42,18 @@ export const click = (e, elements, clickValueRed) => {
     //checks if click effect graphic option is enabled
     if(options[1].value){
         const clickEffect = document.createElement("div")
-        clickEffect.style.position = "absolute"
+        clickEffect.style.position = "fixed"
         elements.main.appendChild(clickEffect)
                 
         switch(options[2].value){
             case "ripple":
-                clickEffect.classList.add("ripple")  
+                clickEffect.className = "ripple effect"
                 break
             case "material ripple":
-                clickEffect.classList.add("ripple-simple")
+                clickEffect.className = "ripple-simple effect"
                 break
                 case "splash":
-                clickEffect.classList.add("splash")
+                clickEffect.className = "splash effect"
 
                 for(let i = 0; i < 5; i++){
                     const fx = document.createElement("div")
@@ -65,9 +67,9 @@ export const click = (e, elements, clickValueRed) => {
                 }
                 break
         }
-        
+
         clickEffect.style.left = `${x - clickEffect.offsetWidth / 2}px`
-        clickEffect.style.top = `${y - headerHeight - clickEffect.offsetHeight / 2}px`
+        clickEffect.style.top = `${y - clickEffect.offsetHeight / 2}px`
 
         setTimeout(() => { clickEffect.remove() }, 400);
     }

@@ -30,6 +30,15 @@ const Options = ({ dismiss }) => {
 
     function click(e) {
         if (e.currentTarget === e.target) {
+
+
+            //checks if CSS changes needs to be done
+            const squareElement = document.querySelector(".the-square")
+            if(options[2].value == "splash"){
+                squareElement.classList.remove("square-clip")
+            } else {
+                squareElement.classList.add("square-clip")
+            }
             dismiss()
         }
     }

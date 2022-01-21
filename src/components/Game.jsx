@@ -30,8 +30,10 @@ function Game(){
     const [generatorElements, setGeneratorElements] = useState([])
     const [upgradeElements, setUpgradeElements] = useState([])
     const [elements, setElements] = useState({
-        main: null, header: null
+        main: null, header: null, background: null, container: null
     })
+
+    const [sideLength, setSideLength] = useState(0)
 
     const [color, setColor] = useState({r: 0, g: 0, b: 0, p: 0})
     
@@ -55,8 +57,10 @@ function Game(){
     
     //load game
     useEffect(() => {
-        setElements({main: document.querySelector('.square'), 
-        header: document.querySelector(".App-header")})
+        setElements({main: document.querySelector('.the-square'), 
+        header: document.querySelector(".App-header"),
+        background: document.querySelector(".square"),
+        container: document.querySelector(".square-container")})
         
         //things i need to know because im too lazy to check manually
         console.log(generatorUpgrades.length + upgrades.length + " total upgrades")
@@ -101,15 +105,24 @@ function Game(){
             })
         }
         
+        //Initial check to make sure the square has any size
+        setSideLength(document.querySelector(".square").offsetHeight/3)
+
         onUpgrade()
     }, [])
         
-        //Checks if the window is active or not
-        document.addEventListener('visibilitychange', () => {
-            if(document.hidden){
-                setIsActive(false)
-            } else {
+    //Checks if the window is active or not
+    document.addEventListener('visibilitychange', () => {
+        if(document.hidden){
+            setIsActive(false)
+        } else {
             setIsActive(true)
+        }
+    })
+
+    window.addEventListener('resize', () => {
+        if(elements.background) {
+            setSideLength(elements.background.offsetHeight/3)
         }
     })
     
@@ -435,9 +448,23 @@ function Game(){
             <p>Upgrades purchased: {stats.upgradeCount}</p>
         </div>
 
+        function test() {
+            let sideLength = 0
+            if(elements.background != null){
+                sideLength = elements.background.offsetHeight/3
+            }
+            return {height: sideLength, width: sideLength }
+        }
+
+        const theSquare = <div className="the-square square-clip" onClick={onClick} style={{
+            height: (sideLength > 160 ? sideLength : 160) + "px" , 
+            width: (sideLength > 160 ? sideLength : 160) + "px"
+            }}>
+        </div>
+
     return (
         <section>
-        <div className="square" onClick={onClick}></div>
+        <div className="square"></div>
             <div className={"color-values "}>
                 <span className="cur-r">
                     {Math.floor(color.r)}
@@ -453,6 +480,13 @@ function Game(){
                 </span>
                 <p>rps: {handleBigNumber(rps.toFixed(1))}</p>
             </div>
+                <div className="square-container">
+                    {theSquare}
+                    <div className="square-background" style={{
+                        height: (sideLength > 160 ? sideLength : 160) + "px" , 
+                        width: (sideLength > 160 ? sideLength : 160) + "px"
+                        }}></div>
+                </div>
             {leftMenu}
             {rightMenu}
             {options[4].value ? leftStats : null}
