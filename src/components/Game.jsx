@@ -30,7 +30,7 @@ function Game(){
     const [generatorElements, setGeneratorElements] = useState([])
     const [upgradeElements, setUpgradeElements] = useState([])
     const [elements, setElements] = useState({
-        main: null, header: null, background: null, container: null
+        main: null, header: null, background: null, container: null, transformContainer: null
     })
 
     const [sideLength, setSideLength] = useState(0)
@@ -59,8 +59,9 @@ function Game(){
     useEffect(() => {
         setElements({main: document.querySelector('.the-square'), 
         header: document.querySelector(".App-header"),
-        background: document.querySelector(".square"),
-        container: document.querySelector(".square-container")})
+        background: document.querySelector(".background"),
+        container: document.querySelector(".square-container"),
+        transformContainer: document.querySelector(".square-transform-container")})
         
         //things i need to know because im too lazy to check manually
         console.log(generatorUpgrades.length + upgrades.length + " total upgrades")
@@ -106,7 +107,7 @@ function Game(){
         }
         
         //Initial check to make sure the square has any size
-        setSideLength(document.querySelector(".square").offsetHeight/3)
+        setSideLength(document.querySelector(".background").offsetHeight/3)
 
         onUpgrade()
     }, [])
@@ -464,7 +465,7 @@ function Game(){
 
     return (
         <section>
-        <div className="square"></div>
+        <div className="background"></div>
             <div className={"color-values "}>
                 <span className="cur-r">
                     {Math.floor(color.r)}
@@ -481,11 +482,14 @@ function Game(){
                 <p>rps: {handleBigNumber(rps.toFixed(1))}</p>
             </div>
                 <div className="square-container">
+                    <div className="square-transform-container">
+
                     {theSquare}
                     <div className="square-background" style={{
                         height: (sideLength > 160 ? sideLength : 160) + "px" , 
                         width: (sideLength > 160 ? sideLength : 160) + "px"
-                        }}></div>
+                    }}></div>
+                    </div>
                 </div>
             {leftMenu}
             {rightMenu}

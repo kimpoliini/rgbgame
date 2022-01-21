@@ -2,6 +2,9 @@ import { options } from "./data/options"
 import { handleBigNumber } from "./colorCalc"
 
 export const click = (e, elements, clickValueRed) => {
+    elements.transformContainer.classList.remove("on-click")
+
+
     let headerHeight, x, y, randomWidthOffset = 0, randomHeightOffset = 0
     //checks options if any click effects are enabled
     if(options[1].value || options[3].value){
@@ -11,7 +14,7 @@ export const click = (e, elements, clickValueRed) => {
         x = e.clientX
         y = e.clientY
 
-        // console.log("x: " + x + ", y: " + y);
+        // console.log("x: " + x + ", y: " + y)
 
         //makes sure the text doesn't appear underneath the header
         randomWidthOffset = Math.floor(Math.random() * 60) - 30
@@ -42,7 +45,7 @@ export const click = (e, elements, clickValueRed) => {
     //checks if click effect graphic option is enabled
     if(options[1].value){
         const clickEffect = document.createElement("div")
-        clickEffect.style.position = "fixed"
+        clickEffect.style.position = "absolute"
         elements.main.appendChild(clickEffect)
                 
         switch(options[2].value){
@@ -68,9 +71,15 @@ export const click = (e, elements, clickValueRed) => {
                 break
         }
 
-        clickEffect.style.left = `${x - clickEffect.offsetWidth / 2}px`
-        clickEffect.style.top = `${y - clickEffect.offsetHeight / 2}px`
+
+        let distanceY = window.pageYOffset + elements.main.getBoundingClientRect().top
+        let distanceX = window.pageXOffset + elements.main.getBoundingClientRect().left
+
+        clickEffect.style.left = `${x - distanceX - clickEffect.offsetWidth / 2}px`
+        clickEffect.style.top = `${y - distanceY - clickEffect.offsetHeight / 2}px`
 
         setTimeout(() => { clickEffect.remove() }, 400);
     }
+    elements.transformContainer.classList.add("on-click")
+
 }
