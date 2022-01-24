@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react"
 import Generator from "./Generator"
 import Upgrade from "./Upgrade"
 import "./styles/game.css"
+import "./styles/effects.css"
 import { useInterval } from "../js/interval.jsx"
 import { redToRgb, rgbToRed, buy, handleBigNumber } from "../js/colorCalc.jsx"
 import { generators, levelThresholds } from  "../js/data/generators.js"
@@ -485,10 +486,10 @@ function Game(){
                     <div className="square-transform-container">
 
                     {theSquare}
-                    <div className="square-background" style={{
+                    {/* <div className="square-background" style={{
                         height: (sideLength > 160 ? sideLength : 160) + "px" , 
                         width: (sideLength > 160 ? sideLength : 160) + "px"
-                    }}></div>
+                    }}></div> */}
                     </div>
                 </div>
             {leftMenu}
