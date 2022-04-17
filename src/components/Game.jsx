@@ -87,11 +87,19 @@ function Game(){
             })
         }
         
-        //Checks if there are any upgrades bought before trying to load them
+        //Checks if there are any upgrades bought or have ranks before trying to load them
         if(cookies.upgrades){
             upgrades.forEach((upgrade, i) => {
                 if(cookies.upgrades[i] != null){
                     upgrade.bought = cookies.upgrades[i].bought
+
+                    if(cookies.upgrades[i].rank){
+                        console.log(`${upgrade.name} has rank ${cookies.upgrades[i].rank}`);
+                        upgrade.rank = cookies.upgrades[i].rank
+                        upgrade.price = cookies.upgrades[i].price
+                    }
+                    // console.log(upgrade);
+
                 } else {
                     upgrade.bought = false
                 }
@@ -144,11 +152,16 @@ function Game(){
             }
         })
         
-        //Loops through upgrades and saves how many are bought
+        //Loops through upgrades and saves how many are bought or have ranks
         let upgradeData = []
         upgrades.forEach((upgrade, i) => {
             upgradeData.push({})
             upgradeData[i].bought = upgrade.bought
+
+            if(upgrade.rank){
+                upgradeData[i].rank = upgrade.rank
+                upgradeData[i].price = upgrade.price
+            }
         })
 
         let optionsData = []
@@ -164,7 +177,7 @@ function Game(){
 
         console.log("saved")
         addNotification("Saved")
-    }, 60000)
+    }, 6000)
     
     //increments rgb each tick
     useInterval(() => {
@@ -323,18 +336,23 @@ function Game(){
 
     function onUpgrade(){
         //Sorts upgrades by price and adds them to the list
-        const sortedUpgrades = upgrades.sort((a,b) => {
+        const sortedUpgrades = [...upgrades].sort((a,b) => {
             let aPrice = rgbToRed(Object.assign({}, a.price))
             let bPrice = rgbToRed(Object.assign({}, b.price))
             return aPrice - bPrice
         })
-        let upgradeElements = sortedUpgrades.map((upgrade, i) => { 
+
+        let upgradeElements = sortedUpgrades.map((upgrade, i) => {
+            //Gets the index of the upgrade from upgrades.js
+            const index = upgrades.indexOf(upgrade)
+
             if(!upgrade.bought){
-                return <Upgrade key={i} upgradeId={i} onClick={() => tryBuyUpgrade(i)}/>
+                return <Upgrade key={index} upgradeId={index} onClick={() => tryBuyUpgrade(index)}/>
             } else {
                 return
             }
         })
+    
         setUpgradeElements(upgradeElements)
         
         checkRgb()
@@ -399,11 +417,27 @@ function Game(){
         const c = values.color
         const remainder = buy([c[0], c[1], c[2], c[3]], price)
 
+        console.log(upgrade);
+
+
         if(remainder != null){
             values.color = [remainder[0], remainder[1], remainder[2], remainder[3]]
             handleUpgrade(id, values.rps)
             
-            upgrade.bought = true
+            //Checks if an upgrade has ranks, increments if it does
+            if(upgrade.maxRanks){
+                upgrade.rank ? upgrade.rank += 1 : upgrade.rank = 1
+                if(upgrade.rank >= upgrade.maxRanks) {
+                    upgrade.bought = true
+                    console.log("max rank reached");
+                } else {
+                    //Price increase for upgrades with rank
+                    upgrade.price = redToRgb(Math.floor(rgbToRed(upgrade.price)*1.5))
+                }
+            } else {
+                upgrade.bought = true
+            }
+
             onUpgrade()
             checkCanAfford()
         }
