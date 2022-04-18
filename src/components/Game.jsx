@@ -14,6 +14,8 @@ import { useCookies } from "react-cookie"
 import { options } from "../js/data/options"
 import { click } from "../js/click"
 import Notification from "./Notification"
+import SideMenu from "./SideMenu"
+import RgbCounter from "./RgbCounter"
 
 function Game(){
     
@@ -177,7 +179,7 @@ function Game(){
 
         console.log("saved")
         addNotification("Saved")
-    }, 6000)
+    }, 30000)
     
     //increments rgb each tick
     useInterval(() => {
@@ -193,12 +195,14 @@ function Game(){
     useInterval(() => {
         let bg = elements.main
 
+        let c = redToRgb(rgbToRed(values.color))
+
         if(rgbps[2] >= 1){
-            bg.style.backgroundColor = `rgb(255, 255, ${color.b})`
+            bg.style.backgroundColor = `rgb(255, 255, ${c[2]})`
         } else if(rgbps[1] >= 1){
-            bg.style.backgroundColor = `rgb(255, ${color.g}, ${color.b})`
+            bg.style.backgroundColor = `rgb(255, ${c[1]}, ${c[2]})`
         } else {
-            bg.style.backgroundColor = `rgb(${color.r}, ${color.g}, ${color.b})`
+            bg.style.backgroundColor = `rgb(${c[0]}, ${c[1]}, ${c[2]})`
         }
     }, 1000 / options[6].value)
     
@@ -266,14 +270,6 @@ function Game(){
     function incrementRgb(rgb){
         const c = values.color
         values.color = [c[0] + rgb[0], c[1] + rgb[1], c[2] + rgb[2], c[3] + rgb[3]]
-        checkRgb()
-    }
-    
-    function checkRgb(){
-        let c = redToRgb(rgbToRed(values.color))
-        values.color = c
-        
-        setColor({r: c[0], g: c[1], b: c[2], p: c[3]})
     }
     
     function calculateStats(){
@@ -355,7 +351,6 @@ function Game(){
     
         setUpgradeElements(upgradeElements)
         
-        checkRgb()
         calculateStats()
         checkMultiplier()
     }
@@ -506,21 +501,8 @@ function Game(){
     return (
         <section>
         <div className="background"></div>
-            <div className={"color-values "}>
-                <span className="cur-r">
-                    {Math.floor(color.r)}
-                </span>
-                <span className="cur-g">
-                    {color.g}
-                </span>
-                <span className="cur-b">
-                    {color.b}
-                </span>
-                <span className="cur-p">
-                    {handleBigNumber(color.p)} px
-                </span>
-                <p>rps: {handleBigNumber(rps.toFixed(1))}</p>
-            </div>
+        <RgbCounter rps={rps} />
+            
                 <div className="square-container">
                     <div className="square-transform-container">
 
@@ -528,8 +510,8 @@ function Game(){
                     </div>
                 </div>
             
-            {sideMenu("left")}
-            {sideMenu("right")}
+            <SideMenu direction={"left"} list={upgradeElements} callback={(d)=>openMenu(d)}/>
+            <SideMenu direction={"right"} list={generatorElements} callback={(d)=>openMenu(d)}/>
             {options[4].value ? leftStats : null}
             {options[4].value ? rightStats : null}
             {notifs}

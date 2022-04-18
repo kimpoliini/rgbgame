@@ -35,7 +35,7 @@ export const options = [
         title: "Framerate",
         tooltip: "How many times numbers are calculated each second. Does not affect RPS. High values might have a negative impact on performance",
         type: "dropdown",
-        typeValues: [144, 120, 75, 60, 30, 15, 10, 5, 1],
+        typeValues: [144, 120, 75, 60, 30, 15],
         value: 30,
     },
     {
