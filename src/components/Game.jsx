@@ -120,7 +120,7 @@ function Game(){
 
         onUpgrade()
     }, [])
-        
+    
     //Checks if the window is active or not
     document.addEventListener('visibilitychange', () => {
         if(document.hidden){
@@ -449,32 +449,44 @@ function Game(){
 
         menu.classList.toggle(`hidden-${dir}`)
 
-        isMenuOpen[dir] ? button.firstChild.innerText = ">" : button.firstChild.innerText = "<"
+        if(isMenuOpen[dir]){
+            dir == "left" ? button.firstChild.innerText = ">" : button.lastChild.innerText = ">"
+        } else {
+            dir == "left" ? button.firstChild.innerText = "<" : button.lastChild.innerText = "<"
+        }
 
         setIsMenuOpen({...isMenuOpen, [dir]: !isMenuOpen[dir]})
     }
 
-     const leftMenu = <div className="left-menu side-menu">
-         <div className="left-menu-content menu-content">
-             <h4>Upgrades</h4>
-             {upgradeElements}
-         </div>
-         <button className="open-left menu-button" onClick={() => openMenu("left")}><span>{">"}</span></button>
-     </div>
-     
-     const rightMenu = <div className="right-menu side-menu">
-        <button className="open-right menu-button" onClick={() => openMenu("right")}><span>{">"}</span></button>
-         <div className="right-menu-content menu-content">
-            <h4>Generators</h4>
-            {generatorElements}
-             </div>
-        </div>
+        const sideMenuButton = (dir) => {
+            const isLeft = dir == "left"
+            const name = isLeft ? <span>Upgrades</span> : <span>Generators</span>
+            const arrow = <span className="arrow">{">"}</span>
+            return <button className={`open-${dir} menu-button`} onClick={() => openMenu(dir)}>
+                   {isLeft ? arrow : name}
+                   {isLeft ? name : arrow}
+                    </button>
+        }
+
+        const sideMenuContent = (dir) => (
+        <div className={`${dir}-menu-content menu-content`}>
+                    {dir == "left" ? upgradeElements : generatorElements}
+                     </div>
+        )
+
+        const sideMenu = (dir) => {
+            const isLeft = dir == "left"
+            return <div className={`${dir}-menu side-menu`}>
+                {isLeft ? sideMenuContent(dir) : sideMenuButton(dir)}
+                {isLeft ? sideMenuButton(dir) : sideMenuContent(dir)}
+            </div>
+        }
 
         const leftStats = <div className="stats bottom-right">
             <p>R/t: {rpt.toFixed(2)}</p>
             <p>RGB/s: {rgbps[0].toFixed(2)}, {rgbps[1]}, {rgbps[2]}, {rgbps[3]}</p>
             <p>RGB/t: {rgbpt[0].toFixed(2)}, {rgbpt[1]}, {rgbpt[2]}, {rgbpt[3]}</p>
-            <p>R/click: {clickValueRed}</p>
+            <p>R/click: {clickValueRed.toFixed(2)}</p>
         </div>
 
         const rightStats = <div className="stats bottom-left">
@@ -484,15 +496,8 @@ function Game(){
             <p>Upgrades purchased: {stats.upgradeCount}</p>
         </div>
 
-        function test() {
-            let sideLength = 0
-            if(elements.background != null){
-                sideLength = elements.background.offsetHeight/3
-            }
-            return {height: sideLength, width: sideLength }
-        }
-
-        const theSquare = <div className="the-square square-clip" onClick={onClick} style={{
+        const theSquare = <div className="the-square square-clip" onClick={onClick} 
+        style={{
             height: (sideLength > 160 ? sideLength : 160) + "px" , 
             width: (sideLength > 160 ? sideLength : 160) + "px"
             }}>
@@ -520,14 +525,11 @@ function Game(){
                     <div className="square-transform-container">
 
                     {theSquare}
-                    {/* <div className="square-background" style={{
-                        height: (sideLength > 160 ? sideLength : 160) + "px" , 
-                        width: (sideLength > 160 ? sideLength : 160) + "px"
-                    }}></div> */}
                     </div>
                 </div>
-            {leftMenu}
-            {rightMenu}
+            
+            {sideMenu("left")}
+            {sideMenu("right")}
             {options[4].value ? leftStats : null}
             {options[4].value ? rightStats : null}
             {notifs}

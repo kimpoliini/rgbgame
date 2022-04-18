@@ -32,9 +32,7 @@ section {
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 1fr;
-    
-    background-color: black;
-    outline: black solid 4px;
+
     box-shadow: rgba(0, 0, 0, 0.6) 8px 8px 8px;
     border-radius: 2%;
 }
@@ -127,23 +125,25 @@ section {
 }
 
 .side-menu {
-    top: 15%;
+    margin-top: 4px;
     height: 75%;
     position: fixed;
     display: flex;
     pointer-events: none;
-    width: 12em;
+    width: "100%";
     transition: left, right, 0.25s ease-in-out;
     z-index: 12;
 }
 
 .menu-content {
+    margin-top: 4px;
+    top: 64px;
     position: relative;
     padding: 8px;
     width: 10em;
     overflow-x: hidden;
     flex-direction: column;
-    padding-top: 8px;
+    padding-top: 4px;
     background-color: #282c34;
     overflow-y: scroll;
     pointer-events: auto;
@@ -158,17 +158,29 @@ section {
 }
 
 .menu-button {
+    padding-left: 8px;
+    padding-right: 8px;
+    position: fixed;
     z-index: 1;
     pointer-events: auto;
     cursor: pointer;
-    margin-top: 1em;
     color: white;
-    height: 4em;
-    width: 2em;
-    font-size: 24pt;
+    height: 64px;
+    font-weight: bold;
+    font-size: 16pt;
     background-color: #282c34;
     border: none;
     transition: background-color 0.2s;
+}
+
+.arrow {
+    margin-left: 8px;
+    margin-right: 8px;
+}
+
+.menu-button span:not(.arrow){
+    margin-left: 8px;
+    margin-right: 8px;
 }
 
 .menu-content span {
@@ -195,16 +207,17 @@ section {
 /* left menus */
 
 .left-menu {
-    left: calc(-10em + 10px);
+    left: calc(-12em);
 }
 
-.left-menu-content {    
+.left-menu-content {
     border-bottom-right-radius: 8px;
     border-top-right-radius: 8px;
     box-shadow: rgba(0, 0, 0, 0.25) 2px 2px 4px;
 }
 
 .open-left {
+    left: 0;
     border-top-right-radius: 8px;
     border-bottom-right-radius: 8px;
     box-shadow: rgba(0, 0, 0, 0.25) 4px 2px 4px;
@@ -213,22 +226,29 @@ section {
 /* right menus */
 
 .right-menu {
-    right: calc(-10em + 10px);
+    right: calc(-12em);
 }
 
 .right-menu-content {
     border-bottom-left-radius: 8px;
     border-top-left-radius: 8px;
     box-shadow: rgba(0, 0, 0, 0.25) -2px 2px 4px;
+
+    direction: rtl;
+}
+
+.right-menu-content > div {
+    direction: ltr;
 }
 
 .open-right {
+    right: 0;
     border-top-left-radius: 8px;
     border-bottom-left-radius: 8px;
     box-shadow: rgba(0, 0, 0, 0.25) -4px 2px 4px;
 }
 
-.open-right span {
+.open-right .arrow {
     display: inline-block;
     transform: rotate(180deg);
 }
