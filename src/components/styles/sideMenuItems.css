@@ -10,6 +10,12 @@ p {
     margin: 6px;
 }
 
+p:not(.color-values > p){
+    margin: 0px 6px 4px 6px;
+    font-size: 10pt;
+    color: rgb(200, 200, 200);
+}
+
 p:nth-child(3):not(.stats > p){
     font-size: 10pt;
     font-style: italic;
@@ -62,6 +68,7 @@ p:nth-child(3):not(.stats > p){
 }
 
 .generator-price {
+    margin-top: 8px;
     margin-left: 4px;
     font-size: 12pt;
     font-weight: bold;
@@ -96,6 +103,7 @@ p:nth-child(3):not(.stats > p){
 }
 
 .generator-count {
+    padding: 2px 0px 4px 0px;
     margin: 4px;
     width: 6em;
     color: white;
@@ -106,16 +114,16 @@ p:nth-child(3):not(.stats > p){
     z-index: 1; 
     font-weight: bold;
     overflow: hidden;
-    text-shadow: rgba(0, 0, 0, 1) 0px 0px 5px;
+    text-shadow: black 0px 0px 5px;
 }
 
 .generator-count-bar {
     background-color: rgba(255, 255, 255, 0.4);
+    top: 0px;
     left: 0px;
     width: 0%;
     height: 100%;
     position: absolute;
-    top: 0px;
     z-index: -1; 
     transition: width 0.15s;
 }
