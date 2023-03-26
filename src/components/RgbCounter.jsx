@@ -13,8 +13,8 @@ const RgbCounter = ({ rps }) => {
     useInterval(() => {
         checkColor()
 
-        if (framerate != options[5].value) {
-            setFramerate(options[5].value)
+        if (framerate != options[5].currentValue) {
+            setFramerate(options[5].currentValue)
         }
     }, 1000 / framerate)
 

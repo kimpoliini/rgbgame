@@ -40,7 +40,7 @@ const Generator = ({ onClick, genId }) => {
         }}
             //prevent images from animating when hovering over things you can't afford, or when animations are disabled
             onMouseEnter={() => {
-                if (options[0].value) {
+                if (options[0].currentValue) {
                     const el = document.querySelector(`#generator-${genId}`)
                     if (!el.classList.contains("cannot-afford")) {
                         setImage(gen.imageAnim)

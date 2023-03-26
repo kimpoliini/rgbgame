@@ -102,7 +102,7 @@ function Game() {
         //Checks if there are option values stored in cookies
         if (cookies.options) {
             options.forEach((opt, i) => {
-                if (cookies.options[i] != null) opt.value = cookies.options[i].value
+                if (cookies.options[i] != null) opt.currentValue = cookies.options[i].currentValue
             })
         }
 
@@ -149,7 +149,7 @@ function Game() {
         let optionsData = []
         options.forEach((opt, i) => {
             optionsData.push({})
-            optionsData[i].value = opt.value
+            optionsData[i].currentValue = opt.currentValue
         })
 
         setCookie('values', values)
@@ -166,8 +166,8 @@ function Game() {
         if (rps > 0) {
             incrementRgb(rgbpt)
         }
-        if (framerate != options[5].value) {
-            setFramerate(options[5].value)
+        if (framerate != options[5].currentValue) {
+            setFramerate(options[5].currentValue)
         }
     }, 1000 / framerate)
 
@@ -184,7 +184,7 @@ function Game() {
         } else {
             bg.style.backgroundColor = `rgb(${c[0]}, ${c[1]}, ${c[2]})`
         }
-    }, 1000 / options[6].value)
+    }, 1000 / options[6].currentValue)
 
     //checks if you can afford each generator and applies a filter for those you cannot
     useInterval(() => {
@@ -414,8 +414,8 @@ function Game() {
 
             <SideMenu direction={"left"} list={upgradeElements} callback={(d) => openMenu(d)} />
             <SideMenu direction={"right"} list={generatorElements} callback={(d) => openMenu(d)} />
-            {options[4].value ? leftStats : null}
-            {options[4].value ? rightStats : null}
+            {options[4].currentValue ? leftStats : null}
+            {options[4].currentValue ? rightStats : null}
             {notifs}
         </section>
     )

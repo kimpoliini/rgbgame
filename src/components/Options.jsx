@@ -14,9 +14,8 @@ const Options = ({ dismiss }) => {
         let optionCallback = {}
         const elements = options.map((o, i) => {
             if (o.type == "button") {
-                switch (o.value) {
+                switch (o.currentValue) {
                     case "reset":
-                        console.log(i + " is reset")
                         optionCallback = reset
                         break
                 }
@@ -30,11 +29,9 @@ const Options = ({ dismiss }) => {
 
     function click(e) {
         if (e.currentTarget === e.target) {
-
-
             //checks if CSS changes needs to be done
             const squareElement = document.querySelector(".the-square")
-            if(options[2].value == "splash"){
+            if(options[2].currentValue == "splash"){
                 squareElement.classList.remove("square-clip")
             } else {
                 squareElement.classList.add("square-clip")

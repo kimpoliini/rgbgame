@@ -7,7 +7,7 @@ export const click = (e, elements, clickValueRed) => {
 
     let headerHeight, x, y, randomWidthOffset = 0, randomHeightOffset = 0
     //checks options if any click effects are enabled
-    if(options[1].value || options[3].value){
+    if(options[1].currentValue || options[3].currentValue){
         headerHeight = elements.header.offsetHeight
         
         //getting pointer location and accounts for header
@@ -22,7 +22,7 @@ export const click = (e, elements, clickValueRed) => {
     }
     
     //checks if click effect text option is enabled
-    if(options[3].value){
+    if(options[3].currentValue){
         const text = document.createElement("span")
         text.innerText = handleBigNumber(clickValueRed.toFixed(0))
         
@@ -43,12 +43,12 @@ export const click = (e, elements, clickValueRed) => {
     }
     
     //checks if click effect graphic option is enabled
-    if(options[1].value){
+    if(options[1].currentValue){
         const clickEffect = document.createElement("div")
         clickEffect.style.position = "absolute"
         elements.main.appendChild(clickEffect)
                 
-        switch(options[2].value){
+        switch(options[2].currentValue){
             case "ripple":
                 clickEffect.className = "ripple effect"
                 break
