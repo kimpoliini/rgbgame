@@ -13,6 +13,8 @@ import { useCookies } from "react-cookie"
 import { options } from "../js/data/options"
 import { click } from "../js/click"
 import Notification from "./Notification"
+import SideMenu from "./SideMenu"
+import RgbCounter from "./RgbCounter"
 
 function Game() {
 
@@ -109,7 +111,6 @@ function Game() {
 
         onUpgrade()
     }, [])
-
     //Checks if the window is active or not
     document.addEventListener('visibilitychange', () => {
         if (document.hidden) {
@@ -174,12 +175,14 @@ function Game() {
     useInterval(() => {
         let bg = elements.main
 
-        if (rgbps[2] >= 1) {
-            bg.style.backgroundColor = `rgb(255, 255, ${color[2]})`
-        } else if (rgbps[1] >= 1) {
-            bg.style.backgroundColor = `rgb(255, ${color[1]}, ${color[2]})`
+        let c = redToRgb(rgbToRed(values.color))
+
+        if(rgbps[2] >= 1){
+            bg.style.backgroundColor = `rgb(255, 255, ${c[2]})`
+        } else if(rgbps[1] >= 1){
+            bg.style.backgroundColor = `rgb(255, ${c[1]}, ${c[2]})`
         } else {
-            bg.style.backgroundColor = `rgb(${color[0]}, ${color[1]}, ${color[2]})`
+            bg.style.backgroundColor = `rgb(${c[0]}, ${c[1]}, ${c[2]})`
         }
     }, 1000 / options[6].value)
 
@@ -245,13 +248,6 @@ function Game() {
     function incrementRgb(rgb) {
         const c = values.color
         values.color = [c[0] + rgb[0], c[1] + rgb[1], c[2] + rgb[2], c[3] + rgb[3]]
-        checkRgb()
-    }
-
-    function checkRgb() {
-        let c = redToRgb(rgbToRed(values.color))
-        values.color = c
-        setColor(c)
     }
 
     function calculateStats() {
@@ -307,8 +303,7 @@ function Game() {
         })
 
         setUpgradeElements(upgradeElements)
-
-        checkRgb()
+        
         calculateStats()
         checkMultiplier()
     }
@@ -351,33 +346,45 @@ function Game() {
 
         menu.classList.toggle(`hidden-${dir}`)
 
-        isMenuOpen[dir] ? button.firstChild.innerText = ">" : button.firstChild.innerText = "<"
+        if(isMenuOpen[dir]){
+            dir == "left" ? button.firstChild.innerText = ">" : button.lastChild.innerText = ">"
+        } else {
+            dir == "left" ? button.firstChild.innerText = "<" : button.lastChild.innerText = "<"
+        }
 
         setIsMenuOpen({ ...isMenuOpen, [dir]: !isMenuOpen[dir] })
     }
 
-    const leftMenu = <div className="left-menu side-menu">
-        <div className="left-menu-content menu-content">
-            <h4>Upgrades</h4>
-            {upgradeElements}
-        </div>
-        <button className="open-left menu-button" onClick={() => openMenu("left")}><span>{">"}</span></button>
-    </div>
+        const sideMenuButton = (dir) => {
+            const isLeft = dir == "left"
+            const name = isLeft ? <span>Upgrades</span> : <span>Generators</span>
+            const arrow = <span className="arrow">{">"}</span>
+            return <button className={`open-${dir} menu-button`} onClick={() => openMenu(dir)}>
+                   {isLeft ? arrow : name}
+                   {isLeft ? name : arrow}
+                    </button>
+        }
 
-    const rightMenu = <div className="right-menu side-menu">
-        <button className="open-right menu-button" onClick={() => openMenu("right")}><span>{">"}</span></button>
-        <div className="right-menu-content menu-content">
-            <h4>Generators</h4>
-            {generatorElements}
-        </div>
-    </div>
+        const sideMenuContent = (dir) => (
+        <div className={`${dir}-menu-content menu-content`}>
+                    {dir == "left" ? upgradeElements : generatorElements}
+                     </div>
+        )
 
-    const leftStats = <div className="stats bottom-right">
-        <p>R/t: {rpt.toFixed(2)}</p>
-        <p>RGB/s: {rgbps[0].toFixed(2)}, {rgbps[1]}, {rgbps[2]}, {rgbps[3]}</p>
-        <p>RGB/t: {rgbpt[0].toFixed(2)}, {rgbpt[1]}, {rgbpt[2]}, {rgbpt[3]}</p>
-        <p>R/click: {clickValueRed.toFixed(2)}</p>
-    </div>
+        const sideMenu = (dir) => {
+            const isLeft = dir == "left"
+            return <div className={`${dir}-menu side-menu`}>
+                {isLeft ? sideMenuContent(dir) : sideMenuButton(dir)}
+                {isLeft ? sideMenuButton(dir) : sideMenuContent(dir)}
+            </div>
+        }
+
+        const leftStats = <div className="stats bottom-right">
+            <p>R/t: {rpt.toFixed(2)}</p>
+            <p>RGB/s: {rgbps[0].toFixed(2)}, {rgbps[1]}, {rgbps[2]}, {rgbps[3]}</p>
+            <p>RGB/t: {rgbpt[0].toFixed(2)}, {rgbpt[1]}, {rgbpt[2]}, {rgbpt[3]}</p>
+            <p>R/click: {clickValueRed.toFixed(2)}</p>
+        </div>
 
     const rightStats = <div className="stats bottom-left">
         <p>Total multiplier: {stats.totalMultiplier.toFixed(3)}x</p>
@@ -386,37 +393,27 @@ function Game() {
         <p>Upgrades purchased: {stats.upgradeCount}</p>
     </div>
 
-    const theSquare = <div className="the-square square-clip" onClick={onClick} style={{
-        height: (sideLength > 160 ? sideLength : 160) + "px",
-        width: (sideLength > 160 ? sideLength : 160) + "px"
-    }}>
-    </div>
+        const theSquare = <div className="the-square square-clip" onClick={onClick} 
+        style={{
+            height: (sideLength > 160 ? sideLength : 160) + "px" , 
+            width: (sideLength > 160 ? sideLength : 160) + "px"
+            }}>
+        </div>
 
     return (
         <section>
-            <div className="background"></div>
-            <div className={"color-values "}>
-                <span className="cur-r">
-                    {Math.floor(color[0])}
-                </span>
-                <span className="cur-g">
-                    {color[1]}
-                </span>
-                <span className="cur-b">
-                    {color[2]}
-                </span>
-                <span className="cur-p">
-                    {handleBigNumber(color[3])} px
-                </span>
-                <p>rps: {handleBigNumber(rps.toFixed(2))}</p>
-            </div>
-            <div className="square-container">
-                <div className="square-transform-container">
+        <div className="background"></div>
+        <RgbCounter rps={rps} />
+            
+                <div className="square-container">
+                    <div className="square-transform-container">
+
                     {theSquare}
+                    </div>
                 </div>
-            </div>
-            {leftMenu}
-            {rightMenu}
+            
+            <SideMenu direction={"left"} list={upgradeElements} callback={(d)=>openMenu(d)}/>
+            <SideMenu direction={"right"} list={generatorElements} callback={(d)=>openMenu(d)}/>
             {options[4].value ? leftStats : null}
             {options[4].value ? rightStats : null}
             {notifs}
