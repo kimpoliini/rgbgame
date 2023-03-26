@@ -15,7 +15,7 @@ export const redToRgb = (red) => {
 }
 
 //turns a value of rgb into red
-export const rgbToRed = (rgb) => {
+export const rgbToRed = ([...rgb]) => {
     for(let i = 4; i > 0; i--){
         if(i === 0) break
         
@@ -30,7 +30,7 @@ export const rgbToRed = (rgb) => {
     return red
 }
 
-export const buy = (currentRgb, priceRgb) => {
+export const buy = ([...currentRgb], [...priceRgb]) => {
     let priceRed = rgbToRed(priceRgb)
     let currentRed = rgbToRed(currentRgb)
 
