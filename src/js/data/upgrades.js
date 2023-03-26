@@ -51,7 +51,7 @@ class Upgrade {
 
     buyUpgrade(currentColor) {
         if (this._bought) return
-        if (rgbToRed(currentColor) >= rgbToRed(this._price)) {
+        if (rgbToRed(currentColor) >= rgbToRed(this.price)) {
             const remainder = buy(currentColor, this.price)
             this._rank++
 

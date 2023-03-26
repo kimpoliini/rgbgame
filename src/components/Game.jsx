@@ -177,9 +177,9 @@ function Game() {
 
         let c = redToRgb(rgbToRed(values.color))
 
-        if(rgbps[2] >= 1){
+        if (rgbps[2] >= 1) {
             bg.style.backgroundColor = `rgb(255, 255, ${c[2]})`
-        } else if(rgbps[1] >= 1){
+        } else if (rgbps[1] >= 1) {
             bg.style.backgroundColor = `rgb(255, ${c[1]}, ${c[2]})`
         } else {
             bg.style.backgroundColor = `rgb(${c[0]}, ${c[1]}, ${c[2]})`
@@ -303,7 +303,7 @@ function Game() {
         })
 
         setUpgradeElements(upgradeElements)
-        
+
         calculateStats()
         checkMultiplier()
     }
@@ -346,7 +346,7 @@ function Game() {
 
         menu.classList.toggle(`hidden-${dir}`)
 
-        if(isMenuOpen[dir]){
+        if (isMenuOpen[dir]) {
             dir == "left" ? button.firstChild.innerText = ">" : button.lastChild.innerText = ">"
         } else {
             dir == "left" ? button.firstChild.innerText = "<" : button.lastChild.innerText = "<"
@@ -355,36 +355,36 @@ function Game() {
         setIsMenuOpen({ ...isMenuOpen, [dir]: !isMenuOpen[dir] })
     }
 
-        const sideMenuButton = (dir) => {
-            const isLeft = dir == "left"
-            const name = isLeft ? <span>Upgrades</span> : <span>Generators</span>
-            const arrow = <span className="arrow">{">"}</span>
-            return <button className={`open-${dir} menu-button`} onClick={() => openMenu(dir)}>
-                   {isLeft ? arrow : name}
-                   {isLeft ? name : arrow}
-                    </button>
-        }
+    const sideMenuButton = (dir) => {
+        const isLeft = dir == "left"
+        const name = isLeft ? <span>Upgrades</span> : <span>Generators</span>
+        const arrow = <span className="arrow">{">"}</span>
+        return <button className={`open-${dir} menu-button`} onClick={() => openMenu(dir)}>
+            {isLeft ? arrow : name}
+            {isLeft ? name : arrow}
+        </button>
+    }
 
-        const sideMenuContent = (dir) => (
+    const sideMenuContent = (dir) => (
         <div className={`${dir}-menu-content menu-content`}>
-                    {dir == "left" ? upgradeElements : generatorElements}
-                     </div>
-        )
-
-        const sideMenu = (dir) => {
-            const isLeft = dir == "left"
-            return <div className={`${dir}-menu side-menu`}>
-                {isLeft ? sideMenuContent(dir) : sideMenuButton(dir)}
-                {isLeft ? sideMenuButton(dir) : sideMenuContent(dir)}
-            </div>
-        }
-
-        const leftStats = <div className="stats bottom-right">
-            <p>R/t: {rpt.toFixed(2)}</p>
-            <p>RGB/s: {rgbps[0].toFixed(2)}, {rgbps[1]}, {rgbps[2]}, {rgbps[3]}</p>
-            <p>RGB/t: {rgbpt[0].toFixed(2)}, {rgbpt[1]}, {rgbpt[2]}, {rgbpt[3]}</p>
-            <p>R/click: {clickValueRed.toFixed(2)}</p>
+            {dir == "left" ? upgradeElements : generatorElements}
         </div>
+    )
+
+    const sideMenu = (dir) => {
+        const isLeft = dir == "left"
+        return <div className={`${dir}-menu side-menu`}>
+            {isLeft ? sideMenuContent(dir) : sideMenuButton(dir)}
+            {isLeft ? sideMenuButton(dir) : sideMenuContent(dir)}
+        </div>
+    }
+
+    const leftStats = <div className="stats bottom-right">
+        <p>R/t: {rpt.toFixed(2)}</p>
+        <p>RGB/s: {rgbps[0].toFixed(2)}, {rgbps[1]}, {rgbps[2]}, {rgbps[3]}</p>
+        <p>RGB/t: {rgbpt[0].toFixed(2)}, {rgbpt[1]}, {rgbpt[2]}, {rgbpt[3]}</p>
+        <p>R/click: {clickValueRed.toFixed(2)}</p>
+    </div>
 
     const rightStats = <div className="stats bottom-left">
         <p>Total multiplier: {stats.totalMultiplier.toFixed(3)}x</p>
@@ -393,27 +393,27 @@ function Game() {
         <p>Upgrades purchased: {stats.upgradeCount}</p>
     </div>
 
-        const theSquare = <div className="the-square square-clip" onClick={onClick} 
+    const theSquare = <div className="the-square square-clip" onClick={onClick}
         style={{
-            height: (sideLength > 160 ? sideLength : 160) + "px" , 
+            height: (sideLength > 160 ? sideLength : 160) + "px",
             width: (sideLength > 160 ? sideLength : 160) + "px"
-            }}>
-        </div>
+        }}>
+    </div>
 
     return (
         <section>
-        <div className="background"></div>
-        <RgbCounter rps={rps} />
-            
-                <div className="square-container">
-                    <div className="square-transform-container">
+            <div className="background"></div>
+            <RgbCounter rps={rps} />
+
+            <div className="square-container">
+                <div className="square-transform-container">
 
                     {theSquare}
-                    </div>
                 </div>
-            
-            <SideMenu direction={"left"} list={upgradeElements} callback={(d)=>openMenu(d)}/>
-            <SideMenu direction={"right"} list={generatorElements} callback={(d)=>openMenu(d)}/>
+            </div>
+
+            <SideMenu direction={"left"} list={upgradeElements} callback={(d) => openMenu(d)} />
+            <SideMenu direction={"right"} list={generatorElements} callback={(d) => openMenu(d)} />
             {options[4].value ? leftStats : null}
             {options[4].value ? rightStats : null}
             {notifs}
