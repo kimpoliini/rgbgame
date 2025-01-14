@@ -111,14 +111,9 @@ function Game() {
 
         onUpgrade()
     }, [])
+
     //Checks if the window is active or not
-    document.addEventListener('visibilitychange', () => {
-        if (document.hidden) {
-            setIsActive(false)
-        } else {
-            setIsActive(true)
-        }
-    })
+    document.addEventListener('visibilitychange', () => setIsActive(document.hidden))
 
     window.addEventListener('resize', () => {
         if (elements.background) {
@@ -166,7 +161,7 @@ function Game() {
         if (rps > 0) {
             incrementRgb(rgbpt)
         }
-        if (framerate != options[5].currentValue) {
+        if (framerate !== options[5].currentValue) {
             setFramerate(options[5].currentValue)
         }
     }, 1000 / framerate)
@@ -191,8 +186,7 @@ function Game() {
         checkCanAfford()
     }, 1000 / 2) //lower if necessary
 
-    //convertions
-
+    //conversions
     useEffect(() => {
         setClickValueRgb(redToRgb(clickValueRed))
     }, [clickValueRed])
@@ -297,8 +291,6 @@ function Game() {
 
             if (!upgrade.bought) {
                 return <Upgrade key={index} upgradeId={index} onClick={() => tryBuyUpgrade(index)} />
-            } else {
-                return
             }
         })
 
@@ -332,6 +324,7 @@ function Game() {
         checkMultiplier()
     }
 
+    //buying upgrades
     function tryBuyUpgrade(id) {
         const remainder = upgrades[id].buyUpgrade(values.color)
         if (remainder != null) values.color = remainder
@@ -347,36 +340,12 @@ function Game() {
         menu.classList.toggle(`hidden-${dir}`)
 
         if (isMenuOpen[dir]) {
-            dir == "left" ? button.firstChild.innerText = ">" : button.lastChild.innerText = ">"
+            dir === "left" ? button.firstChild.innerText = ">" : button.lastChild.innerText = ">"
         } else {
-            dir == "left" ? button.firstChild.innerText = "<" : button.lastChild.innerText = "<"
+            dir === "left" ? button.firstChild.innerText = "<" : button.lastChild.innerText = "<"
         }
 
         setIsMenuOpen({ ...isMenuOpen, [dir]: !isMenuOpen[dir] })
-    }
-
-    const sideMenuButton = (dir) => {
-        const isLeft = dir == "left"
-        const name = isLeft ? <span>Upgrades</span> : <span>Generators</span>
-        const arrow = <span className="arrow">{">"}</span>
-        return <button className={`open-${dir} menu-button`} onClick={() => openMenu(dir)}>
-            {isLeft ? arrow : name}
-            {isLeft ? name : arrow}
-        </button>
-    }
-
-    const sideMenuContent = (dir) => (
-        <div className={`${dir}-menu-content menu-content`}>
-            {dir == "left" ? upgradeElements : generatorElements}
-        </div>
-    )
-
-    const sideMenu = (dir) => {
-        const isLeft = dir == "left"
-        return <div className={`${dir}-menu side-menu`}>
-            {isLeft ? sideMenuContent(dir) : sideMenuButton(dir)}
-            {isLeft ? sideMenuButton(dir) : sideMenuContent(dir)}
-        </div>
     }
 
     const leftStats = <div className="stats bottom-right">

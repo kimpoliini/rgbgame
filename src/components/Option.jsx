@@ -35,6 +35,9 @@ const Option = ({ optionId, callback }) => {
             case "button":
                 el = <div className={`button`} onClick={onClick}><div>{opt.currentValue}</div></div>
                 break
+            default:
+                el = <div></div>
+                break
         }
 
         setAction(el)
