@@ -4,7 +4,7 @@ import { options } from "../js/data/options.js"
 import "./styles/options.css"
 import Tooltip from "./Tooltip.jsx"
 
-const Option = ({ optionId, callback }) => {
+const Option = ({ optionId, callback, hidden }) => {
     const [opt, setOpt] = useState(options[optionId])
     const [action, setAction] = useState()
     const [isEnabled, setIsEnabled] = useState(false)
@@ -58,7 +58,7 @@ const Option = ({ optionId, callback }) => {
         }
     }
 
-    return (
+    return hidden ? null : (
         <div id={`option-${optionId}`} className="option" onClick={opt.type == "button" ? null : onClick}
             onMouseEnter={() => {
                 let height = document.querySelector(`#option-${optionId}`).clientHeight

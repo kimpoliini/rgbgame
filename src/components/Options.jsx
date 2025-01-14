@@ -21,7 +21,7 @@ const Options = ({ dismiss }) => {
                 }
             }
 
-            return <Option key={i} optionId={i} callback={() => optionCallback()} />
+            return <Option key={i} optionId={i} callback={() => optionCallback()} hidden={o.hidden}/>
         })
 
         setOptionsElements(elements)
@@ -31,7 +31,7 @@ const Options = ({ dismiss }) => {
         if (e.currentTarget === e.target) {
             //checks if CSS changes needs to be done
             const squareElement = document.querySelector(".the-square")
-            if(options[2].currentValue == "splash"){
+            if(options[2].currentValue === 2){
                 squareElement.classList.remove("square-clip")
             } else {
                 squareElement.classList.add("square-clip")

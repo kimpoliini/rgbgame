@@ -1,7 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { options } from "../js/data/options"
+import "./styles/sideMenu.css"
 
 const SideMenu = ({ direction, list, callback }) => {
-    const isLeft = direction == "left"
+    const [selectedBuyAmount, setSelectedBuyAmount] = useState("1x")
+    const isLeft = direction === "left"
 
     const sideMenuButton = () => {
         const name = isLeft ? <span>Upgrades</span> : <span>Generators</span>
@@ -14,6 +17,20 @@ const SideMenu = ({ direction, list, callback }) => {
 
     const sideMenuContent = () => (
         <div className={`${direction}-menu-content menu-content`}>
+            {isLeft
+                ? null
+                : <div className='buy-count'>
+                    {
+                        options[8].values.map((v, i) => {
+                            return <span key={i} className={options[8].currentValue === i ? "selected" : ""}
+                                onClick={() => {
+                                    setSelectedBuyAmount(v)
+                                    options[8].currentValue = i
+                                }}>{v}</span>
+                        })
+                    }
+                </div>
+            }
             {list}
         </div>
     )
