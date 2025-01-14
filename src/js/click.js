@@ -7,9 +7,9 @@ export const click = (e, elements, clickValueRed) => {
 
     let headerHeight, x, y, randomWidthOffset = 0, randomHeightOffset = 0
     //checks options if any click effects are enabled
-    if(options[1].currentValue || options[3].currentValue){
+    if (options[1].currentValue || options[3].currentValue) {
         headerHeight = elements.header.offsetHeight
-        
+
         //getting pointer location and accounts for header
         x = e.clientX
         y = e.clientY
@@ -20,47 +20,47 @@ export const click = (e, elements, clickValueRed) => {
         randomWidthOffset = Math.floor(Math.random() * 60) - 30
         randomHeightOffset = Math.floor(Math.random() * 40)
     }
-    
+
     //checks if click effect text option is enabled
-    if(options[3].currentValue){
+    if (options[3].currentValue) {
         const text = document.createElement("span")
         text.innerText = handleBigNumber(clickValueRed.toFixed(0))
-        
+
         text.className = "click-text effect"
         elements.container.appendChild(text)
 
         let textX = x - text.offsetWidth + randomWidthOffset + (text.offsetWidth / 2)
         let textY = y - text.offsetHeight - randomHeightOffset
-        
-        if(textY <= 0){
+
+        if (textY <= 0) {
             textY = 8
         }
-        
+
         text.style.left = `${textX}px`
         text.style.top = `${textY}px`
-        
+
         setTimeout(() => { text.remove() }, 800);
     }
-    
+
     //checks if click effect graphic option is enabled
-    if(options[1].currentValue){
+    if (options[1].currentValue) {
         const clickEffect = document.createElement("div")
         clickEffect.style.position = "absolute"
         elements.main.appendChild(clickEffect)
-                
-        switch(options[2].currentValue){
-            case "ripple":
+
+        switch (options[2].currentValue) {
+            case 0:
                 clickEffect.className = "ripple effect"
                 break
-            case "material ripple":
+            case 1:
                 clickEffect.className = "ripple-simple effect"
                 break
-                case "splash":
+            case 2:
                 clickEffect.className = "splash effect"
 
-                for(let i = 0; i < 5; i++){
+                for (let i = 0; i < 5; i++) {
                     const fx = document.createElement("div")
-                    let deg = Math.random() * 360 
+                    let deg = Math.random() * 360
 
                     fx.classList.add("splash-line")
 
@@ -68,6 +68,9 @@ export const click = (e, elements, clickValueRed) => {
 
                     clickEffect.appendChild(fx)
                 }
+                break
+            default:
+                clickEffect.className = "ripple effect"
                 break
         }
 

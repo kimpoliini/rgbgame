@@ -49,21 +49,21 @@ const Generator = ({ onClick, genId }) => {
             }
             }
             onMouseLeave={() => setImage(gen.image)} >
-            <h5>{gen.name}</h5>
+            <h5>{gen.name} | {gen.amount}</h5>
             <div>
-                <p>+{gen.rps ? handleBigNumber(gen.rps.toFixed(2)) : gen.baseRps}/s</p>
-                <p>({gen.amount > 0 ? handleBigNumber((gen.rpsTotal).toFixed(2)) : "0"}/s)</p>
-                <div className="generator-price">
-                    <span>{gen.price[0]}</span>
-                    <span>{gen.price[1]}</span>
-                    <span>{gen.price[2]}</span>
-                </div>
                 <div className="generator-count">
-                    <span>{gen.amount}</span>
+                    {/* <span>{gen.amount}</span> */}
                     <div className="generator-count-bar" style={{ width: `${width}%` }}></div>
                     <span className="next-level-bonus">
                         +{((levelThresholds[levelIndex][1] - 1) * 100).toFixed(0)}% @ {levelThresholds[levelIndex][0]}
                     </span>
+                </div>
+                <p>+{gen.rps ? handleBigNumber(gen.rps.toFixed(2)) : gen.baseRps}/s</p>
+                <p>(total: {gen.amount > 0 ? handleBigNumber((gen.rpsTotal).toFixed(2)) : "0"}/s)</p>
+                <div className="generator-price">
+                    <span>{gen.price[0]}</span>
+                    <span>{gen.price[1]}</span>
+                    <span>{gen.price[2]}</span>
                 </div>
             </div>
             <img className="generator-image" src={process.env.PUBLIC_URL + image} alt={gen.name} />

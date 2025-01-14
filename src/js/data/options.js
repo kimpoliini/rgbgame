@@ -28,7 +28,7 @@ export const options = [
     new Option("Enable click effect", "Enables a graphical effect when clicking",
         "switch", null, true),
     new Option("Click effect", "What effect to be shown when clicking",
-        "dropdown", ["ripple", "material ripple", "splash"], "material ripple"),
+        "dropdown", ["Ripple", "Alternative ripple", "Splash"], 1),
     new Option("Enable click text", "Enables the the text shown when clicking",
         "switch", null, true),
     new Option("Show stats on-screen", "Show statistics like total multiplier, vertice count, amount of upgrades purchased etc. on the main screen",

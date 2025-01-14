@@ -21,12 +21,12 @@ const Option = ({ optionId, callback }) => {
                 break
             case "dropdown":
                 const values = opt.values.map((v, i) => {
-                    return <option key={i} id={`option-${i}`} value={v}>{v}</option>
+                    return <option key={i} id={`option-${i}`} value={i}>{v}</option>
                 })
 
                 el = <select id={`option-${optionId}`} value={opt.currentValue} name={opt.title}
                     onChange={(e) => {
-                        opt.currentValue = e.target.value
+                        opt.currentValue = e.target.selectedIndex
                         setDropdownValue(opt.currentValue)
                     }}>
                     {values}
@@ -59,9 +59,10 @@ const Option = ({ optionId, callback }) => {
     }
 
     return (
-        <div className="option" onClick={opt.type == "button" ? null : onClick}
+        <div id={`option-${optionId}`} className="option" onClick={opt.type == "button" ? null : onClick}
             onMouseEnter={() => {
-                setTooltip(<Tooltip text={opt.tooltip} />)
+                let height = document.querySelector(`#option-${optionId}`).clientHeight
+                setTooltip(<Tooltip text={opt.tooltip} offset={height} />)
             }}
             onMouseLeave={() => {
                 setTooltip(null)

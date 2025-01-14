@@ -13,7 +13,7 @@ const Options = ({ dismiss }) => {
         
         let optionCallback = {}
         const elements = options.map((o, i) => {
-            if (o.type == "button") {
+            if (o.type === "button") {
                 switch (o.currentValue) {
                     case "reset":
                         optionCallback = reset
