@@ -143,6 +143,7 @@ function Game() {
 
         let optionsData = []
         options.forEach((opt, i) => {
+            if (!opt.shouldSave) return
             optionsData.push({})
             optionsData[i].currentValue = opt.currentValue
         })
@@ -382,7 +383,10 @@ function Game() {
             </div>
 
             <SideMenu direction={"left"} list={upgradeElements} callback={(d) => openMenu(d)} />
-            <SideMenu direction={"right"} list={generatorElements} callback={(d) => openMenu(d)} />
+            <SideMenu direction={"right"} list={generatorElements} callback={(d) => openMenu(d)} onBuyAmountChange={() => {
+                checkMultiplier()
+                checkCanAfford()
+            }} />
             {options[4].currentValue ? leftStats : null}
             {options[4].currentValue ? rightStats : null}
             {notifs}

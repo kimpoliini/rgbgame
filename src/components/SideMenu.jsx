@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { options } from "../js/data/options"
 import "./styles/sideMenu.css"
 
-const SideMenu = ({ direction, list, callback }) => {
+const SideMenu = ({ direction, list, callback, onBuyAmountChange }) => {
     const [selectedBuyAmount, setSelectedBuyAmount] = useState("1x")
     const isLeft = direction === "left"
 
@@ -24,8 +24,9 @@ const SideMenu = ({ direction, list, callback }) => {
                         options[8].values.map((v, i) => {
                             return <span key={i} className={options[8].currentValue === i ? "selected" : ""}
                                 onClick={() => {
-                                    setSelectedBuyAmount(v)
                                     options[8].currentValue = i
+                                    setSelectedBuyAmount(v)
+                                    onBuyAmountChange()
                                 }}>{v}</span>
                         })
                     }

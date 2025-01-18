@@ -5,7 +5,8 @@ class Option {
         type,
         values, //Used for dropdowns
         currentValue,
-        hidden = false
+        hidden = false,
+        shouldSave = true
     ) {
         this._title = title
         this._tooltip = tooltip
@@ -13,6 +14,7 @@ class Option {
         this._values = values
         this._currentValue = currentValue
         this._hidden = hidden
+        this._shouldSave = shouldSave
     }
 
     get title() { return this._title }
@@ -21,6 +23,7 @@ class Option {
     get values() { return this._values }
     get currentValue() { return this._currentValue }
     get hidden() { return this._hidden }
+    get shouldSave() { return this._shouldSave }
 
     set currentValue(newValue) { this._currentValue = newValue }
 }
@@ -43,5 +46,5 @@ export const options = [
     new Option("Reset game", "Resets your progress, not just prestige. Make sure you want to do this before continuing!",
         "button", null, "reset"),
     //Hidden options
-    new Option("Buy amount", "How many generators to buy at once", "dropdown", ["1x", "10x", "next", "max"], 0, true),
+    new Option("Buy amount", "How many generators to buy at once", "dropdown", ["1x", "5x", "10x", "next", "max"], 0, true, false),
 ]

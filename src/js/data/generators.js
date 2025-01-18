@@ -1,4 +1,5 @@
 import { buy, redToRgb, rgbToRed } from "../colorCalc"
+import { options } from "./options"
 import { values } from "./values"
 
 class Generator {
@@ -28,7 +29,10 @@ class Generator {
     get baseRps() { return this._baseRps }
     get amount() { return this._amount }
     get vertices() { return this._vertices }
-    get price() { return redToRgb(Math.floor(rgbToRed(this._basePrice) * (Math.pow(this._priceIncrease, this._amount)))) }
+    get price() {
+        let buyCount = this.getBuyCount(options[8].currentValue)
+        return this.getTotalPrice(buyCount)
+    }
     get image() { return this._image }
     get imageAnim() { return this._imageAnim }
 
@@ -45,11 +49,34 @@ class Generator {
     set amount(newAmount) { this._amount = newAmount }
 
     buyGenerator(currentColor) {
+        let buyCount = this.getBuyCount(options[8].currentValue)
+
         if (rgbToRed(currentColor) >= rgbToRed(this.price)) {
             const remainder = buy(currentColor, this.price)
-            this._amount++
+            this._amount += buyCount
             return remainder
         }
+    }
+
+    getBuyCount(optionValue) {
+        if (optionValue <= 2) return parseInt(options[8].values[optionValue]) // 1x, 5x, 10x
+        else if (optionValue === 3) {
+            let remainder = 0
+            for (const threshold of levelThresholds) {
+                if (this._amount < threshold[0]) {
+                    let nextThreshold = threshold[0]
+                    remainder = nextThreshold - this._amount
+                    break
+                }
+            }
+            return remainder
+        }
+    }
+
+    getTotalPrice(buyCount) {
+        const basePrice = rgbToRed(this._basePrice)
+        let currentCost = basePrice * (this._priceIncrease ** this._amount)
+        return redToRgb(currentCost * ((this._priceIncrease ** buyCount) - 1) / (this._priceIncrease - 1))
     }
 }
 
