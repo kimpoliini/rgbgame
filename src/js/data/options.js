@@ -46,5 +46,5 @@ export const options = [
     new Option("Reset game", "Resets your progress, not just prestige. Make sure you want to do this before continuing!",
         "button", null, "reset"),
     //Hidden options
-    new Option("Buy amount", "How many generators to buy at once", "dropdown", ["1x", "5x", "10x", "next", "max"], 0, true, false),
+    new Option("Buy amount", "How many generators to buy at once", "dropdown", ["1x", "5x", "10x", "next"], 0, true, false),
 ]

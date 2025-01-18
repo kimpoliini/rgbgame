@@ -59,8 +59,8 @@ class Generator {
     }
 
     getBuyCount(optionValue) {
-        if (optionValue <= 2) return parseInt(options[8].values[optionValue]) // 1x, 5x, 10x
-        else if (optionValue === 3) {
+        if (optionValue <= 2) return parseInt(options[8].values[optionValue]) //1x, 5x, 10x
+        else if (optionValue === 3) { //next
             let remainder = 0
             for (const threshold of levelThresholds) {
                 if (this._amount < threshold[0]) {
