@@ -2,36 +2,38 @@ import { values } from "./data/values"
 import { upgrades } from "./data/upgrades"
 import { redToRgb } from "./colorCalc"
 
-export const handleUpgrade = (id, rps) => {
-    
-    const upgrade = upgrades[id]
+export const handleUpgrade = (id /*, rps*/) => {
+
+    const index = typeof id === "number" ? id : upgrades.findIndex(el => el.name === id )
+
+    const upgrade = upgrades[index]
     const modifier = upgrade.effectModifier
-    
+
     //Separate vertex.x to an array of two strings
     const typeArray = upgrade.type.split(".")
     const type = typeArray[0]
-    
-    switch(modifier){
+
+    switch (modifier) {
         case "multiply":
             multiplyValue(type, upgrade.effect)
             break
         case "add":
             addValue(type, upgrade.effect)
             break
-        case "time":
-            addColor(upgrade.effect, rps)
-            break
-        }
-        
-    switch(type){
+        // case "time":
+        //     addColor(upgrade.effect, rps)
+        //     break
+    }
+
+    switch (type) {
         case "vertex":
             vertexUpgrade(typeArray[1], modifier, upgrade.effect)
             break
-        }
+    }
 }
 
-function multiplyValue(upgradeType, multiplier){
-    switch(upgradeType){
+function multiplyValue(upgradeType, multiplier) {
+    switch (upgradeType) {
         case "rps":
             values.rpsMultiplier *= multiplier
             break
@@ -42,8 +44,8 @@ function multiplyValue(upgradeType, multiplier){
     }
 }
 
-function addValue(upgradeType, addAmount){
-    switch(upgradeType){
+function addValue(upgradeType, addAmount) {
+    switch (upgradeType) {
         case "rps":
             //n/a
             break
@@ -53,28 +55,28 @@ function addValue(upgradeType, addAmount){
     }
 }
 
-function addColor(time, rps){
-    let red = (time*60)*rps
-    const rgb = redToRgb(red)
+// function addColor(time, rps){
+//     let red = (time*60)*rps
+//     const rgb = redToRgb(red)
 
-    values.color.forEach((c,i) => {
-        values.color[i] += rgb[i]
-    })
-}
+//     values.color.forEach((c,i) => {
+//         values.color[i] += rgb[i]
+//     })
+// }
 
-function vertexUpgrade(type, modifier, effect){
-    switch(type){
+function vertexUpgrade(type, modifier, effect) {
+    switch (type) {
         case "rps":
-            if(modifier === "add"){
+            if (modifier === "add") {
                 values.vertexRpsMultiplier += effect
-            } else if(modifier === "multiply"){
+            } else if (modifier === "multiply") {
                 values.vertexRpsMultiplier *= effect
             }
             break
         case "click":
-            if(modifier === "add"){
+            if (modifier === "add") {
                 values.clickValuePerVertex += effect
-            } else if(modifier === "multiply"){
+            } else if (modifier === "multiply") {
                 values.clickValuePerVertex *= effect
             }
             break

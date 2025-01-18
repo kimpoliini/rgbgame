@@ -1,8 +1,8 @@
 import React from 'react'
 import "./styles/tooltip.css"
-const Tooltip = ({ text }) => {
+const Tooltip = ({ text, offset }) => {
     return (
-        <div className={"tooltip"}>
+        <div className={"tooltip"} style={{bottom: offset+6}}>
             {text}
         </div>
     )

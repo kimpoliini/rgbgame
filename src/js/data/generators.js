@@ -1,142 +1,110 @@
-export const generators = [
-    //tier 1
-    {
-        name: "Triangle",
-        baseRps: 0.2, //150s
-        basePrice: [30,0,0],
-        price: [30,0,0],
-        count: 0,
-        vertices: 3,
-        image: "/assets/generators/triangle.png",
-        imageAnim: "/assets/generators/triangle-anim.gif"
-    },
-    {
-        name: "Square",
-        baseRps: 1, //200s
-        basePrice: [200,0,0],
-        price: [200,0,0],
-        count: 0,
-        vertices: 4,
-        image: "/assets/generators/square.png",
-        imageAnim: "/assets/generators/square-anim.gif"
-    },
-    {
-        name: "Pentagon",
-        baseRps: 3, //256s
-        basePrice: [0,3,0],
-        price: [0,3,0],
-        count: 0,
-        vertices: 5,
-        image: "/assets/generators/pentagon.png",
-        imageAnim: "/assets/generators/pentagon-anim.gif"
-    },
-    {
-        name: "Hexagon",
-        baseRps: 15, //307.2s
-        basePrice: [0,18,0],
-        price: [0,18,0],
-        count: 0,
-        vertices: 6,
-        image: "/assets/generators/hexagon.png",
-        imageAnim: "/assets/generators/hexagon-anim.gif"
-    },
-    {
-        name: "Septagon",
-        baseRps: 50, //409.6s
-        basePrice: [0,80,0],
-        price: [0,80,0],
-        count: 0,
-        vertices: 7,
-        image: "/assets/generators/septagon.png",
-        imageAnim: "/assets/generators/septagon-anim.gif"
-    },
-    {
-        name: "Octagon",
-        baseRps: 125, //524.288s
-        basePrice: [0,0,1],
-        price: [0,0,1],
-        count: 0,
-        vertices: 8,
-        image: "/assets/generators/octagon.png",
-        imageAnim: "/assets/generators/octagon-anim.gif"
-    },
+import { buy, redToRgb, rgbToRed } from "../colorCalc"
+import { options } from "./options"
+import { values } from "./values"
 
-    //tier 2
-    {
-        name: "Pyramid",
-        baseRps: 750, //436.9s
-        basePrice: [0,0,5],
-        price: [0,0,5],
-        count: 0,
-        vertices: 5,
-        image: "/assets/generators/pyramid.png",
-        imageAnim: "/assets/generators/pyramid-anim.gif"
-    },
-    {
-        name: "Cube",
-        baseRps: 3000, //524.288s
-        basePrice: [0,0,24],
-        price: [0,0,24],
-        count: 0,
-        vertices: 8,
-        image: "/assets/generators/cube.png",
-        imageAnim: "/assets/generators/cube-anim.gif"
-    },
-    {
-        name: "Dodecahedron",
-        baseRps: 12000, //546.13s
-        basePrice: [0,0,100],
-        price: [0,0,100],
-        count: 0,
-        vertices: 20,
-        image: "/assets/generators/dodecahedron.png",
-        imageAnim: "/assets/generators/dodecahedron-anim.gif"
-    },
+class Generator {
+    constructor(
+        name,
+        baseRps,
+        basePrice,
+        priceIncrease,
+        vertices,
+        image,
+        imageAnim
+    ) {
+        this._name = name
+        this._baseRps = baseRps
+        this._basePrice = basePrice
+        this._priceIncrease = priceIncrease
+        this._vertices = vertices
+        this._image = image
+        this._imageAnim = imageAnim
+
+        this._amount = 0
+    }
+
+    get name() { return this._name }
+    get rps() { return this._baseRps * this.multiplier * values.rpsMultiplier * (1 + (values.vertexRpsMultiplier * this._vertices)) }
+    get rpsTotal() { return this._baseRps * this._amount * this.multiplier * values.rpsMultiplier * (1 + (values.vertexRpsMultiplier * this._vertices * this._amount)) }
+    get baseRps() { return this._baseRps }
+    get amount() { return this._amount }
+    get vertices() { return this._vertices }
+    get price() {
+        let buyCount = this.getBuyCount(options[8].currentValue)
+        return this.getTotalPrice(buyCount)
+    }
+    get image() { return this._image }
+    get imageAnim() { return this._imageAnim }
+
+    get multiplier() {
+        let multiplier = 1
+
+        levelThresholds.some(i => {
+            if (this._amount >= i[0]) { multiplier *= i[1] } else return true
+        })
+
+        return multiplier
+    }
+
+    set amount(newAmount) { this._amount = newAmount }
+
+    buyGenerator(currentColor) {
+        let buyCount = this.getBuyCount(options[8].currentValue)
+
+        if (rgbToRed(currentColor) >= rgbToRed(this.price)) {
+            const remainder = buy(currentColor, this.price)
+            this._amount += buyCount
+            return remainder
+        }
+    }
+
+    getBuyCount(optionValue) {
+        if (optionValue <= 2) return parseInt(options[8].values[optionValue]) //1x, 5x, 10x
+        else if (optionValue === 3) { //next
+            let remainder = 0
+            for (const threshold of levelThresholds) {
+                if (this._amount < threshold[0]) {
+                    let nextThreshold = threshold[0]
+                    remainder = nextThreshold - this._amount
+                    break
+                }
+            }
+            return remainder
+        }
+    }
+
+    getTotalPrice(buyCount) {
+        const basePrice = rgbToRed(this._basePrice)
+        let currentCost = basePrice * (this._priceIncrease ** this._amount)
+        return redToRgb(currentCost * ((this._priceIncrease ** buyCount) - 1) / (this._priceIncrease - 1))
+    }
+}
+
+export const generators = [
+    new Generator("Triangle", 0.2, [30, 0, 0], 1.10, 3, "/assets/generators/triangle.png", "/assets/generators/triangle-anim.gif"),
+    new Generator("Square", 1, [200, 0, 0], 1.10, 4, "/assets/generators/square.png", "/assets/generators/square-anim.gif"),
+    new Generator("Pentagon", 3, [0, 3, 0], 1.10, 5, "/assets/generators/pentagon.png", "/assets/generators/pentagon-anim.gif"),
+    new Generator("Hexagon", 15, [0, 18, 0], 1.10, 6, "/assets/generators/hexagon.png", "/assets/generators/hexagon-anim.gif"),
+    new Generator("Septagon", 50, [0, 80, 0], 1.10, 7, "/assets/generators/septagon.png", "/assets/generators/septagon-anim.gif"),
+    new Generator("Octagon", 125, [0, 0, 1], 1.10, 8, "/assets/generators/octagon.png", "/assets/generators/octagon-anim.gif"),
+
+    new Generator("Pyramid", 750, [0, 0, 5], 1.10, 5, "/assets/generators/pyramid.png", "/assets/generators/pyramid-anim.gif"),
+    new Generator("Cube", 3000, [0, 0, 24], 1.10, 8, "/assets/generators/cube.png", "/assets/generators/cube-anim.gif"),
+    new Generator("Dodecahedron", 12000, [0, 0, 100], 1.10, 20, "/assets/generators/dodecahedron.png", "/assets/generators/dodecahedron-anim.gif"),
 ]
 
 export const levelThresholds = [
-    {
-        threshold: 10,
-        bonus: 1.1
-    },
-    {
-        threshold: 25,
-        bonus: 1.2
-    },
-    {
-        threshold: 50,
-        bonus: 1.25
-    },
-    {
-        threshold: 75,
-        bonus: 1.1
-    },
-    {
-        threshold: 100,
-        bonus: 1.5
-    },
-    {
-        threshold: 150,
-        bonus: 1.2
-    },
-    {
-        threshold: 200,
-        bonus: 1.5
-    },
-    {
-        threshold: 250,
-        bonus: 1.2
-    },
-    {
-        threshold: 300,
-        bonus: 1.25
-    },
-    {
-        threshold: 400,
-        bonus: 1.25
-    },
-    {
-        threshold: 500,
-        bonus: 1.25
-    },
+    [10, 1.1],
+    [25, 1.2],
+    [50, 1.25],
+    [75, 1.2],
+    [100, 1.5],
+    [150, 1.25],
+    [200, 1.25],
+    [250, 1.25],
+    [300, 1.25],
+    [350, 1.25],
+    [400, 1.25],
+    [450, 1.25],
+    [500, 1.25],
 ]

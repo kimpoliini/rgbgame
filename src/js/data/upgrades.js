@@ -1,142 +1,83 @@
+import { buy, redToRgb, rgbToRed } from "../colorCalc"
+import { handleUpgrade } from "../upgradeHandler"
+
+class Upgrade {
+    constructor(
+        name,
+        description,
+        maxRank,
+        price,
+        effect,
+        effectModifier, /* add, sub, multiply */
+        type) {
+        this._name = name
+        this._description = description
+        this._maxRank = maxRank
+        this._price = price
+        this._effect = effect
+        this._effectModifier = effectModifier
+        this._type = type
+
+        this._bought = false
+        this._rank = 0
+    }
+
+    get name() { return this._name }
+    get description() { return this._description }
+    get price() {
+        if (this.maxRank > 1) {
+            return redToRgb(Math.floor(rgbToRed(this._price) * (Math.pow(1.5, this._rank))))
+        } else {
+            return this._price
+        }
+    }
+    get type() { return this._type }
+    get effect() { return this._effect }
+    get effectModifier() { return this._effectModifier }
+    get rank() { return this._rank }
+    get maxRank() { return this._maxRank }
+    get bought() { return this._bought }
+
+    set rank(newRank) {
+        this._rank = newRank
+        if (this._rank === this._maxRank) this._bought = true
+    }
+    set bought(isBought) {
+        if (isBought) {
+            this._bought = isBought
+            this._rank = this._maxRank
+        }
+    }
+
+    buyUpgrade(currentColor) {
+        if (this._bought) return
+        if (rgbToRed(currentColor) >= rgbToRed(this.price)) {
+            const remainder = buy(currentColor, this.price)
+            this._rank++
+
+            if (this._rank === this._maxRank) this._bought = true
+            handleUpgrade(this._name)
+            return remainder
+        }
+    }
+}
+
 export const upgrades = [
-    {
-        name: "Paint brush",
-        description: "Adds +1 red to your clicks",
-        maxRanks: 10,
-        price: [100,0,0],
-        effect: 1,
-        effectModifier: "add" /* add, sub, multiply, time */,
-        type: "click",
-    },
-    {
-        name: "Paint bucket",
-        description: "Adds +0.1 red to your clicks for each vertex acquired",
-        maxRanks: 5,
-        price: [0,10,0],
-        effect: 0.1,
-        effectModifier: "add",
-        type: "vertex.click",
-    },
-    {
-        name: "Vertex extraction",
-        description: "Gains +0.1% RPS for each vertex owned",
-        maxRanks: 10,
-        price: [0,10,0],
-        effect: 0.001,
-        effectModifier: "add",
-        type: "vertex.rps",
-    },
-    {
-        name: "Brighter colors",
-        description: "You gain +10% rps",
-        price: [100,1,0],
-        effect: 1.1,
-        effectModifier: "multiply",
-        type: "rps",
-    },
-    {
-        name: "Higher saturation",
-        description: "You gain +10% rps",
-        price: [0,3,0],
-        effect: 1.1,
-        effectModifier: "multiply",
-        type: "rps",
-    },
-    {
-        name: "Redder reds",
-        description: "You gain +15% rps",
-        price: [0,8,0],
-        effect: 1.15,
-        effectModifier: "multiply",
-        type: "rps",
-    },
-    {
-        name: "Bluer blues",
-        description: "You gain +15% rps",
-        price: [0,25,0],
-        effect: 1.15,
-        effectModifier: "multiply",
-        type: "rps",
-    },
-    {
-        name: "Greener greens",
-        description: "You gain +15% rps",
-        price: [0,75,0],
-        effect: 1.15,
-        effectModifier: "multiply",
-        type: "rps",
-    },
-    {
-        name: "CMYK",
-        description: "You gain +25% rps",
-        price: [0,100,0],
-        effect: 1.25,
-        effectModifier: "multiply",
-        type: "rps",
-    },
-    {
-        name: "Better color mixing",
-        description: "You gain +25% rps",
-        price: [0,150,0],
-        effect: 1.25,
-        effectModifier: "multiply",
-        type: "rps",
-    },
-    {
-        name: "JPEG artifacts",
-        description: "For some reasons gains you +1% rps",
-        price: [0,100,0],
-        effect: 1.01,
-        effectModifier: "multiply",
-        type: "rps",
-    },
-    //add color to upgrade types
-    {
-        name: "SCART connectors",
-        description: "Multiples click value by 2%",
-        price: [0,1,0],
-        effect: 1.02,
-        effectModifier: "multiply",
-        type: "click",
-    },
-    {
-        name: "RCA connectors",
-        description: "Multiples click value by 4%",
-        price: [0,4,0],
-        effect: 1.04,
-        effectModifier: "multiply",
-        type: "click",
-    },
-    {
-        name: "VGA connectors",
-        description: "Multiples click value by 6%",
-        price: [0,75,0],
-        effect: 1.06,
-        effectModifier: "multiply",
-        type: "click",
-    },
-    {
-        name: "DVI connectors",
-        description: "Multiples click value by 8%",
-        price: [0,200,0],
-        effect: 1.08,
-        effectModifier: "multiply",
-        type: "click",
-    },
-    {
-        name: "HDMI connectors",
-        description: "Multiples click value by 10%",
-        price: [0,0,2],
-        effect: 1.1,
-        effectModifier: "multiply",
-        type: "click",
-    },
-    {
-        name: "DisplayPort connectors",
-        description: "Multiples click value by 10%",
-        price: [0,0,8],
-        effect: 1.1,
-        effectModifier: "multiply",
-        type: "click",
-    },
+    new Upgrade("Paint brush", "Adds +1 red to your clicks", 10, [100, 0, 0], 1, "add", "click"),
+    new Upgrade("Paint bucket", "Adds +0.1 red to your clicks for each vertex acquired", 5, [0, 10, 0], 0.1, "add", "vertex.click"),
+    new Upgrade("Vertex extraction", "Gains +0.1% RPS for each vertex owned", 10, [0, 10, 0], 0.001, "add", "vertex.rps"),
+    new Upgrade("Brighter colors", "You gain +10% rps", 1, [100, 1, 0], 1.1, "multiply", "rps"),
+    new Upgrade("Higher saturation", "You gain +10% rps", 1, [0, 3, 0], 1.1, "multiply", "rps"),
+    new Upgrade("Redder reds", "You gain +15% rps", 1, [0, 8, 0], 1.15, "multiply", "rps"),
+    new Upgrade("Bluer blues", "You gain +15% rps", 1, [0, 25, 0], 1.15, "multiply", "rps"),
+    new Upgrade("Greener greens", "You gain +15% rps", 1, [0, 75, 0], 1.15, "multiply", "rps"),
+    new Upgrade("CMYK", "You gain +25% rps", 1, [0, 100, 0], 1.25, "multiply", "rps"),
+    new Upgrade("Better color mixing", "You gain +25% rps", 1, [0, 150, 0], 1.25, "multiply", "rps"),
+    new Upgrade("JPEG artifacts", "For some reasons gains you +1% rps", 1, [0, 100, 0], 1.01, "multiply", "rps"),
+    new Upgrade("SCART connectors", "Multiples click value by 2%", 1, [0, 1, 0], 1.02, "multiply", "click"),
+    new Upgrade("RCA connectors", "Multiples click value by 4%", 1, [0, 4, 0], 1.04, "multiply", "click"),
+    new Upgrade("VGA connectors", "Multiples click value by 6%", 1, [0, 75, 0], 1.06, "multiply", "click"),
+    new Upgrade("DVI connectors", "Multiples click value by 8%", 1, [0, 200, 0], 1.08, "multiply", "click"),
+    new Upgrade("HDMI connectors", "Multiples click value by 10%", 1, [0, 0, 2], 1.1, "multiply", "click"),
+    new Upgrade("DisplayPort connectors", "Multiples click value by 10%", 1, [0, 0, 8], 1.1, "multiply", "click"),
 ]
