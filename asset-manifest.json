@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/rgbgame/static/css/main.e395e932.css",
-    "main.js": "/rgbgame/static/js/main.c352c39d.js",
+    "main.js": "/rgbgame/static/js/main.44defbda.js",
     "static/js/453.18a2c810.chunk.js": "/rgbgame/static/js/453.18a2c810.chunk.js",
     "index.html": "/rgbgame/index.html",
     "main.e395e932.css.map": "/rgbgame/static/css/main.e395e932.css.map",
-    "main.c352c39d.js.map": "/rgbgame/static/js/main.c352c39d.js.map",
+    "main.44defbda.js.map": "/rgbgame/static/js/main.44defbda.js.map",
     "453.18a2c810.chunk.js.map": "/rgbgame/static/js/453.18a2c810.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.e395e932.css",
-    "static/js/main.c352c39d.js"
+    "static/js/main.44defbda.js"
   ]
 }
