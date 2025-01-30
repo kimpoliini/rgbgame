@@ -1,20 +1,20 @@
-import React, { useEffect, useRef, useState } from "react"
-import Generator from "./Generator"
-import Upgrade from "./Upgrade"
-import "./styles/game.css"
-import "./styles/effects.css"
-import { useInterval } from "../js/interval.jsx"
-import { redToRgb, rgbToRed, handleBigNumber } from "../js/colorCalc.jsx"
-import { generators } from "../js/data/generators.js"
-import { upgrades } from "../js/data/upgrades.js"
-import { generatorUpgrades } from "../js/data/generatorUpgrades"
-import { values } from "../js/data/values.js"
+import React, { useEffect, useState } from "react"
 import { useCookies } from "react-cookie"
-import { options } from "../js/data/options"
-import { click } from "../js/click"
-import Notification from "./Notification"
-import SideMenu from "./SideMenu"
-import RgbCounter from "./RgbCounter"
+import "./game.css"
+import "../../styles/effects.css"
+import Generator from "../Generator/Generator.jsx"
+import Upgrade from "../Upgrade/Upgrade.jsx"
+import { useInterval } from "../../utils/interval.jsx"
+import { redToRgb, rgbToRed } from "../../utils/colorCalc.jsx"
+import { generators } from "../../data/generators.js"
+import { upgrades } from "../../data/upgrades.js"
+import { generatorUpgrades } from "../../data/generatorUpgrades.js"
+import { values } from "../../data/values.js"
+import { options } from "../../data/options.js"
+import { click } from "../../utils/click.js"
+import Notification from "../Notification/Notification.jsx"
+import SideMenu from "../SideMenu/SideMenu.jsx"
+import RgbCounter from "../RgbCounter/RgbCounter.jsx"
 
 function Game() {
 
@@ -33,8 +33,6 @@ function Game() {
     })
 
     const [sideLength, setSideLength] = useState(0)
-
-    const [color, setColor] = useState([0, 0, 0, 0])
 
     //click
     const [clickValueRed, setClickValueRed] = useState(values.clickValue * 1)

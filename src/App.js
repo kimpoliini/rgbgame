@@ -1,8 +1,8 @@
 import './App.css';
-import Game from './components/Game'
-import Kofi from './components/Kofi'
+import Game from './components/Game/Game'
+import Kofi from './components/Kofi/Kofi'
 import { useState } from 'react';
-import Options from './components/Options';
+import Options from './components/Options/Options';
 
 function App() {
 

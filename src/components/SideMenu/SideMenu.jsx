@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react'
-import { options } from "../js/data/options"
-import "./styles/sideMenu.css"
+import { options } from "../../data/options"
+import "./sideMenu.css"
 
 const SideMenu = ({ direction, list, onBuyAmountChange }) => {
     const isLeft = direction === "left"

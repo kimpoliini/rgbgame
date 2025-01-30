@@ -1,20 +1,16 @@
-import { options } from "./data/options"
+import { options } from "../data/options"
 import { handleBigNumber } from "./colorCalc"
 
 export const click = (e, elements, clickValueRed) => {
     elements.transformContainer.classList.remove("on-click")
 
 
-    let headerHeight, x, y, randomWidthOffset = 0, randomHeightOffset = 0
+    let x, y, randomWidthOffset = 0, randomHeightOffset = 0
     //checks options if any click effects are enabled
     if (options[1].currentValue || options[3].currentValue) {
-        headerHeight = elements.header.offsetHeight
-
         //getting pointer location and accounts for header
         x = e.clientX
         y = e.clientY
-
-        // console.log("x: " + x + ", y: " + y)
 
         //makes sure the text doesn't appear underneath the header
         randomWidthOffset = Math.floor(Math.random() * 60) - 30
@@ -75,8 +71,8 @@ export const click = (e, elements, clickValueRed) => {
         }
 
 
-        let distanceY = window.pageYOffset + elements.main.getBoundingClientRect().top
-        let distanceX = window.pageXOffset + elements.main.getBoundingClientRect().left
+        let distanceX = window.scrollX + elements.main.getBoundingClientRect().left
+        let distanceY = window.scrollY + elements.main.getBoundingClientRect().top
 
         clickEffect.style.left = `${x - distanceX - clickEffect.offsetWidth / 2}px`
         clickEffect.style.top = `${y - distanceY - clickEffect.offsetHeight / 2}px`

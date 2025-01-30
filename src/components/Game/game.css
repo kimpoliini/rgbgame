@@ -9,7 +9,7 @@ section {
 }
 
 .background {
-    background-image: url("transparency.png");
+    background-image: url("/public/assets/transparency.png");
     background-size: 40%;
     image-rendering: pixelated;
     filter: contrast(.85);

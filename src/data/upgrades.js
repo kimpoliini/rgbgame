@@ -1,5 +1,5 @@
-import { buy, redToRgb, rgbToRed } from "../colorCalc"
-import { handleUpgrade } from "../upgradeHandler"
+import { buy, redToRgb, rgbToRed } from "../utils/colorCalc"
+import { handleUpgrade } from "../utils/upgradeHandler"
 
 class Upgrade {
     constructor(

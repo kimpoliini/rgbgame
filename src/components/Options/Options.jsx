@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react"
-import { options } from "../js/data/options"
+import "./options.css"
 import { useCookies } from "react-cookie"
-import Option from "./Option"
-import "./styles/options.css"
+import { options } from "../../data/options.js"
+import Option from "../Option/Option.jsx"
 
 const Options = ({ dismiss }) => {
     const [cookies, setCookie, removeCookie] = useCookies([])

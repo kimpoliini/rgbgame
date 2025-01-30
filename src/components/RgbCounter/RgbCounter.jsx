@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import './styles/rgbCounter.css'
-import { handleBigNumber, redToRgb, rgbToRed } from '../js/colorCalc'
-import { useInterval } from '../js/interval'
-import { options } from '../js/data/options'
-import { values } from '../js/data/values'
+import './rgbCounter.css'
+import { handleBigNumber, redToRgb, rgbToRed } from '../../utils/colorCalc'
+import { useInterval } from '../../utils/interval'
+import { options } from '../../data/options'
+import { values } from '../../data/values'
 
 const RgbCounter = ({ rps }) => {
     const [framerate, setFramerate] = useState(30)

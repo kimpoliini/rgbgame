@@ -39,3 +39,7 @@
 .header-button:hover {
   background-color: #4b5261;
 }
+
+p {
+  margin: 0.33rem;
+}

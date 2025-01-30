@@ -1,5 +1,5 @@
 import React from 'react'
-import "./styles/tooltip.css"
+import "./tooltip.css"
 const Tooltip = ({ text, offset }) => {
     return (
         <div className={"tooltip"} style={{bottom: offset+6}}>

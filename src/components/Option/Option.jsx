@@ -1,8 +1,7 @@
-import { useEffect } from "react"
-import { useState } from "react"
-import { options } from "../js/data/options.js"
-import "./styles/options.css"
-import Tooltip from "./Tooltip.jsx"
+import { useEffect, useState } from "react"
+import "./option.css"
+import { options } from "../../data/options.js"
+import Tooltip from "../Tooltip/Tooltip.jsx"
 
 const Option = ({ optionId, callback, hidden }) => {
     const [opt, setOpt] = useState(options[optionId])

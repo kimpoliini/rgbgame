@@ -15,7 +15,6 @@
 .notification.simple {
     box-shadow: rgba(0, 0, 0, 0.25) 2px 2px 2px;
     right: 2%;
-    
     animation: notification-simple 2.5s;
 }
 

@@ -1,4 +1,4 @@
-import { buy, redToRgb, rgbToRed } from "../colorCalc"
+import { buy, redToRgb, rgbToRed } from "../utils/colorCalc"
 import { options } from "./options"
 import { values } from "./values"
 

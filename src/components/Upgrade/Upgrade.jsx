@@ -1,5 +1,5 @@
-import "./styles/sideMenuItems.css"
-import { upgrades } from "../js/data/upgrades"
+import "../../styles/sideMenuItems.css"
+import { upgrades } from "../../data/upgrades"
 
 const Upgrade = ({ onClick, upgradeId }) => {
     const upgrade = upgrades[upgradeId]

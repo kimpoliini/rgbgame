@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react"
-import "./styles/sideMenuItems.css"
-import { generators, levelThresholds } from "../js/data/generators.js"
-import { options } from "../js/data/options"
-import { handleBigNumber } from "../js/colorCalc"
+import "../../styles/sideMenuItems.css"
+import { generators, levelThresholds } from "../../data/generators.js"
+import { options } from "../../data/options.js"
+import { handleBigNumber } from "../../utils/colorCalc.jsx"
 
 const Generator = ({ onClick, genId }) => {
     const gen = generators[genId]
