@@ -1,6 +1,6 @@
 //turns a value of red into rgb
 export const redToRgb = (red) => {
-    let r = parseFloat(red.toFixed(2))
+    let r = parseFloat(red)
     let rgb = [r,0,0,0]
 
     for(let i = 0; i < 3; i++){

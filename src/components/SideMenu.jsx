@@ -1,17 +1,21 @@
-import React, { useEffect, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { options } from "../js/data/options"
 import "./styles/sideMenu.css"
 
-const SideMenu = ({ direction, list, callback, onBuyAmountChange }) => {
-    const [selectedBuyAmount, setSelectedBuyAmount] = useState("1x")
+const SideMenu = ({ direction, list, onBuyAmountChange }) => {
     const isLeft = direction === "left"
+    const menuRef = useRef()
+    const [chevron, setChevron] = useState(isLeft ? "<" : ">")
+
+    function onClick() {
+        menuRef.current.classList.toggle(`hidden-${direction}`)
+        setChevron(isLeft && chevron === "<" ? ">" : (chevron === ">" ? "<" : ">"))
+    }
 
     const sideMenuButton = () => {
-        const name = isLeft ? <span>Upgrades</span> : <span>Generators</span>
-        const arrow = <span className="arrow">{">"}</span>
-        return <button className={`open-${direction} menu-button`} onClick={() => callback(direction)}>
-            {isLeft ? arrow : name}
-            {isLeft ? name : arrow}
+        return <button className={`open-${direction} menu-button`} onClick={() => {onClick()}}>
+            <span>{isLeft ? chevron : "Generators"}</span>
+            <span>{isLeft ? "Upgrades" : chevron}</span>
         </button>
     }
 
@@ -25,7 +29,6 @@ const SideMenu = ({ direction, list, callback, onBuyAmountChange }) => {
                             return <span key={i} className={options[8].currentValue === i ? "selected" : ""}
                                 onClick={() => {
                                     options[8].currentValue = i
-                                    setSelectedBuyAmount(v)
                                     onBuyAmountChange()
                                 }}>{v}</span>
                         })
@@ -36,7 +39,7 @@ const SideMenu = ({ direction, list, callback, onBuyAmountChange }) => {
         </div>
     )
 
-    return <div className={`${direction}-menu side-menu`}>
+    return <div ref={menuRef} className={`${direction}-menu side-menu`}>
         {isLeft ? sideMenuContent(direction) : sideMenuButton(direction)}
         {isLeft ? sideMenuButton(direction) : sideMenuContent(direction)}
     </div>

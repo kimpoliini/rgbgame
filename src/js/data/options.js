@@ -40,9 +40,9 @@ export const options = [
     new Option("Show stats on-screen", "Show statistics like total multiplier, vertice count, amount of upgrades purchased etc. on the main screen",
         "switch", null, false),
     new Option("Framerate", "How many times numbers are calculated each second. Does not affect RPS. High values might have a negative impact on performance",
-        "dropdown", [144, 120, 75, 60, 30, 15], 30),
+        "dropdown", [120, 60, 30, 10], 2),
     new Option("Background color update frequency", "How many times the background color refreshes each second. Values higher than 5 might have a negative impact on performance",
-        "dropdown", [10, 5, 2, 1], 5),
+        "dropdown", [10, 5, 2, 1], 1),
     new Option("Reset game", "Resets your progress, not just prestige. Make sure you want to do this before continuing!",
         "button", null, "reset"),
     //Hidden options

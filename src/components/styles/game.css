@@ -25,6 +25,9 @@ section {
     align-items: center;
     height: 100vh;
     width: 100vw;
+
+    animation: fade-in 0.4s cubic-bezier(0.1, 0.82, 0.165, 1);
+
 }
 
 .square-transform-container {
@@ -286,5 +289,17 @@ section {
     100% {
         transform: scale(1);
         box-shadow: rgba(0, 0, 0, 0.6) 8px 8px 8px;
+    }
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        transform: scale(0);
+    }
+    
+    to {
+        opacity: 1;
+        transform: scale(1);
     }
 }

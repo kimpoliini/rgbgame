@@ -21,9 +21,6 @@ function Game() {
     //cookies
     const [cookies, setCookie, removeCookie] = useCookies([])
 
-    //menus
-    const [isMenuOpen, setIsMenuOpen] = useState({ left: false, right: false })
-
     //fps
     const [framerate, setFramerate] = useState(30)
 
@@ -162,8 +159,8 @@ function Game() {
         if (rps > 0) {
             incrementRgb(rgbpt)
         }
-        if (framerate !== options[5].currentValue) {
-            setFramerate(options[5].currentValue)
+        if (framerate !== options[5].values[options[5].currentValue]) {
+            setFramerate(options[5].values[options[5].currentValue])
         }
     }, 1000 / framerate)
 
@@ -180,7 +177,7 @@ function Game() {
         } else {
             bg.style.backgroundColor = `rgb(${c[0]}, ${c[1]}, ${c[2]})`
         }
-    }, 1000 / options[6].currentValue)
+    }, 1000 / options[6].values[options[6].currentValue])
 
     //checks if you can afford each generator and applies a filter for those you cannot
     useInterval(() => {
@@ -194,11 +191,7 @@ function Game() {
 
     //sets rpt and rgbps every time rps changes
     useEffect(() => {
-        if (!document.hidden) {
-            setRpt(rps / (1000 / (1000 / framerate)))
-        } else {
-            setRpt(rps)
-        }
+        setRpt(!document.hidden ? rps / (1000 / (1000 / framerate)) : rps)
         setRgbps(redToRgb(rps))
     }, [rps, framerate, isActive])
 
@@ -210,7 +203,7 @@ function Game() {
     //updates the background color to color values after loading the game, probably not necessary
     useEffect(() => {
         if (elements.main != null) {
-            elements.main.style.backgroundColor = `rgb(${color.slice(0, 3).join(",")})`
+            elements.main.style.backgroundColor = `rgb(${values.color.slice(0, 3).join(",")})`
         }
     }, [elements.main])
 
@@ -334,21 +327,6 @@ function Game() {
         checkCanAfford()
     }
 
-    function openMenu(dir) {
-        const menu = document.querySelector(`.${dir}-menu`)
-        const button = document.querySelector(`.open-${dir}`)
-
-        menu.classList.toggle(`hidden-${dir}`)
-
-        if (isMenuOpen[dir]) {
-            dir === "left" ? button.firstChild.innerText = ">" : button.lastChild.innerText = ">"
-        } else {
-            dir === "left" ? button.firstChild.innerText = "<" : button.lastChild.innerText = "<"
-        }
-
-        setIsMenuOpen({ ...isMenuOpen, [dir]: !isMenuOpen[dir] })
-    }
-
     const leftStats = <div className="stats bottom-right">
         <p>R/t: {rpt.toFixed(2)}</p>
         <p>RGB/s: {rgbps[0].toFixed(2)}, {rgbps[1]}, {rgbps[2]}, {rgbps[3]}</p>
@@ -377,18 +355,18 @@ function Game() {
 
             <div className="square-container">
                 <div className="square-transform-container">
-
                     {theSquare}
                 </div>
             </div>
 
-            <SideMenu direction={"left"} list={upgradeElements} callback={(d) => openMenu(d)} />
-            <SideMenu direction={"right"} list={generatorElements} callback={(d) => openMenu(d)} onBuyAmountChange={() => {
+            <SideMenu direction={"left"} list={upgradeElements} />
+            <SideMenu direction={"right"} list={generatorElements} onBuyAmountChange={() => {
                 checkMultiplier()
                 checkCanAfford()
             }} />
             {options[4].currentValue ? leftStats : null}
             {options[4].currentValue ? rightStats : null}
+
             {notifs}
         </section>
     )
