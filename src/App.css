@@ -4,11 +4,9 @@
 
 .App-header {
   background-color: #282c34;
-  /* min-height: 100vh; */
   display: flex;
   flex-direction: row;
   align-items: center;
-  /* justify-content: center; */
   font-size: calc(8px + 2vmin);
   color: white;
   position: relative;
@@ -31,11 +29,10 @@
 .header-button {
   padding: 16px;
   font-size: 11pt;
-    background-color: transparent;
+  background-color: transparent;
   color: white;
   border: none;
   cursor: pointer;
-  /* margin-left: auto; */
   transition: background-color 0.2s;
 }
 
