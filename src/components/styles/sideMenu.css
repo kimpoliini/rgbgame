@@ -1,3 +1,113 @@
+/* menus */
+
+.side-menu {
+    margin-top: 4px;
+    height: 75%;
+    position: fixed;
+    display: flex;
+    pointer-events: none;
+    width: "100%";
+    transition: left, right, 0.25s ease-in-out;
+    z-index: 12;
+}
+
+.menu-content {
+    margin-top: 4px;
+    top: 64px;
+    position: relative;
+    padding: 8px;
+    width: 10em;
+    overflow-x: hidden;
+    flex-direction: column;
+    padding-top: 4px;
+    background-color: #282c34;
+    overflow-y: scroll;
+    pointer-events: auto;
+}
+
+.side-menu.hidden-left {
+    left: 0em;
+}
+
+.side-menu.hidden-right {
+    right: 0em;
+}
+
+/* left menus */
+
+.left-menu {
+    left: calc(-12em);
+}
+
+.left-menu-content {
+    border-bottom-right-radius: 8px;
+    border-top-right-radius: 8px;
+    box-shadow: rgba(0, 0, 0, 0.25) 2px 2px 4px;
+}
+
+.open-left {
+    left: 0;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    box-shadow: rgba(0, 0, 0, 0.25) 4px 2px 4px;
+}
+
+/* right menus */
+
+.right-menu {
+    right: calc(-12em);
+}
+
+.right-menu-content {
+    border-bottom-left-radius: 8px;
+    border-top-left-radius: 8px;
+    box-shadow: rgba(0, 0, 0, 0.25) -2px 2px 4px;
+
+    direction: rtl; 
+}
+
+.right-menu-content > div {
+    direction: ltr;
+}
+
+.open-right {
+    right: 0;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    box-shadow: rgba(0, 0, 0, 0.25) -4px 2px 4px;
+}
+
+/* menu button */
+
+.menu-button {
+    padding: 0px 8px 0px 8px;
+    position: fixed;
+    z-index: 1;
+    pointer-events: auto;
+    cursor: pointer;
+    color: white;
+    height: 4rem;
+    font-weight: bold;
+    font-size: 16pt;
+    background-color: #282c34;
+    border: none;
+    transition: background-color 0.2s;
+}
+
+.menu-button span{
+    margin: 0px 8px 0px 8px;
+}
+
+.menu-content span {
+    display: block;
+}
+
+.menu-button:hover {
+    background-color: #4b5261;
+}
+
+/* buy counts */
+
 .buy-count {
     margin-top: 8px;
     width: 100%;
@@ -13,7 +123,6 @@
     font-size: 12pt;
     font-weight: bold;
     color: white;
-    /* background-color: rgba(255, 255, 255, 0.15); */
     padding: 6px;
 }
 
@@ -36,3 +145,17 @@
     border-bottom-right-radius: 8px;
 }
 
+/* scrollbar */
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.25);
+    border-radius: 100px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #4b5261;
+}

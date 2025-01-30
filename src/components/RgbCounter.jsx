@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import './styles/game.css'
+import './styles/rgbCounter.css'
 import { handleBigNumber, redToRgb, rgbToRed } from '../js/colorCalc'
 import { useInterval } from '../js/interval'
 import { options } from '../js/data/options'
