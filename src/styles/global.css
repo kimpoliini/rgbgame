@@ -1,0 +1,14 @@
+:root {
+    --gradient-base-color: rgba(50, 50, 50, 0.5);
+    --gradient-afford-color: rgba(50, 200, 50, 0.66);
+    --gradient-cannot-afford-color: rgba(255, 0, 0, 0.8);
+
+    --menu-bg-color-base: rgba(100, 100, 100, 0.5);
+
+}
+
+@property --item-gradient {
+    syntax: '<color>';
+    initial-value: rgba(50, 50, 50, 0.66);
+    inherits: false;
+}

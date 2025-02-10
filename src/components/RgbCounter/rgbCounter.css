@@ -2,18 +2,16 @@
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: auto;
-    width: 128px;
-    height: auto;
-    margin-top: 8px;
+    background-color: var(--menu-bg-color-base);
+    width: 8rem;
+    margin-top: 0.5rem;
     position: absolute;
-    background-color: #282c34;
-    padding: 12px;
-    padding-bottom: 6px;
+    padding: 0.5rem;
     border-radius: 8px;
     font-weight: bold;
-    box-shadow: rgba(0, 0, 0, 0.25) 2px 2px 2px;
     font-size: 13pt;
     align-items: center;
+    backdrop-filter: blur(3px);
 }
 
 .color-values span:not(.cur-p) {
@@ -45,10 +43,8 @@
     background-color: white;
     color: black;
     grid-column: 1 / 4;
-    
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
-    
+    border-radius: 0px 0px 8px 8px;
+
     transition: visibility, 0.25s;
     z-index: 0;
 }
@@ -56,7 +52,8 @@
 .color-values p {
     font-weight: normal;
     grid-column: 1 / 4;
-    text-align: center;
-    margin: 0.33rem;
-    font-size: 12pt;
+    margin: 0 0.66rem 0 0.66rem;
+    background-color: var(--gradient-base-color);
+    border-radius: 0px 0px 8px 8px;
+    padding: 0.33rem;
 }
