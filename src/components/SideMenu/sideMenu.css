@@ -20,7 +20,8 @@
     overflow-x: hidden;
     flex-direction: column;
     padding-top: 4px;
-    background-color: #282c34;
+    background-color: rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(3px);
     overflow-y: scroll;
     pointer-events: auto;
 }
@@ -89,7 +90,8 @@
     height: 4rem;
     font-weight: bold;
     font-size: 16pt;
-    background-color: #282c34;
+    background-color: rgba(100, 100, 100, 0.5);
+    backdrop-filter: blur(3px);
     border: none;
     transition: background-color 0.2s;
 }
@@ -103,7 +105,7 @@
 }
 
 .menu-button:hover {
-    background-color: #4b5261;
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 /* buy counts */
@@ -114,8 +116,9 @@
     display: flex;
     flex-direction: row;
     color: red; 
-    box-shadow: 0px 1px 2px black;
     border-radius: 8px;
+    background-color: rgba(100, 100, 100, 0.9);
+
 }
 
 .buy-count > span {
@@ -157,5 +160,6 @@
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background-color: #4b5261;
+    /* background-color: #4b5261; */
+    background-color: rgba(0, 0, 0, 0.5);
 }

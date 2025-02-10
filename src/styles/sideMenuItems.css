@@ -1,23 +1,35 @@
+:root {
+    --gradient-base-color: rgba(50, 50, 50, 0.5);
+    --gradient-afford-color: rgba(50, 200, 50, 0.66);
+    --gradient-cannot-afford-color: rgba(255, 0, 0, 0.8);
+}
+
+@property --item-gradient {
+    syntax: '<color>';
+    initial-value: rgba(50, 50, 50, 0.66);
+    inherits: false;
+}
+
 .side-menu-item {
-    p:not(.color-values > p){
+    p:not(.color-values > p) {
         margin: 0px 6px 4px 6px;
         font-size: 10pt;
-        color: rgb(200, 200, 200);
+        color: rgb(225, 225, 225);
     }
-    
+
     h5 {
         text-align: left;
         margin: 4px;
         grid-column: 1/3;
     }
-    
+
     p {
         font-size: 11pt;
         text-align: left;
         margin: 6px;
     }
-    
-    p:nth-child(3):not(.stats > p){
+
+    p:nth-child(3):not(.stats > p) {
         font-size: 10pt;
         font-style: italic;
         color: lightgray;
@@ -27,23 +39,39 @@
 .side-menu-item {
     grid-template-rows: auto 1fr;
     display: grid;
-    margin-top: 12px;
+    margin-top: 8px;
     pointer-events: auto;
     padding: 6px;
     border-radius: 8px;
-    box-shadow: rgba(0, 0, 0, 0.25) 0px 2px 1px 2px;
-
-    transition: background-color, transform, -webkit-transform, box-shadow, 0.25s;
+    background: linear-gradient(90deg, var(--gradient-base-color), var(--item-gradient));
+    transition: --item-gradient 0.25s, transform 0.25s;
 }
+
 
 .side-menu-item:not(.cannot-afford):hover {
     cursor: pointer;
-    background-color: #4b5261;
-    box-shadow: rgba(0, 0, 0, 0.25) 0px 8px 1px 2px;
-    transform: translateY(-6px);
-    
-    transition: background-color, transform, -webkit-transform, box-shadow, 0.25s;
+    --item-gradient: var(--gradient-afford-color);
+    transition: --item-gradient 0.25s, transform 0.25s;
+
+    transform: translateX(-6px);
 }
+
+.cannot-afford {
+    filter: saturate(0.33) brightness(0.66);
+    --item-gradient: var(--gradient-cannot-afford-color)
+}
+
+/* left */
+
+.left-menu-content>.side-menu-item {
+    background: linear-gradient(90deg, var(--item-gradient), var(--gradient-base-color));
+}
+
+.left-menu-content>.side-menu-item:not(.cannot-afford):hover {
+    transform: translateX(6px);
+}
+
+/*  */
 
 .prevent-flicker {
     position: absolute;
@@ -66,7 +94,7 @@
     display: block;
     margin-left: auto;
     height: 100px;
-    align-self: center;    
+    align-self: center;
 }
 
 .generator-price {
@@ -113,7 +141,7 @@
     background-color: rgba(255, 255, 255, 0.15);
     border-radius: 8px;
     position: relative;
-    z-index: 1; 
+    z-index: 1;
     font-weight: bold;
     overflow: hidden;
     text-shadow: black 0px 0px 5px;
@@ -126,12 +154,8 @@
     width: 0%;
     height: 100%;
     position: absolute;
-    z-index: -1; 
+    z-index: -1;
     transition: width 0.15s;
-}
-
-.cannot-afford {
-    filter: saturate(0.25) brightness(0.5);
 }
 
 .next-level-bonus {
