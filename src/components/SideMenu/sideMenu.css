@@ -117,7 +117,7 @@
     flex-direction: row;
     color: red; 
     border-radius: 8px;
-    background-color: rgba(100, 100, 100, 0.9);
+    background-color: rgba(50, 50, 50, 0.5);
 
 }
 
@@ -127,6 +127,8 @@
     font-weight: bold;
     color: white;
     padding: 6px;
+
+    transition: background-color 0.2s;
 }
 
 .buy-count > span:hover:not(.selected) {
@@ -160,6 +162,5 @@
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    /* background-color: #4b5261; */
     background-color: rgba(0, 0, 0, 0.5);
 }

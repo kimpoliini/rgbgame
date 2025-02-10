@@ -44,15 +44,14 @@
     padding: 6px;
     border-radius: 8px;
     background: linear-gradient(90deg, var(--gradient-base-color), var(--item-gradient));
-    transition: --item-gradient 0.25s, transform 0.25s;
+    transition-property: --item-gradient, transform, filter;
+    transition-duration: 0.25s;
 }
 
 
 .side-menu-item:not(.cannot-afford):hover {
     cursor: pointer;
     --item-gradient: var(--gradient-afford-color);
-    transition: --item-gradient 0.25s, transform 0.25s;
-
     transform: translateX(-6px);
 }
 
