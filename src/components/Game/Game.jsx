@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { createRef, useEffect, useState } from "react"
 import { useCookies } from "react-cookie"
 import "./game.css"
 import "../../styles/effects.css"
@@ -16,6 +16,7 @@ import { click } from "../../utils/click.js"
 import Notification from "../Notification/Notification.jsx"
 import SideMenu from "../SideMenu/SideMenu.jsx"
 import RgbCounter from "../RgbCounter/RgbCounter.jsx"
+import { prepareSave } from "../../utils/save.js"
 
 function Game() {
 
@@ -52,6 +53,7 @@ function Game() {
 
     //notifications
     const [notifs, setNotifs] = useState([])
+    const notifications = createRef()
 
     //load game
     useEffect(() => {
@@ -121,33 +123,12 @@ function Game() {
 
     //save the game once every half minute
     useInterval(() => {
-        //Loops through generators and saves how many are bought
-        let generatorData = []
-        generators.forEach((gen, i) => {
-            generatorData.push({})
-            generatorData[i].amount = generators[i].amount
-        })
-
-        //Loops through upgrades and saves how many are bought or have ranks
-        let upgradeData = []
-        upgrades.forEach((upgrade, i) => {
-            upgradeData.push({})
-            upgradeData[i].bought = upgrade.bought
-            if (upgrade.bought) return
-            if (upgrade.rank) upgradeData[i].rank = upgrade.rank
-        })
-
-        let optionsData = []
-        options.forEach((opt, i) => {
-            if (!opt.shouldSave) return
-            optionsData.push({})
-            optionsData[i].currentValue = opt.currentValue
-        })
-
+        const saveData = prepareSave()
+        
         setCookie('values', values)
-        setCookie('generators', generatorData)
-        setCookie('upgrades', upgradeData)
-        setCookie('options', optionsData)
+        Object.entries(saveData).forEach((data, i) => {
+            setCookie(data[0], data[1])
+        })
 
         console.log("saved")
         addNotification("Saved")
@@ -365,6 +346,8 @@ function Game() {
             }} />
             {options[4].currentValue ? leftStats : null}
             {options[4].currentValue ? rightStats : null}
+
+            <div className="notification-container" ref={notifications}></div>
 
             {notifs}
         </section>
