@@ -20,8 +20,8 @@
     overflow-x: hidden;
     flex-direction: column;
     padding-top: 4px;
-    background-color: rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(3px);
+    background-color: rgba(100, 100, 100, 0.2);
+    backdrop-filter: blur(6px);
     overflow-y: scroll;
     pointer-events: auto;
 }
@@ -44,6 +44,14 @@
     border-bottom-right-radius: 8px;
     border-top-right-radius: 8px;
     box-shadow: rgba(0, 0, 0, 0.25) 2px 2px 4px;
+    border: double 2px transparent;
+    border-left: none;
+    /* border-style: solid; */
+    /* border-image: linear-gradient(red, green) 27; */
+    background-image: linear-gradient(transparent, transparent), 
+                    linear-gradient(to right, transparent, transparent);
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
 }
 
 .open-left {
@@ -64,10 +72,10 @@
     border-top-left-radius: 8px;
     box-shadow: rgba(0, 0, 0, 0.25) -2px 2px 4px;
 
-    direction: rtl; 
+    direction: rtl;
 }
 
-.right-menu-content > div {
+.right-menu-content>div {
     direction: ltr;
 }
 
@@ -90,13 +98,14 @@
     height: 4rem;
     font-weight: bold;
     font-size: 16pt;
-    background-color: rgba(100, 100, 100, 0.5);
-    backdrop-filter: blur(3px);
+    background-color: rgba(100, 100, 100, 0.2);
+    backdrop-filter: blur(6px);
     border: none;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
     transition: background-color 0.2s;
 }
 
-.menu-button span{
+.menu-button span {
     margin: 0px 8px 0px 8px;
 }
 
@@ -115,14 +124,14 @@
     width: 100%;
     display: flex;
     flex-direction: row;
-    color: red; 
+    color: red;
     border-radius: 8px;
-    background-color: rgba(50, 50, 50, 0.5);
-
+    background-color: rgba(100, 100, 100, 0.66);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
-.buy-count > span {
-    flex:1;
+.buy-count>span {
+    flex: 1;
     font-size: 12pt;
     font-weight: bold;
     color: white;
@@ -131,21 +140,21 @@
     transition: background-color 0.2s;
 }
 
-.buy-count > span:hover:not(.selected) {
+.buy-count>span:hover:not(.selected) {
     background-color: rgba(255, 255, 255, 0.15);
     cursor: pointer;
 }
 
-.buy-count > span.selected {
+.buy-count>span.selected {
     background-color: rgba(255, 255, 255, 0.4);
 }
 
-.buy-count > span:nth-child(1) {
+.buy-count>span:nth-child(1) {
     border-top-left-radius: 8px;
     border-bottom-left-radius: 8px;
 }
 
-.buy-count > span:last-child {
+.buy-count>span:last-child {
     border-top-right-radius: 8px;
     border-bottom-right-radius: 8px;
 }

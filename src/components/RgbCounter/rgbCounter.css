@@ -11,7 +11,8 @@
     font-weight: bold;
     font-size: 13pt;
     align-items: center;
-    backdrop-filter: blur(3px);
+    backdrop-filter: blur(6px);
+    font-family: var(--font-family-default);
 }
 
 .color-values span:not(.cur-p) {

@@ -1,14 +1,17 @@
 :root {
-    --gradient-base-color: rgba(50, 50, 50, 0.5);
-    --gradient-afford-color: rgba(50, 200, 50, 0.66);
+    --gradient-base-color: rgba(100, 100, 100, 0.66);
+    --gradient-afford-color: rgba(100, 200, 100, 0.66);
     --gradient-cannot-afford-color: rgba(255, 0, 0, 0.8);
 
-    --menu-bg-color-base: rgba(100, 100, 100, 0.5);
+    --menu-bg-color-base: rgba(100, 100, 100, 0.66);
 
+    --font-family-default: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
 }
 
 @property --item-gradient {
     syntax: '<color>';
-    initial-value: rgba(50, 50, 50, 0.66);
+    initial-value: rgba(100, 100, 100, 0.66);
     inherits: false;
 }
