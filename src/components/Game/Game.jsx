@@ -123,15 +123,7 @@ function Game() {
 
     //save the game once every half minute
     useInterval(() => {
-        const saveData = prepareSave()
-        
-        setCookie('values', values)
-        Object.entries(saveData).forEach((data, i) => {
-            setCookie(data[0], data[1])
-        })
-
-        console.log("saved")
-        addNotification("Saved")
+        saveGame()
     }, 6000)
 
     //increments rgb each tick
@@ -307,6 +299,18 @@ function Game() {
         checkCanAfford()
     }
 
+    function saveGame(){
+        const saveData = prepareSave()
+        
+        setCookie('values', values)
+        Object.entries(saveData).forEach((data, i) => {
+            setCookie(data[0], data[1])
+        })
+
+        console.log("saved")
+        addNotification("Saved")
+    }
+
     const leftStats = <div className="stats bottom-right">
         <p>R/t: {rpt.toFixed(2)}</p>
         <p>RGB/s: {rgbps[0].toFixed(2)}, {rgbps[1]}, {rgbps[2]}, {rgbps[3]}</p>
@@ -346,8 +350,6 @@ function Game() {
             }} />
             {options[4].currentValue ? leftStats : null}
             {options[4].currentValue ? rightStats : null}
-
-            <div className="notification-container" ref={notifications}></div>
 
             {notifs}
         </section>
